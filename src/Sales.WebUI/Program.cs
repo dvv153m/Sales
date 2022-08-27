@@ -1,4 +1,3 @@
-using Sales.Application.Services;
 using Sales.WebUI.AppStart;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,6 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Sales.Application.Services;
+﻿using Sales.Core.Interfaces.Services;
+using Sales.Infrastructure.Services;
 using Sales.WebUI.Configuration;
+
 
 namespace Sales.WebUI.AppStart
 {
