@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Sales.Core.Interfaces.Services;
 using Sales.WebUI.Models;
 using System.Diagnostics;
 
@@ -8,9 +9,10 @@ namespace Sales.WebUI.Controllers
     {
         private readonly ILogger<MainController> _logger;
 
-        public MainController(ILogger<MainController> logger)
+        public MainController(ILogger<MainController> logger, IPromocodeGenerator g)
         {
             _logger = logger;
+            var token = g.Build();
         }
 
         public IActionResult Index()
