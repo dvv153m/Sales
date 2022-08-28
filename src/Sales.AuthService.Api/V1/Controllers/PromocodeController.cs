@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Sales.AuthService.Api.V1.Controllers
+namespace Sales.Promocode.Api.V1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

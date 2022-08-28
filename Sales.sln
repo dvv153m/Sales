@@ -7,24 +7,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C0A2A1DC-2AD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D9101081-8269-4672-B9DC-8386779CDFAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sales.WebUI", "src\Sales.WebUI\Sales.WebUI.csproj", "{972F54BB-346F-4F48-91B1-61A077C1807A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.WebUI", "src\Sales.WebUI\Sales.WebUI.csproj", "{972F54BB-346F-4F48-91B1-61A077C1807A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3354CCF6-87DD-4E82-AAC7-7443DF051E5E}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sales.AuthService.Api", "src\Sales.AuthService.Api\Sales.AuthService.Api.csproj", "{72228AF8-369D-4E43-A06F-6371318D5F67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Promocode.Api", "src\Sales.AuthService.Api\Sales.Promocode.Api.csproj", "{72228AF8-369D-4E43-A06F-6371318D5F67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sales.Auth.Api.Tests", "tests\Sales.Auth.Api.Tests\Sales.Auth.Api.Tests.csproj", "{33110268-306B-45FC-8375-66D222A3CE57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Auth.Api.Tests", "tests\Sales.Auth.Api.Tests\Sales.Auth.Api.Tests.csproj", "{33110268-306B-45FC-8375-66D222A3CE57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sales.Core", "src\Sales.Core\Sales.Core.csproj", "{294EF9A9-6A07-45E9-83FC-DCE9EAECBB8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Core", "src\Sales.Core\Sales.Core.csproj", "{294EF9A9-6A07-45E9-83FC-DCE9EAECBB8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sales.Contracts", "src\Sales.Contracts\Sales.Contracts.csproj", "{74D0263C-A23C-4FCF-A743-1B985BDAD6CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Contracts", "src\Sales.Contracts\Sales.Contracts.csproj", "{74D0263C-A23C-4FCF-A743-1B985BDAD6CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sales.Infrastructure", "src\Sales.Infrastructure\Sales.Infrastructure.csproj", "{1052D7D0-CEE1-4A7D-BBAC-C4686E781B90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Infrastructure", "src\Sales.Infrastructure\Sales.Infrastructure.csproj", "{1052D7D0-CEE1-4A7D-BBAC-C4686E781B90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sales.Infrastructure.Data.Dapper", "src\Sales.Infrastructure.Data.Dapper\Sales.Infrastructure.Data.Dapper.csproj", "{DB30DF9C-7219-4A3C-B7F4-C907AF167256}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Infrastructure.Data.Dapper", "src\Sales.Infrastructure.Data.Dapper\Sales.Infrastructure.Data.Dapper.csproj", "{DB30DF9C-7219-4A3C-B7F4-C907AF167256}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

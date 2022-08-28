@@ -1,4 +1,4 @@
-using Sales.AuthService.Api.AppStart;
+using Sales.Promocode.Api.AppStart;
 using Sales.Infrastructure.Data.Dapper.Migration;
 
 var builder = WebApplication.CreateBuilder(args);

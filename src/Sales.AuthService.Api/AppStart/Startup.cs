@@ -1,6 +1,6 @@
 ﻿using Sales.Contracts.Configuration;
 
-namespace Sales.AuthService.Api.AppStart
+namespace Sales.Promocode.Api.AppStart
 {
     public partial class Startup
     {

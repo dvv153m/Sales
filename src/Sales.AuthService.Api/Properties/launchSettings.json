@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "Sales.AuthService.Api": {
+    "Sales.Promocode.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

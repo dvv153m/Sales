@@ -1,7 +1,7 @@
 ﻿using Sales.Infrastructure.Data.Dapper.Context;
 using Sales.Infrastructure.Data.Dapper.Migration;
 
-namespace Sales.AuthService.Api.AppStart
+namespace Sales.Promocode.Api.AppStart
 {
     public partial class Startup
     {
