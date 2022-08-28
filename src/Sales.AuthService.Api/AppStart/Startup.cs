@@ -1,6 +1,6 @@
-﻿using Sales.WebUI.Configuration;
+﻿using Sales.Contracts.Configuration;
 
-namespace Sales.WebUI.AppStart
+namespace Sales.AuthService.Api.AppStart
 {
     public partial class Startup
     {
@@ -11,11 +11,11 @@ namespace Sales.WebUI.AppStart
         public void Initialize(WebApplicationBuilder builder)
         {
             //чтоб через di в конструкторе получать этот конфиг
-            builder.Services.Configure<AppConfig>(builder.Configuration.GetSection(AppConfig.SectionName));
+            builder.Services.Configure<PromocodeServiceConfig>(builder.Configuration.GetSection(PromocodeServiceConfig.SectionName));
 
-            ConfigureAuth(builder);
-            ConfigureServices(builder);
-
+            DbInitialize(builder);
+            //ConfigureAuth(builder);
+            //ConfigureServices(builder);
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Sales.AuthService.Api.V1.Controllers
         /// Вход по существующему промокоду
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
         public bool Login()
         {
             //promocodeService.Login();
@@ -26,11 +27,11 @@ namespace Sales.AuthService.Api.V1.Controllers
         /// Регистрируем новый промокод
         /// </summary>
         /// <returns></returns>
-        public bool Register()
+        /*public bool Register()
         {
             //при генерации проверить что такого промокода еще нет в бд
             //promocodeService.Register();
             return true;
-        }
+        }*/
     }
 }

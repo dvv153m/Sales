@@ -14,4 +14,9 @@
     <Folder Include="V1\Models\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sales.Contracts\Sales.Contracts.csproj" />
+    <ProjectReference Include="..\Sales.Infrastructure.Data.Dapper\Sales.Infrastructure.Data.Dapper.csproj" />
+  </ItemGroup>
+
 </Project>

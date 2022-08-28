@@ -1,6 +1,10 @@
 # Sales
 Book Sale
 
+Todo:
+1. Rename Sales.Auth.Api to Sales.PromocodeService.Api
+
+
 Запустить Sales.Auth.Api, Sales.Api, Sales.WebUI
 
 Sales.Auth.Api - Сервис аутентификации, у него своя бд. Предполагается этот сервис не виден снаружи.
@@ -11,3 +15,6 @@ Sales.Api - Сервис распродажи книг, у него своя бд. Снаружи доступа сюда нет. К 
 Просмотр книг и корзины возможна без аутентификации
 
 1. Нажимаем получить промокод. Потом с этим промокодом аутентифицируемся. Аутентификация через куки.
+
+Используемые библиотеки и фреймворки:
+Dapper, Fluent migrator, AutoMapper, FluentValidation
