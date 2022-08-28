@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Promocode.Api", "src\Sales.AuthService.Api\Sales.Promocode.Api.csproj", "{72228AF8-369D-4E43-A06F-6371318D5F67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Promocode.Api", "src\Sales.Promocode.Api\Sales.Promocode.Api.csproj", "{72228AF8-369D-4E43-A06F-6371318D5F67}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Auth.Api.Tests", "tests\Sales.Auth.Api.Tests\Sales.Auth.Api.Tests.csproj", "{33110268-306B-45FC-8375-66D222A3CE57}"
 EndProject
