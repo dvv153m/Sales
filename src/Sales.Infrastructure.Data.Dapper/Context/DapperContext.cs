@@ -22,19 +22,5 @@ namespace Sales.Infrastructure.Data.Dapper.Context
 
         public IDbConnection CreateMasterConnection()
             => new SqlConnection(_config.Value.MasterConnection);
-
-
-        /*private readonly IConfiguration _configuration;
-
-        public DapperContext(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
-        public IDbConnection CreateConnection()
-            => new SqlConnection(_configuration.GetConnectionString("SqlConnection"));
-
-        public IDbConnection CreateMasterConnection()
-            => new SqlConnection(_configuration.GetConnectionString("MasterConnection"));*/
     }
 }

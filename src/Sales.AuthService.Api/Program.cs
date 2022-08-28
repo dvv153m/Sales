@@ -1,5 +1,6 @@
 using Sales.Promocode.Api.AppStart;
 using Sales.Infrastructure.Data.Dapper.Migration;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,9 @@ startup.Initialize(builder);
 
 var app = builder.Build();
 
+var logger = app.Services.GetService<ILogger<Program>>();
+logger?.LogInformation("Starting Promocode.Api...");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -26,22 +30,26 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+#region Creation and migration DB
+
 using (var scope = app.Services.CreateScope())
 {
     var databaseService = scope.ServiceProvider.GetRequiredService<Database>();
     try
     {
-        databaseService.CreateDatabase("memocards3");
+        databaseService.CreateDatabase();
     }
-    catch
+    catch(Exception ex)
     {
-        //log errors or ...
+        logger?.LogError(ex, "An error occurred database creation");
         throw;
     }
     //var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
     //migrator.ListMigrations();
     //migrator.MigrateUp();
 }
+
+#endregion
 
 app.MapControllers();
 
