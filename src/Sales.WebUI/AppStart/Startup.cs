@@ -1,4 +1,4 @@
-﻿using Sales.WebUI.Configuration;
+﻿using Sales.Contracts.Configuration;
 
 namespace Sales.WebUI.AppStart
 {
@@ -11,7 +11,7 @@ namespace Sales.WebUI.AppStart
         public void Initialize(WebApplicationBuilder builder)
         {
             //чтоб через di в конструкторе получать этот конфиг
-            builder.Services.Configure<AppConfig>(builder.Configuration.GetSection(AppConfig.SectionName));
+            builder.Services.Configure<WebUIConfig>(builder.Configuration.GetSection(WebUIConfig.SectionName));
 
             ConfigureAuth(builder);
             ConfigureServices(builder);

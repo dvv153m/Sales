@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sales.Contracts.Configuration
 {
-    public class PromocodeServiceConfig
+    public class PromocodeApiConfig
     {
         public const string SectionName = "ConnectionStrings";
 

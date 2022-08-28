@@ -1,6 +1,6 @@
-﻿using Sales.Core.Interfaces.Services;
+﻿using Sales.Contracts.Configuration;
+using Sales.Core.Interfaces.Services;
 using Sales.Infrastructure.Services;
-using Sales.WebUI.Configuration;
 
 
 namespace Sales.WebUI.AppStart
@@ -11,7 +11,7 @@ namespace Sales.WebUI.AppStart
         {
             builder.Services.AddSingleton<IPromocodeGenerator>(x =>
             {
-                AppConfig appConf = builder.Configuration.GetSection(AppConfig.SectionName).Get<AppConfig>();
+                WebUIConfig appConf = builder.Configuration.GetSection(WebUIConfig.SectionName).Get<WebUIConfig>();
                 return new PromocodeGenerator(appConf.PromoocodeLenght);
             });
         }
