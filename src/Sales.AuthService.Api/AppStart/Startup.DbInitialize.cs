@@ -1,5 +1,9 @@
-﻿using Sales.Infrastructure.Data.Dapper.Context;
+﻿using FluentMigrator.Runner;
+using Sales.Contracts.Configuration;
+using Sales.Infrastructure.Data.Dapper;
+using Sales.Infrastructure.Data.Dapper.Context;
 using Sales.Infrastructure.Data.Dapper.Migration;
+using System.Reflection;
 
 namespace Sales.Promocode.Api.AppStart
 {
@@ -7,8 +11,18 @@ namespace Sales.Promocode.Api.AppStart
     {
         void DbInitialize(WebApplicationBuilder builder)
         {
+            PromocodeApiConfig promocodeApiConfig = builder.Configuration.GetSection(PromocodeApiConfig.SectionName).Get<PromocodeApiConfig>();
+
             builder.Services.AddSingleton<DapperContext>();
             builder.Services.AddSingleton<Database>();
+
+            builder.Services.AddFluentMigratorCore()
+                .ConfigureRunner(config =>
+                    config.AddSqlServer()
+                    .WithGlobalConnectionString(promocodeApiConfig.SqlConnection)
+                    .ScanIn(typeof(DataMigrationEntrypoint).Assembly).For.Migrations())
+                .AddLogging(config => config.AddFluentMigratorConsole())
+                .BuildServiceProvider(false);
         }
     }
 }

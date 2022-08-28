@@ -1,6 +1,6 @@
 using Sales.Promocode.Api.AppStart;
 using Sales.Infrastructure.Data.Dapper.Migration;
-using Microsoft.Extensions.Logging;
+using FluentMigrator.Runner;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,23 +30,23 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-#region Creation and migration DB
+#region Creation and migration database
 
 using (var scope = app.Services.CreateScope())
 {
     var databaseService = scope.ServiceProvider.GetRequiredService<Database>();
+    var migrationService = scope.ServiceProvider.GetService<IMigrationRunner>();
     try
     {
         databaseService.CreateDatabase();
+        migrationService.ListMigrations();
+        migrationService.MigrateUp();
     }
     catch(Exception ex)
     {
-        logger?.LogError(ex, "An error occurred database creation");
+        logger?.LogError(ex, "An error occurred database creation or migration");
         throw;
-    }
-    //var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
-    //migrator.ListMigrations();
-    //migrator.MigrateUp();
+    }    
 }
 
 #endregion
