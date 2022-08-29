@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sales.Core.Interfaces.Services;
 
 namespace Sales.Promocode.Api.V1.Controllers
 {
@@ -7,10 +8,10 @@ namespace Sales.Promocode.Api.V1.Controllers
     [ApiController]
     public class PromocodeController : ControllerBase
     {
-        /*public PromocodeController(IPromocodeService promocodeService)
+        public PromocodeController(IPromocodeService promocodeService)
         {
 
-        }*/
+        }
 
         /// <summary>
         /// Вход по существующему промокоду

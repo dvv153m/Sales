@@ -14,7 +14,7 @@ namespace Sales.Promocode.Api.AppStart
             builder.Services.Configure<PromocodeApiConfig>(builder.Configuration.GetSection(PromocodeApiConfig.SectionName));
 
             DbInitialize(builder);            
-            //ConfigureServices(builder);
+            ConfigureServices(builder);
         }
     }
 }
