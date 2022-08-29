@@ -34,7 +34,7 @@ namespace Sales.Core.Services
                 string newPromocode;
                 do
                 {
-                    //генерируем новый промокод и проверяем что такого еще нет в бд
+                    //генерируем новый промокод и проверяем, что такого еще нет в бд
                     newPromocode = _promocodeGenerator.Build();
                     promocodeEntity = _promocodeRepository.GetByPromocode(newPromocode);
                     numberAttemps++;
