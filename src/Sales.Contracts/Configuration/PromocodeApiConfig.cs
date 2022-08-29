@@ -10,8 +10,8 @@ namespace Sales.Contracts.Configuration
     {
         public const string SectionName = "ConnectionStrings";
 
-        public string SqlConnection { get; set; }
+        public string SqlConnectionString { get; set; }
 
-        public string MasterConnection { get; set; }
+        public string MasterConnectionString { get; set; }
     }
 }

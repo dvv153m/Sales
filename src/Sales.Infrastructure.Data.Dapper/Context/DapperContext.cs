@@ -7,20 +7,20 @@ namespace Sales.Infrastructure.Data.Dapper.Context
 {
     public class DapperContext
     {
-        private readonly IOptions<PromocodeApiConfig> _config;
+        private readonly PromocodeApiConfig _config;
 
         public DapperContext(IOptions<PromocodeApiConfig> config)
         {
             if(config == null)
                 throw new ArgumentNullException(nameof(config));
 
-            _config = config;
+            _config = config.Value;
         }
 
         public IDbConnection CreateConnection()
-            => new SqlConnection(_config.Value.SqlConnection);
+            => new SqlConnection(_config.SqlConnectionString);
 
         public IDbConnection CreateMasterConnection()
-            => new SqlConnection(_config.Value.MasterConnection);
+            => new SqlConnection(_config.MasterConnectionString);
     }
 }

@@ -8,12 +8,12 @@ namespace Sales.Infrastructure.Data.Dapper.Migration
     {
         public override void Down()
         {
-            Delete.Table("Promocodes");
+            Delete.Table("Promocode");
         }
 
         public override void Up()
         {
-            Create.Table("Promocodes")
+            Create.Table("Promocode")
            .WithColumn("Id").AsInt64().NotNullable().PrimaryKey()
            .WithColumn("Value").AsString(50).NotNullable()
            .WithColumn("CreatedDate").AsDateTime().NotNullable();           
