@@ -3,10 +3,8 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 using Sales.Contracts.Configuration;
 using Sales.Contracts.Entity;
-using Sales.Core.Domain;
 using Sales.Core.Interfaces.Repositories;
 using System.Data;
-using System.Xml.Linq;
 
 namespace Sales.Infrastructure.Data.Dapper.Repositories
 {
