@@ -11,9 +11,9 @@ namespace Sales.Core.Interfaces.Repositories
     public interface IPromocodeRepository
     {
         void Add(PromocodeEntity promocode);
-        
-        Promocode GetByPromocode(string promocode);
 
-        IEnumerable<Promocode> GetAll();
+        PromocodeEntity GetByPromocode(string promocode);
+
+        IEnumerable<PromocodeEntity> GetAll();
     }
 }

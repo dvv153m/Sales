@@ -30,19 +30,19 @@ namespace Sales.Infrastructure.Data.Dapper.Repositories
             }
         }
 
-        public Promocode GetByPromocode(string promocode)
+        public PromocodeEntity GetByPromocode(string promocode)
         {
             using (IDbConnection db = new SqlConnection(_config.SqlConnectionString))
             {
-                return db.Query<Promocode>("SELECT * FROM Users WHERE Id = @id", new { promocode }).FirstOrDefault();
+                return db.Query<PromocodeEntity>("SELECT * FROM Users WHERE Id = @id", new { promocode }).FirstOrDefault();
             }
         }
 
-        public IEnumerable<Promocode> GetAll()
+        public IEnumerable<PromocodeEntity> GetAll()
         {
             using (IDbConnection db = new SqlConnection(_config.SqlConnectionString))
             {
-                return db.Query<Promocode>("SELECT * FROM Promocode");
+                return db.Query<PromocodeEntity>("SELECT * FROM Promocode");
             }
         }
     }
