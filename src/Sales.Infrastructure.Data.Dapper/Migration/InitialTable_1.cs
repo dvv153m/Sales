@@ -14,7 +14,7 @@ namespace Sales.Infrastructure.Data.Dapper.Migration
         public override void Up()
         {
             Create.Table("Promocode")
-           .WithColumn("Id").AsInt64().NotNullable().PrimaryKey()
+           .WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
            .WithColumn("Value").AsString(50).NotNullable()
            .WithColumn("CreatedDate").AsDateTime().NotNullable();           
         }

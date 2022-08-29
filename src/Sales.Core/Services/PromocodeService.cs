@@ -39,11 +39,11 @@ namespace Sales.Core.Services
                     promocodeEntity = _promocodeRepository.GetByPromocode(newPromocode);
                     numberAttemps++;
                 }
-                while (promocodeEntity != null || numberAttemps < maxNumberAttemps);
+                while (promocodeEntity != null && numberAttemps < maxNumberAttemps);
 
                 if (promocodeEntity == null)
                 {
-                    _promocodeRepository.Add(new PromocodeEntity { Value = newPromocode, CreatedDate = DateTime.Now });
+                    _promocodeRepository.Add(new PromocodeEntity { Value = newPromocode });
                 }
                 else
                 { 

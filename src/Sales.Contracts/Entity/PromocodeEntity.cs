@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Sales.Contracts.Entity
 {
     public class PromocodeEntity
-    {
+    {        
         public long Id { get; set; }
 
         public string Value { get; set; }

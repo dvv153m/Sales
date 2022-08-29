@@ -6,6 +6,7 @@ using Sales.Contracts.Entity;
 using Sales.Core.Domain;
 using Sales.Core.Interfaces.Repositories;
 using System.Data;
+using System.Xml.Linq;
 
 namespace Sales.Infrastructure.Data.Dapper.Repositories
 {
@@ -23,10 +24,18 @@ namespace Sales.Infrastructure.Data.Dapper.Repositories
 
         public void Add(PromocodeEntity promocode)
         {
+            promocode.CreatedDate = DateTime.Now;
             using (IDbConnection db = new SqlConnection(_config.SqlConnectionString))
-            {
-                var sqlQuery = "INSERT INTO Promocode (Value, CreatedDate) VALUES(@Name, @Age)";
+            {                
+                var sqlQuery = "INSERT INTO Promocode (Value, CreatedDate) VALUES(@Value, @CreatedDate)";
                 db.Execute(sqlQuery, promocode);
+                //await db.ExecuteAsync(sqlQuery, promocode);
+                /*var parameters = new DynamicParameters();
+                parameters.Add("Value", promocode.Value);
+                parameters.Add("CreatedDate", promocode.CreatedDate);
+                var sqlQuery = "INSERT INTO Promocode (Value, CreatedDate) VALUES(@Value, @CreatedDate)";
+                db.Execute(sqlQuery, parameters);*/
+
             }
         }
 
@@ -34,7 +43,11 @@ namespace Sales.Infrastructure.Data.Dapper.Repositories
         {
             using (IDbConnection db = new SqlConnection(_config.SqlConnectionString))
             {
-                return db.Query<PromocodeEntity>("SELECT * FROM Users WHERE Id = @id", new { promocode }).FirstOrDefault();
+                var parameters = new DynamicParameters();
+                parameters.Add("Value", promocode);
+                //var result = await db.QueryAsync<PromocodeEntity>("SELECT * FROM Promocode WHERE Value = @Value", parameters);
+                //return result.FirstOrDefault();
+                return db.Query<PromocodeEntity>("SELECT * FROM Promocode WHERE Value = @Value", parameters).FirstOrDefault();
             }
         }
 
