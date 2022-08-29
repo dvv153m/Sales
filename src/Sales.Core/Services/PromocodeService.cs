@@ -24,7 +24,7 @@ namespace Sales.Core.Services
             _promocodeGenerator = promocodeGenerator;
         }
 
-        public bool AddPromocode()
+        public async Task<bool> AddPromocodeAsync()
         {
             try
             {
@@ -36,14 +36,14 @@ namespace Sales.Core.Services
                 {
                     //генерируем новый промокод и проверяем, что такого еще нет в бд
                     newPromocode = _promocodeGenerator.Build();
-                    promocodeEntity = _promocodeRepository.GetByPromocode(newPromocode);
+                    promocodeEntity = await _promocodeRepository.GetByPromocodeAsync(newPromocode);
                     numberAttemps++;
                 }
                 while (promocodeEntity != null && numberAttemps < maxNumberAttemps);
 
                 if (promocodeEntity == null)
                 {
-                    _promocodeRepository.Add(new PromocodeEntity { Value = newPromocode });
+                    await _promocodeRepository.AddAsync(new PromocodeEntity { Value = newPromocode });
                 }
                 else
                 { 
@@ -58,11 +58,11 @@ namespace Sales.Core.Services
             return true;
         }
 
-        public bool LoginByPromocode(string promocode)
+        public async Task<bool> LoginByPromocodeAsync(string promocode)
         {
             try
             {
-                PromocodeEntity promocodeEntity = _promocodeRepository.GetByPromocode(promocode);
+                PromocodeEntity promocodeEntity = await _promocodeRepository.GetByPromocodeAsync(promocode);
                 if (promocodeEntity == null)
                 {
                     return false;

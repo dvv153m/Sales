@@ -22,32 +22,24 @@ namespace Sales.Infrastructure.Data.Dapper.Repositories
             _config = config.Value;
         }
 
-        public void Add(PromocodeEntity promocode)
+        public async Task AddAsync(PromocodeEntity entity)
         {
-            promocode.CreatedDate = DateTime.Now;
+            entity.CreatedDate = DateTime.Now;
             using (IDbConnection db = new SqlConnection(_config.SqlConnectionString))
             {                
-                var sqlQuery = "INSERT INTO Promocode (Value, CreatedDate) VALUES(@Value, @CreatedDate)";
-                db.Execute(sqlQuery, promocode);
-                //await db.ExecuteAsync(sqlQuery, promocode);
-                /*var parameters = new DynamicParameters();
-                parameters.Add("Value", promocode.Value);
-                parameters.Add("CreatedDate", promocode.CreatedDate);
-                var sqlQuery = "INSERT INTO Promocode (Value, CreatedDate) VALUES(@Value, @CreatedDate)";
-                db.Execute(sqlQuery, parameters);*/
-
+                var sqlQuery = "INSERT INTO Promocode (Value, CreatedDate) VALUES(@Value, @CreatedDate)";                
+                await db.ExecuteAsync(sqlQuery, entity);                
             }
         }
 
-        public PromocodeEntity GetByPromocode(string promocode)
+        public async Task<PromocodeEntity> GetByPromocodeAsync(string promocode)
         {
             using (IDbConnection db = new SqlConnection(_config.SqlConnectionString))
             {
                 var parameters = new DynamicParameters();
                 parameters.Add("Value", promocode);
-                //var result = await db.QueryAsync<PromocodeEntity>("SELECT * FROM Promocode WHERE Value = @Value", parameters);
-                //return result.FirstOrDefault();
-                return db.Query<PromocodeEntity>("SELECT * FROM Promocode WHERE Value = @Value", parameters).FirstOrDefault();
+                var result = await db.QueryAsync<PromocodeEntity>("SELECT * FROM Promocode WHERE Value = @Value", parameters);
+                return result.FirstOrDefault();                
             }
         }
 

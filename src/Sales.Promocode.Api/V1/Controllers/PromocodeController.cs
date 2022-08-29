@@ -18,13 +18,13 @@ namespace Sales.Promocode.Api.V1.Controllers
         }
 
         /// <summary>
-        /// Вход по существующему промокоду
+        /// Вход по промокоду
         /// </summary>
         /// <returns></returns>
         [HttpPost("login")]
-        public IActionResult Login(string promocode)
+        public async Task<IActionResult> Login(string promocode)
         {
-            var isSuccess = _promocodeService.LoginByPromocode(promocode);
+            var isSuccess = await _promocodeService.LoginByPromocodeAsync(promocode);
             if (!isSuccess)
             {
                 return NotFound();
@@ -37,9 +37,9 @@ namespace Sales.Promocode.Api.V1.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("register")]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
-            var isSuccess = _promocodeService.AddPromocode();
+            var isSuccess = await _promocodeService.AddPromocodeAsync();
             if (!isSuccess)
             {
                 return BadRequest("error");
