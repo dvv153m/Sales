@@ -26,6 +26,7 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseCors(startup.ReleaseCorsPolicy);
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();

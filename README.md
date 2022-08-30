@@ -1,7 +1,7 @@
 # Sales
 Book Sale
 
-####Summary####
+#### Summary ####
 
 Used libraries and frameworks:
 Dapper, Fluent migrator, AutoMapper, FluentValidation
