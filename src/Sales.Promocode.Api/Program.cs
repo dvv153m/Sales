@@ -21,9 +21,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors(startup.DebugCorsPolicy);
 }
-
-app.UseCors(startup.DebugCorsPolicy);
+else
+{
+    app.UseCors(startup.ReleaseCorsPolicy);
+}
 
 app.UseHttpsRedirection();
 
