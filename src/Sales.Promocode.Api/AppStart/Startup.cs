@@ -15,6 +15,7 @@ namespace Sales.Promocode.Api.AppStart
 
             DbInitialize(builder);            
             ConfigureServices(builder);
+            ConfigureSwagger(builder);
         }
     }
 }

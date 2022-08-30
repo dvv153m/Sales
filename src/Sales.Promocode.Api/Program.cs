@@ -1,15 +1,12 @@
 using Sales.Promocode.Api.AppStart;
 using Sales.Infrastructure.Data.Dapper.Migration;
 using FluentMigrator.Runner;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var startup = new Startup();
 startup.Initialize(builder);
