@@ -38,7 +38,7 @@ using (var scope = app.Services.CreateScope())
     var migrationService = scope.ServiceProvider.GetService<IMigrationRunner>();
     try
     {
-        databaseService.CreateDatabase();
+        databaseService.CreateDatabaseIfNotExists();
         migrationService.ListMigrations();
         migrationService.MigrateUp();
     }

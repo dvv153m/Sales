@@ -4,30 +4,30 @@ namespace Sales.Core.Tests.PromocodeGenerator
     public class TestPromocodeGenerator
     {
         [Fact]
-        public void Build_OnSuccess_ReturnPromocode()
+        public void Build_OnSuccess_EqualsPromocodeLength()
         {
-            //Arrange
-            int promocodeLen = 7;
+            //arrange
+            const int expected = 7;
 
-            //Act
-            string promocode = Helper.PromocodeGenerator.Build(promocodeLen);
+            //act
+            int actual = Helper.PromocodeGenerator.Build(promocodeLenght: expected).Length;
 
-            //Arrange
-            Assert.True(promocode.Length == promocodeLen);
+            //arrange
+            Assert.True(expected == actual);
         }
 
         [Fact]
-        public void Build_ThrowArgumentException()
+        public void Build_ThrowArgumentException_PromocodeLenghtLess4()
         {
-            //Arrange
-            int promocodeLen = 3;
+            //arrange
+            const int promocodeLenght = 3;
 
-            //Act            
-            //Arrange
+            //act            
+            //arrange
             Assert.Throws<ArgumentException>(
                 () => 
                 {
-                    return Helper.PromocodeGenerator.Build(promocodeLen);                    
+                    return Helper.PromocodeGenerator.Build(promocodeLenght);                    
                 });
         }
     }

@@ -14,7 +14,7 @@ namespace Sales.Infrastructure.Data.Dapper.Migration
 
             _context = context;
         }
-        public void CreateDatabase()
+        public void CreateDatabaseIfNotExists()
         {
             string dbName = GetDatabaseName();
 
