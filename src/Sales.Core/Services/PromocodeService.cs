@@ -18,10 +18,11 @@ namespace Sales.Core.Services
             _promocodeLenght = promocodeLenght;
         }
 
-        public async Task AddPromocodeAsync()
+        public async Task<string> AddPromocodeAsync()
         {
             string newPromocode = PromocodeGenerator.Build(_promocodeLenght);
             await _promocodeRepository.AddAsync(new PromocodeEntity { Value = newPromocode });
+            return newPromocode;
         }
 
         public async Task<bool> ExistsAsync(string promocode)

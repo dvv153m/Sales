@@ -43,13 +43,14 @@ namespace Sales.Promocode.Api.V1.Controllers
         /// <summary>
         /// Регистрирует новый промокод
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Возвращает созданный промокод</returns>
         [HttpPost("register")]
         public async Task<IActionResult> Register()
         {
+            string newPromocode;
             try
             {
-                await _promocodeService.AddPromocodeAsync();
+                newPromocode = await _promocodeService.AddPromocodeAsync();
             }
             catch (Exception ex)
             {
@@ -57,7 +58,7 @@ namespace Sales.Promocode.Api.V1.Controllers
                 return BadRequest();
             }
             
-            return Ok();
+            return Ok(newPromocode);
         }
     }
 }
