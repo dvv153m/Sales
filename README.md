@@ -1,18 +1,18 @@
 # Sales
 Book Sale
 
-Используемые библиотеки и фреймворки:
+Used libraries and frameworks:
 Dapper, Fluent migrator, AutoMapper, FluentValidation
 
-Запустить Sales.Promocode.Api, Sales.Product.Api, Sales.WebUI
+Run Sales.Promocode.Api, Sales.Product.Api, Sales.WebUI
 
-Sales.Promocode.Api - Сервис для работы с промокодами, у него своя бд. Он не виден снаружи. Доступ только с Sales.WebUI (CORS)
-Sales.WebUI - сайт распродажи книг. 
-Sales.Product.Api - Сервис распродажи книг, у него своя бд. Он не виден снаружи. Доступ только с Sales.WebUI (CORS).
-Структура БД в нем позволяет сохранять не только книги, но и любые другие товары.
+Sales.Promocode.Api - Service for working with promocodes, it has its own database. It is not visible from the outside. Access only from Sales.WebUI (CORS)
+Sales.WebUI - Web pages 
+Sales.Product.Api - Book sale service, it has its own database. It is not visible from the outside. Access only from Sales.WebUI (CORS).
+The structure of the database in it allows you to save not only books, but also any other goods.
 
-Основные моменты:
-Просмотр книг и корзины возможно без аутентификации
-Аутентификация через куки
+Basic moments:
+- Viewing books and shopping cart, adding to cart is possible without authentication
+- Cookie Authentication
 
-Варианты горизонтального масштабирования:
+Horizontal scaling options:
