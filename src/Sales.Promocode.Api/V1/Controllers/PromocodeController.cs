@@ -8,42 +8,55 @@ namespace Sales.Promocode.Api.V1.Controllers
     public class PromocodeController : ControllerBase
     {
         private readonly IPromocodeService _promocodeService;
+        private readonly ILogger<PromocodeController> _logger;
 
-        public PromocodeController(IPromocodeService promocodeService)
+        public PromocodeController(IPromocodeService promocodeService,
+                                   ILogger<PromocodeController> logger)
         {
-            if(promocodeService == null)
-                throw new ArgumentNullException(nameof(promocodeService));
+            promocodeService = promocodeService ?? throw new ArgumentNullException(nameof(promocodeService));
+            logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             _promocodeService = promocodeService;
+            _logger = logger;   
         }
 
         /// <summary>
-        /// Вход по промокоду
+        /// Определяет, существует ли заданный промокод
         /// </summary>
         /// <returns></returns>
-        [HttpGet("{promocode}")]
-        public async Task<IActionResult> Get(string promocode)
+        [HttpGet("exists/{promocode}")]
+        public async Task<IActionResult> Exists(string promocode)
         {
-            var isSuccess = await _promocodeService.GetByPromocodeAsync(promocode);
-            if (!isSuccess)
+            bool isExist = false;
+            try
             {
-                return NotFound();
-            }            
-            return Ok();
+                isExist = await _promocodeService.ExistsAsync(promocode);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to get promocode");
+            }
+
+            return isExist ? Ok() : NotFound();
         }
 
         /// <summary>
-        /// Регистрируем новый промокод
+        /// Регистрирует новый промокод
         /// </summary>
         /// <returns></returns>
         [HttpPost("register")]
         public async Task<IActionResult> Register()
         {
-            var isSuccess = await _promocodeService.AddPromocodeAsync();
-            if (!isSuccess)
+            try
             {
-                return BadRequest("error");
+                await _promocodeService.AddPromocodeAsync();
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to register promo code");
+                return BadRequest();
+            }
+            
             return Ok();
         }
     }

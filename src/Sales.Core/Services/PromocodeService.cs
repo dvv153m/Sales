@@ -3,7 +3,6 @@ using Sales.Core.Helper;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Core.Interfaces.Services;
 
-
 namespace Sales.Core.Services
 {
     public class PromocodeService : IPromocodeService
@@ -19,55 +18,16 @@ namespace Sales.Core.Services
             _promocodeLenght = promocodeLenght;
         }
 
-        public async Task<bool> AddPromocodeAsync()
+        public async Task AddPromocodeAsync()
         {
-            try
-            {
-                byte maxNumberAttemps = 10;
-                byte numberAttemps = 0;
-                PromocodeEntity promocodeEntity;
-                string newPromocode;
-                do
-                {
-                    //генерируем новый промокод и проверяем, что такого еще нет в бд
-                    newPromocode = PromocodeGenerator.Build(_promocodeLenght);
-                    promocodeEntity = await _promocodeRepository.GetByPromocodeAsync(newPromocode);
-                    numberAttemps++;
-                }
-                while (promocodeEntity != null && numberAttemps < maxNumberAttemps);
-
-                if (promocodeEntity == null)
-                {
-                    await _promocodeRepository.AddAsync(new PromocodeEntity { Value = newPromocode });
-                }
-                else
-                { 
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                //loging
-                return false;
-            }
-            return true;
+            string newPromocode = PromocodeGenerator.Build(_promocodeLenght);
+            await _promocodeRepository.AddAsync(new PromocodeEntity { Value = newPromocode });
         }
 
-        public async Task<bool> GetByPromocodeAsync(string promocode)
+        public async Task<bool> ExistsAsync(string promocode)
         {
-            try
-            {
-                PromocodeEntity promocodeEntity = await _promocodeRepository.GetByPromocodeAsync(promocode);
-                if (promocodeEntity == null)
-                {
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            { 
-                //loging
-            }
-            return true;
-        }        
+            PromocodeEntity promocodeEntity = await _promocodeRepository.GetByPromocodeAsync(promocode);
+            return promocodeEntity != null;
+        }
     }
 }

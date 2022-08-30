@@ -8,8 +8,8 @@ namespace Sales.Core.Interfaces.Services
 {
     public interface IPromocodeService
     {
-        Task<bool> AddPromocodeAsync();
+        Task AddPromocodeAsync();
 
-        Task<bool> GetByPromocodeAsync(string promocode);        
+        Task<bool> ExistsAsync(string promocode);        
     }
 }
