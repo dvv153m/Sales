@@ -23,6 +23,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(startup.DebugCorsPolicy);
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

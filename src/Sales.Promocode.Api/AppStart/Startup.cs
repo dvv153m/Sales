@@ -13,7 +13,8 @@ namespace Sales.Promocode.Api.AppStart
             //чтоб через di в конструкторе получать этот конфиг
             builder.Services.Configure<PromocodeApiConfig>(builder.Configuration.GetSection(PromocodeApiConfig.SectionName));
 
-            DbInitialize(builder);            
+            DbInitialize(builder);
+            ConfigureCors(builder);
             ConfigureServices(builder);
             ConfigureSwagger(builder);
         }
