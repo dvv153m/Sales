@@ -1,4 +1,5 @@
 ﻿using Sales.Contracts.Entity;
+using Sales.Core.Helper;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Core.Interfaces.Services;
 
@@ -8,17 +9,14 @@ namespace Sales.Core.Services
     public class PromocodeService : IPromocodeService
     {
         private readonly IPromocodeRepository _promocodeRepository;
+        private readonly int _promocodeLenght;
 
-        private readonly IPromocodeGenerator _promocodeGenerator;
-
-        public PromocodeService(IPromocodeRepository promocodeRepository,
-                                IPromocodeGenerator promocodeGenerator)
+        public PromocodeService(IPromocodeRepository promocodeRepository, int promocodeLenght)
         {
-            promocodeRepository = promocodeRepository ?? throw new ArgumentNullException(nameof(promocodeRepository));
-            promocodeGenerator = promocodeGenerator ?? throw new ArgumentNullException(nameof(promocodeGenerator));
+            promocodeRepository = promocodeRepository ?? throw new ArgumentNullException(nameof(promocodeRepository));            
 
-            _promocodeRepository = promocodeRepository; 
-            _promocodeGenerator = promocodeGenerator;
+            _promocodeRepository = promocodeRepository;
+            _promocodeLenght = promocodeLenght;
         }
 
         public async Task<bool> AddPromocodeAsync()
@@ -32,7 +30,7 @@ namespace Sales.Core.Services
                 do
                 {
                     //генерируем новый промокод и проверяем, что такого еще нет в бд
-                    newPromocode = _promocodeGenerator.Build();
+                    newPromocode = PromocodeGenerator.Build(_promocodeLenght);
                     promocodeEntity = await _promocodeRepository.GetByPromocodeAsync(newPromocode);
                     numberAttemps++;
                 }
