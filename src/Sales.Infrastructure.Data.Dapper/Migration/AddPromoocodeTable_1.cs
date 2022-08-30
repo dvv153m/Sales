@@ -4,7 +4,7 @@
 namespace Sales.Infrastructure.Data.Dapper.Migration
 {
     [Migration(1)]
-    public class InitialTable_1 : FluentMigrator.Migration
+    public class AddPromoocodeTable_1 : FluentMigrator.Migration
     {
         public override void Down()
         {
@@ -15,7 +15,7 @@ namespace Sales.Infrastructure.Data.Dapper.Migration
         {
             Create.Table("Promocode")
            .WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
-           .WithColumn("Value").AsString(50).NotNullable()
+           .WithColumn("Value").AsString(50).NotNullable().Unique()
            .WithColumn("CreatedDate").AsDateTime().NotNullable();           
         }
     }

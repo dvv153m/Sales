@@ -10,6 +10,6 @@ namespace Sales.Core.Interfaces.Services
     {
         Task<bool> AddPromocodeAsync();
 
-        Task<bool> LoginByPromocodeAsync(string promocode);        
+        Task<bool> GetByPromocodeAsync(string promocode);        
     }
 }

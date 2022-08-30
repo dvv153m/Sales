@@ -14,11 +14,8 @@ namespace Sales.Core.Services
         public PromocodeService(IPromocodeRepository promocodeRepository,
                                 IPromocodeGenerator promocodeGenerator)
         {
-            if (promocodeRepository == null)
-                throw new ArgumentNullException(nameof(promocodeRepository));
-
-            if (promocodeGenerator == null)
-                throw new ArgumentNullException(nameof(promocodeGenerator));
+            promocodeRepository = promocodeRepository ?? throw new ArgumentNullException(nameof(promocodeRepository));
+            promocodeGenerator = promocodeGenerator ?? throw new ArgumentNullException(nameof(promocodeGenerator));
 
             _promocodeRepository = promocodeRepository; 
             _promocodeGenerator = promocodeGenerator;
@@ -58,7 +55,7 @@ namespace Sales.Core.Services
             return true;
         }
 
-        public async Task<bool> LoginByPromocodeAsync(string promocode)
+        public async Task<bool> GetByPromocodeAsync(string promocode)
         {
             try
             {

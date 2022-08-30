@@ -3,7 +3,7 @@ using Sales.Core.Interfaces.Services;
 
 namespace Sales.Promocode.Api.V1.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/promocode")]
     [ApiController]
     public class PromocodeController : ControllerBase
     {
@@ -21,10 +21,10 @@ namespace Sales.Promocode.Api.V1.Controllers
         /// Вход по промокоду
         /// </summary>
         /// <returns></returns>
-        [HttpPost("login")]
-        public async Task<IActionResult> Login(string promocode)
+        [HttpGet("{promocode}")]
+        public async Task<IActionResult> Get(string promocode)
         {
-            var isSuccess = await _promocodeService.LoginByPromocodeAsync(promocode);
+            var isSuccess = await _promocodeService.GetByPromocodeAsync(promocode);
             if (!isSuccess)
             {
                 return NotFound();
