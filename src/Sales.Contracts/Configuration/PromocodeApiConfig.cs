@@ -8,7 +8,7 @@ namespace Sales.Contracts.Configuration
 {
     public class PromocodeApiConfig
     {
-        public const string SectionName = "AppConfig";
+        public const string SectionName = "AppSettings";
 
         public string SqlConnectionString { get; set; }
 

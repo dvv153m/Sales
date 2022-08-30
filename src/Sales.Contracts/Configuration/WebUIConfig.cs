@@ -8,7 +8,7 @@ namespace Sales.Contracts.Configuration
 {
     public class WebUIConfig
     {
-        public const string SectionName = "App";
+        public const string SectionName = "AppSettings";
 
         public int PromoocodeLenght { get; set; }
     }
