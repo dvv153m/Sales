@@ -54,7 +54,7 @@ namespace Sales.Promocode.Api.V1.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to register promo code");
+                _logger.LogError(ex, "Failed to register promocode");
                 return BadRequest();
             }
             
