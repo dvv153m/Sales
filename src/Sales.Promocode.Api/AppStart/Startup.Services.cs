@@ -4,7 +4,6 @@ using Sales.Core.Interfaces.Repositories;
 using Sales.Core.Interfaces.Services;
 using Sales.Core.Services;
 using Sales.Infrastructure.Data.Dapper.Repositories;
-//using Sales.Infrastructure.Services;
 
 namespace Sales.Promocode.Api.AppStart
 {
