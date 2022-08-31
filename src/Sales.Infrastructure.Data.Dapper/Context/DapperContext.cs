@@ -11,7 +11,7 @@ namespace Sales.Infrastructure.Data.Dapper.Context
 
         public DapperContext(IOptions<PromocodeApiConfig> config)
         {
-            if(config == null)
+            if(config == null || config.Value == null)
                 throw new ArgumentNullException(nameof(config));
 
             _config = config.Value;

@@ -3,7 +3,6 @@ using Sales.Contracts.Configuration;
 using Sales.Infrastructure.Data.Dapper;
 using Sales.Infrastructure.Data.Dapper.Context;
 using Sales.Infrastructure.Data.Dapper.Migration;
-using System.Reflection;
 
 namespace Sales.Promocode.Api.AppStart
 {

@@ -8,7 +8,7 @@ namespace Sales.WebUI.AppStart
     {
         void ConfigureServices(WebApplicationBuilder builder)
         {
-            
+            builder.Services.AddHttpClient();   
         }
     }
 }

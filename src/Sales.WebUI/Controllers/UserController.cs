@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Sales.Contracts.Configuration;
 using Sales.WebUI.Models;
 using System.Security.Claims;
 
@@ -7,6 +9,21 @@ namespace Sales.WebUI.Controllers
 {
     public class UserController : Controller
     {
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        private readonly WebUIConfig _config;
+
+        public UserController(IHttpClientFactory httpClientFactory,
+                              IOptions<WebUIConfig> config)
+        {
+            _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
+
+            if (config == null || config.Value == null)
+                throw new ArgumentNullException(nameof(config));
+
+            _config = config.Value;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -14,19 +31,30 @@ namespace Sales.WebUI.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Login(UserViewModel model)
-        {
-            //обращаемся к сервису аутентификации
-            //там создается новая запись в бд с промокодом
-
-            var claims = new List<Claim>
+        {                        
+            using (var httpClient = _httpClientFactory.CreateClient())
             {
-                new Claim("Promocode", model.Promocode)
-            };
-            var claimIdentity = new ClaimsIdentity(claims, "Cookie");
-            var claimPrincipal = new ClaimsPrincipal(claimIdentity);
-            await HttpContext.SignInAsync("Cookie", claimPrincipal);
+                var response = await httpClient.GetAsync($"{_config.PromoocodeApiUrl}/promocode/exists/{model.Promocode}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var claims = new List<Claim>
+                    {
+                        new Claim("Promocode", model.Promocode)
+                    };
+                    var claimIdentity = new ClaimsIdentity(claims, "Cookie");
+                    var claimPrincipal = new ClaimsPrincipal(claimIdentity);
+                    await HttpContext.SignInAsync("Cookie", claimPrincipal);
 
-            return Redirect(model.ReturnUrl ?? "/");
+                    return Redirect(model.ReturnUrl ?? "/");
+                }
+                else
+                { 
+                    //вывести что такого промокода не существует
+                    return View();
+                }
+
+                
+            }
         }
 
         public async Task<IActionResult> Logout()
