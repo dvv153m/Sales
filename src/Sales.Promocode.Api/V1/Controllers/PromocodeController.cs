@@ -57,8 +57,11 @@ namespace Sales.Promocode.Api.V1.Controllers
                 _logger.LogError(ex, "Failed to register promocode");
                 return BadRequest();
             }
-            
-            return Ok(newPromocode);
+
+            return CreatedAtRoute(routeName: String.Empty,
+                                      //routeValues: new { promocode = newPromocode },
+                                      value: newPromocode);
         }
+        //return Ok(newPromocode);    
     }
 }

@@ -30,27 +30,43 @@ namespace Sales.WebUI.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> GenerateAndLogin()
+        {
+            using (var httpClient = _httpClientFactory.CreateClient())
+            {
+                var response = await httpClient.PostAsync($"{_config.PromoocodeApiUrl}/promocode/register", null);
+                var newPromocode = await response.Content.ReadAsStringAsync();
+                return await HandleResponse(newPromocode, response.IsSuccessStatusCode);                
+            }
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Login(UserViewModel model)
         {                        
             using (var httpClient = _httpClientFactory.CreateClient())
             {
                 var response = await httpClient.GetAsync($"{_config.PromoocodeApiUrl}/promocode/exists/{model.Promocode}");
-                if (response.IsSuccessStatusCode)
-                {
-                    var claims = new List<Claim>
-                    {
-                        new Claim("Promocode", model.Promocode)
-                    };
-                    var claimIdentity = new ClaimsIdentity(claims, "Cookie");
-                    var claimPrincipal = new ClaimsPrincipal(claimIdentity);
-                    await HttpContext.SignInAsync("Cookie", claimPrincipal);
+                return await HandleResponse(model.Promocode, response.IsSuccessStatusCode);                
+            }
+        }
 
-                    return Redirect(model.ReturnUrl ?? "/");
-                }
-                else
-                {                     
-                    return Redirect("/User/Index");
-                }                
+        private async Task<IActionResult> HandleResponse(string promocode, bool isSuccessStatusCode)
+        {
+            if (isSuccessStatusCode)
+            {
+                var claims = new List<Claim>
+                    {
+                        new Claim("Promocode", promocode)
+                    };
+                var claimIdentity = new ClaimsIdentity(claims, "Cookie");
+                var claimPrincipal = new ClaimsPrincipal(claimIdentity);
+                await HttpContext.SignInAsync("Cookie", claimPrincipal);
+
+                return Redirect("/");
+            }
+            else
+            {
+                return Redirect("/User/Index");
             }
         }
 
