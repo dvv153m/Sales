@@ -1,10 +1,4 @@
-﻿using Sales.Core.Interfaces.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Sales.Core.Helper
 {
     public static class PromocodeGenerator
@@ -18,9 +12,13 @@ namespace Sales.Core.Helper
             if (promocodeLenght < 4)
                 throw new ArgumentException("Min promocode lenght is 4 simbol");
 
-            return new string(Enumerable.Repeat(_chars, promocodeLenght)
-                              .Select(s => s[_random.Next(s.Length)])
-                              .ToArray());
+            return string.Create(promocodeLenght, _chars, (span, chars) =>
+            {
+                for (int i = 0; i < promocodeLenght; i++)
+                {
+                    span[i] = chars[_random.Next(chars.Length)];
+                }
+            });            
         }
     }
 }
