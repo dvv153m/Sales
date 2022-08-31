@@ -48,12 +48,9 @@ namespace Sales.WebUI.Controllers
                     return Redirect(model.ReturnUrl ?? "/");
                 }
                 else
-                { 
-                    //вывести что такого промокода не существует
-                    return View();
-                }
-
-                
+                {                     
+                    return Redirect("/User/Index");
+                }                
             }
         }
 
