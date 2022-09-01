@@ -10,7 +10,7 @@ namespace Sales.Promocode.Api.AppStart
     {
         void DbInitialize(WebApplicationBuilder builder)
         {
-            PromocodeApiConfig promocodeApiConfig = builder.Configuration.GetSection(PromocodeApiConfig.SectionName).Get<PromocodeApiConfig>();
+            PromocodeApiOptions promocodeApiConfig = builder.Configuration.GetSection(PromocodeApiOptions.SectionName).Get<PromocodeApiOptions>();
 
             builder.Services.AddSingleton<DapperContext>();
             builder.Services.AddSingleton<Database>();

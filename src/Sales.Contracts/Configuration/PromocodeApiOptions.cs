@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace Sales.Contracts.Configuration
 {
-    public class WebUIConfig
+    public class PromocodeApiOptions
     {
         public const string SectionName = "AppSettings";
-        
-        public string PromoocodeApiUrl { get; set; }
 
-        public string ProductApiUrl { get; set; }
+        public string SqlConnectionString { get; set; }
+
+        public string MasterConnectionString { get; set; }
+
+        public int PromoocodeLenght { get; set; }
     }
 }

@@ -11,10 +11,10 @@ namespace Sales.WebUI.Controllers
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        private readonly WebUIConfig _config;
+        private readonly WebUIOptions _config;
 
         public UserController(IHttpClientFactory httpClientFactory,
-                              IOptions<WebUIConfig> config)
+                              IOptions<WebUIOptions> config)
         {
             _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
 

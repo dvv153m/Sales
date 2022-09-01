@@ -11,7 +11,7 @@ namespace Sales.WebUI.AppStart
         public void Initialize(WebApplicationBuilder builder)
         {
             //чтоб через di в конструкторе получать этот конфиг
-            builder.Services.Configure<WebUIConfig>(builder.Configuration.GetSection(WebUIConfig.SectionName));
+            builder.Services.Configure<WebUIOptions>(builder.Configuration.GetSection(WebUIOptions.SectionName));
 
             ConfigureAuth(builder);
             ConfigureServices(builder);

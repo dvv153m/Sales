@@ -10,9 +10,9 @@ namespace Sales.Infrastructure.Data.Dapper.Repositories
 {
     public class PromocodeRepository : IPromocodeRepository
     {
-        private readonly PromocodeApiConfig _config;
+        private readonly PromocodeApiOptions _config;
 
-        public PromocodeRepository(IOptions<PromocodeApiConfig> config)
+        public PromocodeRepository(IOptions<PromocodeApiOptions> config)
         {
             if (config == null)
                 throw new ArgumentNullException(nameof(config));

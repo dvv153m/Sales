@@ -7,9 +7,9 @@ namespace Sales.Infrastructure.Data.Dapper.Context
 {
     public class DapperContext
     {
-        private readonly PromocodeApiConfig _config;
+        private readonly PromocodeApiOptions _config;
 
-        public DapperContext(IOptions<PromocodeApiConfig> config)
+        public DapperContext(IOptions<PromocodeApiOptions> config)
         {
             if(config == null || config.Value == null)
                 throw new ArgumentNullException(nameof(config));
