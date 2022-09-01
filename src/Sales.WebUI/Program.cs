@@ -31,6 +31,3 @@ app.MapControllerRoute(
     pattern: "{controller=Main}/{action=Index}/{id?}");
 
 app.Run();
-//hello pull request11111
-//12345
-//1111111111111
