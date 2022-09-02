@@ -16,7 +16,15 @@ namespace Sales.Infrastructure.Promocode.Data.Dapper.Migration
             Create.Table("Promocode")
                   .WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
                   .WithColumn("Value").AsString(50).NotNullable().Unique()
+                  .WithColumn("Role").AsString(50).NotNullable()
                   .WithColumn("CreatedDate").AsDateTime().NotNullable();
+
+            Insert.IntoTable("Promocode").Row(new
+            {
+                Value = "5RVPQ31",
+                Role = "Admin",
+                CreatedDate = DateTime.Now
+            });
         }
     }
 }

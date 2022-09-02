@@ -12,6 +12,8 @@ namespace Sales.Contracts.Entity
 
         public string Value { get; set; }
 
+        public string Role { get; set; }
+
         public DateTime CreatedDate { get; set; }
     }
 }
