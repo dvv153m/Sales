@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Sales.Core\Sales.Core.csproj" />
     <ProjectReference Include="..\Sales.Infrastructure.Data.Dapper\Sales.Infrastructure.Promocode.Data.Dapper.csproj" />
+    <ProjectReference Include="..\Sales.Infrastructure.Data\Sales.Infrastructure.Data.csproj" />
     <ProjectReference Include="..\Sales.Infrastructure\Sales.Infrastructure.csproj" />
   </ItemGroup>
 

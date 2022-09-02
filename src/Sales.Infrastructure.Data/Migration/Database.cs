@@ -1,7 +1,12 @@
 ﻿using Dapper;
-using Sales.Infrastructure.Promocode.Data.Dapper.Context;
+using Sales.Infrastructure.Data.Context;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Sales.Infrastructure.Promocode.Data.Dapper.Migration
+namespace Sales.Infrastructure.Data.Migration
 {
     public class Database
     {
@@ -9,7 +14,7 @@ namespace Sales.Infrastructure.Promocode.Data.Dapper.Migration
 
         public Database(DapperContext context)
         {
-            if(context == null)
+            if (context == null)
                 throw new ArgumentNullException(nameof(context));
 
             _context = context;
@@ -22,7 +27,7 @@ namespace Sales.Infrastructure.Promocode.Data.Dapper.Migration
             var parameters = new DynamicParameters();
             parameters.Add("name", dbName);
             using (var connection = _context.CreateMasterConnection())
-            {                
+            {
                 var records = connection.Query(query, parameters);
                 if (!records.Any())
                     connection.Execute($"CREATE DATABASE {dbName}");
@@ -30,7 +35,7 @@ namespace Sales.Infrastructure.Promocode.Data.Dapper.Migration
         }
 
         private string GetDatabaseName()
-        {            
+        {
             using (var connection = _context.CreateConnection())
             {
                 return connection.Database;

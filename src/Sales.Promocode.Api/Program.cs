@@ -1,7 +1,6 @@
 using Sales.Promocode.Api.AppStart;
-using Sales.Infrastructure.Promocode.Data.Dapper.Migration;
 using FluentMigrator.Runner;
-
+using Sales.Infrastructure.Data.Migration;
 
 var builder = WebApplication.CreateBuilder(args);
 

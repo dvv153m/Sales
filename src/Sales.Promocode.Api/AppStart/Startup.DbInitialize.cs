@@ -1,8 +1,9 @@
 ﻿using FluentMigrator.Runner;
 using Sales.Contracts.Configuration;
+using Sales.Infrastructure.Data.Context;
+using Sales.Infrastructure.Data.Migration;
 using Sales.Infrastructure.Promocode.Data.Dapper;
-using Sales.Infrastructure.Promocode.Data.Dapper.Context;
-using Sales.Infrastructure.Promocode.Data.Dapper.Migration;
+
 
 namespace Sales.Promocode.Api.AppStart
 {
@@ -10,15 +11,19 @@ namespace Sales.Promocode.Api.AppStart
     {
         void DbInitialize(WebApplicationBuilder builder)
         {
-            PromocodeApiOptions promocodeApiConfig = builder.Configuration.GetSection(PromocodeApiOptions.SectionName).Get<PromocodeApiOptions>();
-
-            builder.Services.AddSingleton<DapperContext>();
+            PromocodeApiOptions promocodeApiOptions = builder.Configuration.GetSection(PromocodeApiOptions.SectionName).Get<PromocodeApiOptions>();
+            
+            builder.Services.AddSingleton<DapperContext>(x =>
+            {
+                return new DapperContext(promocodeApiOptions.SqlConnectionString, promocodeApiOptions.MasterConnectionString);
+            });
+            
             builder.Services.AddSingleton<Database>();
 
             builder.Services.AddFluentMigratorCore()
                 .ConfigureRunner(config =>
                     config.AddSqlServer()
-                    .WithGlobalConnectionString(promocodeApiConfig.SqlConnectionString)
+                    .WithGlobalConnectionString(promocodeApiOptions.SqlConnectionString)
                     .ScanIn(typeof(PromocodeDataMigrationEntrypoint).Assembly).For.Migrations())
                 .AddLogging(config => config.AddFluentMigratorConsole())
                 .BuildServiceProvider(false);
