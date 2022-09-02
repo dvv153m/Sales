@@ -19,7 +19,7 @@ namespace Sales.Promocode.Api.AppStart
                 .ConfigureRunner(config =>
                     config.AddSqlServer()
                     .WithGlobalConnectionString(promocodeApiConfig.SqlConnectionString)
-                    .ScanIn(typeof(DataMigrationEntrypoint).Assembly).For.Migrations())
+                    .ScanIn(typeof(PromocodeDataMigrationEntrypoint).Assembly).For.Migrations())
                 .AddLogging(config => config.AddFluentMigratorConsole())
                 .BuildServiceProvider(false);
         }
