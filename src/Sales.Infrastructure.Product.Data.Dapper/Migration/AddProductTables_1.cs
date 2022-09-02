@@ -1,21 +1,20 @@
 ﻿using FluentMigrator;
 
-
-namespace Sales.Infrastructure.Promocode.Data.Dapper.Migration
+namespace Sales.Infrastructure.Product.Data.Dapper.Migration
 {
     [Migration(1)]
-    public class AddPromocodeTable_1 : FluentMigrator.Migration
+    public class AddProductTables_1 : FluentMigrator.Migration
     {
         public override void Down()
         {
-            Delete.Table("Promocode");
+            Delete.Table("Product");
         }
 
         public override void Up()
         {
-            Create.Table("Promocode")
+            Create.Table("Product")
                   .WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
-                  .WithColumn("Value").AsString(50).NotNullable().Unique()
+                  .WithColumn("CopyNumber").AsString(50).NotNullable().Unique()
                   .WithColumn("CreatedDate").AsDateTime().NotNullable();
         }
     }
