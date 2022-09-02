@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sales.Infrastructure.Data.Dapper.Entity
+namespace Sales.Infrastructure.Promocode.Data.Dapper.Entity
 {
     /*public class PromocodeEntity
     {

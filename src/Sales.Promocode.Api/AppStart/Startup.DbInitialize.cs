@@ -1,8 +1,8 @@
 ﻿using FluentMigrator.Runner;
 using Sales.Contracts.Configuration;
-using Sales.Infrastructure.Data.Dapper;
-using Sales.Infrastructure.Data.Dapper.Context;
-using Sales.Infrastructure.Data.Dapper.Migration;
+using Sales.Infrastructure.Promocode.Data.Dapper;
+using Sales.Infrastructure.Promocode.Data.Dapper.Context;
+using Sales.Infrastructure.Promocode.Data.Dapper.Migration;
 
 namespace Sales.Promocode.Api.AppStart
 {

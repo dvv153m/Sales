@@ -6,7 +6,7 @@ using Sales.Contracts.Entity;
 using Sales.Core.Interfaces.Repositories;
 using System.Data;
 
-namespace Sales.Infrastructure.Data.Dapper.Repositories
+namespace Sales.Infrastructure.Promocode.Data.Dapper.Repositories
 {
     public class PromocodeRepository : IPromocodeRepository
     {

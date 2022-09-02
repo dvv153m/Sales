@@ -22,7 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Contracts", "src\Sale
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Infrastructure", "src\Sales.Infrastructure\Sales.Infrastructure.csproj", "{1052D7D0-CEE1-4A7D-BBAC-C4686E781B90}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Infrastructure.Data.Dapper", "src\Sales.Infrastructure.Data.Dapper\Sales.Infrastructure.Data.Dapper.csproj", "{DB30DF9C-7219-4A3C-B7F4-C907AF167256}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Infrastructure.Promocode.Data.Dapper", "src\Sales.Infrastructure.Data.Dapper\Sales.Infrastructure.Promocode.Data.Dapper.csproj", "{DB30DF9C-7219-4A3C-B7F4-C907AF167256}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Promocode.Api.Tests", "tests\Sales.Promocode.Api.Tests\Sales.Promocode.Api.Tests.csproj", "{51C4BF2A-5B4C-4390-A476-BCB43F473F97}"
 EndProject

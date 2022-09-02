@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sales.Infrastructure.Data.Dapper
+namespace Sales.Infrastructure.Promocode.Data.Dapper
 {
     public class DataMigrationEntrypoint
     {

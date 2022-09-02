@@ -1,7 +1,7 @@
 ﻿using FluentMigrator;
 
 
-namespace Sales.Infrastructure.Data.Dapper.Migration
+namespace Sales.Infrastructure.Promocode.Data.Dapper.Migration
 {
     [Migration(1)]
     public class AddPromocodeTable_1 : FluentMigrator.Migration

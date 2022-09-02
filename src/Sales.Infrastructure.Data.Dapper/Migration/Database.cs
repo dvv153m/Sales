@@ -1,7 +1,7 @@
 ﻿using Dapper;
-using Sales.Infrastructure.Data.Dapper.Context;
+using Sales.Infrastructure.Promocode.Data.Dapper.Context;
 
-namespace Sales.Infrastructure.Data.Dapper.Migration
+namespace Sales.Infrastructure.Promocode.Data.Dapper.Migration
 {
     public class Database
     {

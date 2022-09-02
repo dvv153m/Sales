@@ -1,9 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Sales.Contracts.Configuration;
+﻿using Sales.Contracts.Configuration;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Core.Interfaces.Services;
 using Sales.Core.Services;
-using Sales.Infrastructure.Data.Dapper.Repositories;
+using Sales.Infrastructure.Promocode.Data.Dapper.Repositories;
 
 namespace Sales.Promocode.Api.AppStart
 {

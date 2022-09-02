@@ -3,7 +3,7 @@ using Sales.Contracts.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Sales.Infrastructure.Data.Dapper.Context
+namespace Sales.Infrastructure.Promocode.Data.Dapper.Context
 {
     public class DapperContext
     {

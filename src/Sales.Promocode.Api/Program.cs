@@ -1,7 +1,7 @@
 using Sales.Promocode.Api.AppStart;
-using Sales.Infrastructure.Data.Dapper.Migration;
+using Sales.Infrastructure.Promocode.Data.Dapper.Migration;
 using FluentMigrator.Runner;
-using Microsoft.OpenApi.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
