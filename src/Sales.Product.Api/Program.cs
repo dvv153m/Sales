@@ -1,3 +1,8 @@
+using FluentMigrator.Runner;
+using Microsoft.Extensions.Logging;
+using Sales.Infrastructure.Data.Migration;
+using Sales.Product.Api.AppStart;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +12,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var startup = new Startup();
+startup.Initialize(builder);
+
 var app = builder.Build();
+
+var logger = app.Services.GetService<ILogger<Program>>();
+logger?.LogInformation("Starting Product.Api...");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -19,6 +30,27 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+#region Creation and migration database
+
+using (var scope = app.Services.CreateScope())
+{
+    var databaseService = scope.ServiceProvider.GetRequiredService<Database>();
+    var migrationService = scope.ServiceProvider.GetService<IMigrationRunner>();
+    try
+    {
+        databaseService.CreateDatabaseIfNotExists();
+        migrationService.ListMigrations();
+        migrationService.MigrateUp();
+    }
+    catch (Exception ex)
+    {
+        logger?.LogError(ex, "An error occurred database creation or migration");
+        throw;
+    }
+}
+
+#endregion
 
 app.MapControllers();
 

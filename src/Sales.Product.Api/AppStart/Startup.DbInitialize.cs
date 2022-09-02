@@ -4,19 +4,19 @@ using Sales.Infrastructure.Data.Context;
 using Sales.Infrastructure.Data.Migration;
 using Sales.Infrastructure.Product.Data.Dapper;
 
-namespace Sales.Promocode.Api.AppStart
+namespace Sales.Product.Api.AppStart
 {
     public partial class Startup
     {
         void DbInitialize(WebApplicationBuilder builder)
         {
-            PromocodeApiOptions promocodeApiOptions = builder.Configuration.GetSection(PromocodeApiOptions.SectionName).Get<PromocodeApiOptions>();
-            
+            ProductApiOptions promocodeApiOptions = builder.Configuration.GetSection(ProductApiOptions.SectionName).Get<ProductApiOptions>();
+
             builder.Services.AddSingleton<DapperContext>(x =>
             {
                 return new DapperContext(promocodeApiOptions.SqlConnectionString, promocodeApiOptions.MasterConnectionString);
             });
-            
+
             builder.Services.AddSingleton<Database>();
 
             builder.Services.AddFluentMigratorCore()

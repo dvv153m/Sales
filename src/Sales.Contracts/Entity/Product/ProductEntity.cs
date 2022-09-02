@@ -29,5 +29,7 @@ namespace Sales.Contracts.Entity.Product
         /// Путь к фотографии
         /// </summary>
         public string PhotoPath { get; set; }    
+
+        public DateTime CreatedDate { get; set; }
     }
 }

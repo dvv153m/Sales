@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,7 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sales.Contracts\Sales.Contracts.csproj" />
+    <ProjectReference Include="..\Sales.Infrastructure.Data\Sales.Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\Sales.Infrastructure.Product.Data.Dapper\Sales.Infrastructure.Product.Data.Dapper.csproj" />
   </ItemGroup>
 
 </Project>
