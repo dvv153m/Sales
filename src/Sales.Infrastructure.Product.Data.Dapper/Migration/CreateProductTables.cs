@@ -1,6 +1,4 @@
 ﻿using FluentMigrator;
-using FluentMigrator.SqlServer;
-using System;
 
 namespace Sales.Infrastructure.Product.Data.Dapper.Migration
 {
@@ -15,7 +13,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
         public override void Up()
         {
             Create.Table("Attribute")
-                  .WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+                  .WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
                   .WithColumn("Name").AsString(50).NotNullable().Unique()
                   .WithColumn("CreatedDate").AsDateTime().NotNullable();
 
@@ -24,12 +22,12 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                   .WithColumn("Title").AsString(150).NotNullable()
                   .WithColumn("CopyNumber").AsInt32().NotNullable()
                   .WithColumn("Price").AsInt32().NotNullable()
-                  .WithColumn("PhotoPath").AsInt32()
+                  .WithColumn("PhotoPath").AsString()
                   .WithColumn("CreatedDate").AsDateTime().NotNullable();
 
             Create.Table("ProductDetail")
                   .WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
-                  .WithColumn("AttributeId").AsInt32().NotNullable()
+                  .WithColumn("AttributeId").AsInt64().NotNullable()
                   .WithColumn("ProductId").AsInt64().NotNullable()
                   .WithColumn("Value").AsString(150).NotNullable()
                   .WithColumn("CreatedDate").AsDateTime().NotNullable();
@@ -41,7 +39,6 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
             Create.ForeignKey()
             .FromTable("ProductDetail").ForeignColumn("AttributeId")
             .ToTable("Attribute").PrimaryColumn("Id");
-
         }
     }
 }

@@ -91,7 +91,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
 
             using (var connection = _dbContext.CreateConnection())
             {
-                var productDict = new Dictionary<int, ProductEntity>();
+                var productDict = new Dictionary<long, ProductEntity>();
 
                 var productEntities = new List<ProductEntity>();
                 var products = await connection.QueryAsync<ProductEntity, ProductDetailEntity, AttributeEntity, ProductEntity>(
