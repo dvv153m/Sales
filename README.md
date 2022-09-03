@@ -18,3 +18,15 @@ Basic moments:
 - Cookie Authentication
 
 Horizontal scaling options:
+
+
+Sales.Product.Api:
+Структура бд Products
+Рисунок вставить
+Для перфоманса можно свести все в одну таблицу
+
+
+не учитывал локализацию
+если нужно будет отсортировать книги по году издания
+
+

@@ -40,7 +40,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         databaseService.CreateDatabaseIfNotExists();
-        migrationService.ListMigrations();
+        //migrationService.ListMigrations();
         migrationService.MigrateUp();
     }
     catch (Exception ex)
