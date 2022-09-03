@@ -1,30 +1,25 @@
 ﻿using Dapper;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Options;
-using Sales.Contracts.Configuration;
 using Sales.Contracts.Entity.Product;
 using Sales.Core.Interfaces.Repositories;
-using System.Data;
+using Sales.Infrastructure.Data.Context;
 
 namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
 {
     public class ProductRepository : IProductRepository
-    {
-        private readonly ProductApiOptions _config;
+    {        
+        private readonly DapperContext _dapperContext;
 
-        public ProductRepository(IOptions<ProductApiOptions> config)
+        public ProductRepository(DapperContext dapperContext)
         {
-            if (config == null)
-                throw new ArgumentNullException(nameof(config));
-
-            _config = config.Value;
+            _dapperContext = dapperContext ?? throw new ArgumentNullException(nameof(dapperContext));            
         }
         public IEnumerable<ProductDetailEntity> GetAll()
         {
-            using (IDbConnection db = new SqlConnection(_config.SqlConnectionString))
+            using (var connection = _dapperContext.CreateConnection())
             {
-                return db.Query<ProductDetailEntity>("SELECT * FROM ProductDetail");//todo async
-            }
+                var res = connection.Query<ProductDetailEntity>("SELECT * FROM ProductDetail");//todo async
+                return res;
+            }            
         }
     }
 }

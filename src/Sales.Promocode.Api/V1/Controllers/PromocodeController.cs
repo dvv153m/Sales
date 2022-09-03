@@ -35,6 +35,7 @@ namespace Sales.Promocode.Api.V1.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Failed to get promocode");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
 
             return isExist ? Ok() : NotFound();
@@ -55,11 +56,10 @@ namespace Sales.Promocode.Api.V1.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Failed to register promocode");
-                return BadRequest();
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
 
-            return CreatedAtRoute(routeName: String.Empty,
-                                      //routeValues: new { promocode = newPromocode },
+            return CreatedAtRoute(routeName: String.Empty,                                      
                                       value: newPromocode);
         }
         //return Ok(newPromocode);    

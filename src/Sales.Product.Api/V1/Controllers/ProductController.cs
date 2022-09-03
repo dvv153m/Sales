@@ -22,14 +22,14 @@ namespace Sales.Product.Api.V1.Controllers
         {            
             try
             {
-                var res = _productService.GetAll();
+                var products = _productService.GetAll();
+                return Ok(products);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to get promocode");
+                _logger.LogError(ex, "Failed to get products");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
-
-            return Ok();
         }
     }
 }
