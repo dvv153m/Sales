@@ -1,14 +1,13 @@
-﻿using Sales.Contracts.Entity.Base;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sales.Contracts.Entity.Product
+namespace Sales.Contracts.Request.Product
 {
-    public class ProductEntity : EntityBase
-    {        
+    public class CreateProductRequest
+    {
         /// <summary>
         /// Название товара
         /// </summary>
@@ -27,9 +26,6 @@ namespace Sales.Contracts.Entity.Product
         /// <summary>
         /// Путь к фотографии
         /// </summary>
-        public string PhotoPath { get; set; }    
-
-        
-        public List<ProductDetailEntity> ProductDetails { get; set; }
+        //public string PhotoPath { get; set; }
     }
 }

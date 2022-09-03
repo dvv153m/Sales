@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Sales.Contracts.Request.Product;
 using Sales.Core.Interfaces.Services;
 
 namespace Sales.Product.Api.V1.Controllers
@@ -22,7 +23,7 @@ namespace Sales.Product.Api.V1.Controllers
         {            
             try
             {
-                var products = _productService.GetAll();
+                var products = await _productService.GetAll();
                 return Ok(products);
             }
             catch (Exception ex)
@@ -30,6 +31,22 @@ namespace Sales.Product.Api.V1.Controllers
                 _logger.LogError(ex, "Failed to get products");
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateProductRequest request)
+        {
+            try
+            {
+                await _productService.AddAsync(request);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to add product");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+
+            return Ok();
         }
     }
 }
