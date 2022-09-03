@@ -15,7 +15,7 @@ namespace Sales.Product.Api.AppStart
 
             DbInitialize(builder);
             //ConfigureCors(builder);
-            //ConfigureServices(builder);
+            ConfigureServices(builder);
             //ConfigureSwagger(builder);
         }
     }
