@@ -30,6 +30,6 @@ namespace Sales.Contracts.Entity.Product
         public string PhotoPath { get; set; }    
 
         
-        public List<ProductDetailEntity> ProductDetails { get; set; } // возможно перенести это в доменный объект
+        //public List<ProductDetailEntity> ProductDetails { get; set; } // возможно перенести это в доменный объект
     }
 }
