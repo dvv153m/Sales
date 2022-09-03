@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Sales.Contracts.Entity.Base;
 
 namespace Sales.Contracts.Entity.Order
 {
-    public class OrderDetailsEntity
-    {
-        public int Id { get; set; }
-
+    public class OrderDetailsEntity : EntityBase
+    {        
         /// <summary>
         /// Id заказа
         /// </summary>

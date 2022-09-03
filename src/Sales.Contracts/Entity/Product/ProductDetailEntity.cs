@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Sales.Contracts.Entity.Base;
 
 namespace Sales.Contracts.Entity.Product
 {
-    public class ProductDetailEntity
-    {
-        public int Id { get; set; }
-
-        //public int ProductId { get; set; }
-
-        //public int AttributeId { get; set; }
+    public class ProductDetailEntity : EntityBase
+    {        
+        public int ProductId { get; set; }
+        
+        public int AttributeId { get; set; }
         public AttributeEntity Attribute { get; set; }
 
-        public string Value { get; set; }
-
-        public DateTime CreatedDate { get; set; }
+        public string Value { get; set; }        
     }
 }

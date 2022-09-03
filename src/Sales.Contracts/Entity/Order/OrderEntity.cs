@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sales.Contracts.Entity.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,13 +7,8 @@ using System.Threading.Tasks;
 
 namespace Sales.Contracts.Entity.Order
 {
-    public class OrderEntity
-    {
-        /// <summary>
-        /// Id заказа (Номер заказа)
-        /// </summary>
-        public int Id { get; set; }
-
+    public class OrderEntity : EntityBase
+    {        
         /// <summary>
         /// Дата заказа
         /// </summary>

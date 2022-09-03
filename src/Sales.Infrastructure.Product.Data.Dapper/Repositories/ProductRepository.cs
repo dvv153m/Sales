@@ -14,7 +14,26 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));            
         }
+
         public IEnumerable<ProductDetailEntity> GetAll()
+        {
+            var query = "SELECT * FROM ProductDetail p JOIN Attribute a ON p.AttributeId = a.Id";
+
+            using (var connection = _dbContext.CreateConnection())
+            {
+                var productEntities = new List<ProductDetailEntity>();
+                var products = connection.Query<ProductDetailEntity, AttributeEntity, ProductEntity, ProductDetailEntity>(
+                    query, (productDetails, attribute, product) =>
+                    {
+                        productDetails.Attribute = attribute;
+                        productEntities.Add(productDetails);
+                        return productDetails;
+                    });
+
+                return productEntities;
+            }
+        }
+        /*public IEnumerable<ProductDetailEntity> GetAll()
         {
             var query = "SELECT * FROM ProductDetail p JOIN Attribute a ON p.AttributeId = a.Id";
 
@@ -31,7 +50,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
 
                 return productEntities;
             }            
-        }
+        }*/
 
         /*using (IDbConnection connection = _dbContext.CreateConnection())
             {
