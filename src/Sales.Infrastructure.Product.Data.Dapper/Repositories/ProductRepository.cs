@@ -8,19 +8,25 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
 {
     public class ProductRepository : IProductRepository
     {        
-        private readonly DapperContext _dapperContext;
+        private readonly DapperContext _dbContext;
 
-        public ProductRepository(DapperContext dapperContext)
+        public ProductRepository(DapperContext dbContext)
         {
-            _dapperContext = dapperContext ?? throw new ArgumentNullException(nameof(dapperContext));            
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));            
         }
         public IEnumerable<ProductDetailEntity> GetAll()
         {
-            using (IDbConnection connection = _dapperContext.CreateConnection())
+            /*var query = "SELECT * FROM ProductDetail p JOIN Attribute a ON p.AttributeId = a.Id";
+
+            using (var connection = _context.CreateConnection())
+            { 
+                var products = connection.Query<ProductDetailEntity, AttributeEntity, ProductDetailEntity>
+            }*/
+            using (IDbConnection connection = _dbContext.CreateConnection())
             {
                 var res = connection.Query<ProductDetailEntity>("SELECT * FROM ProductDetail");//todo async
                 return res;
-            }            
+            }
         }
     }
 }

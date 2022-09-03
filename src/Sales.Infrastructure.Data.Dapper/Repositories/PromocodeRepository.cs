@@ -1,7 +1,4 @@
 ﻿using Dapper;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Options;
-using Sales.Contracts.Configuration;
 using Sales.Contracts.Entity;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Infrastructure.Data.Context;
@@ -11,17 +8,17 @@ namespace Sales.Infrastructure.Promocode.Data.Dapper.Repositories
 {
     public class PromocodeRepository : IPromocodeRepository
     {
-        private readonly DapperContext _dapperContext;
+        private readonly DapperContext _dbContext;
 
-        public PromocodeRepository(DapperContext dapperContext)
+        public PromocodeRepository(DapperContext dbContext)
         {
-            _dapperContext = dapperContext ?? throw new ArgumentNullException(nameof(dapperContext));
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
         public async Task AddAsync(PromocodeEntity entity)
         {
             entity.CreatedDate = DateTime.Now;
-            using (IDbConnection connection = _dapperContext.CreateConnection())
+            using (IDbConnection connection = _dbContext.CreateConnection())
             {                
                 var sqlQuery = "INSERT INTO Promocode (Value, CreatedDate) VALUES(@Value, @CreatedDate)";                
                 await connection.ExecuteAsync(sqlQuery, entity);                
@@ -30,7 +27,7 @@ namespace Sales.Infrastructure.Promocode.Data.Dapper.Repositories
 
         public async Task<PromocodeEntity> GetByPromocodeAsync(string promocode)
         {
-            using (IDbConnection connection = _dapperContext.CreateConnection())
+            using (IDbConnection connection = _dbContext.CreateConnection())
             {
                 var parameters = new DynamicParameters();
                 parameters.Add("Value", promocode);
@@ -41,7 +38,7 @@ namespace Sales.Infrastructure.Promocode.Data.Dapper.Repositories
 
         public IEnumerable<PromocodeEntity> GetAll()
         {
-            using (IDbConnection connection = _dapperContext.CreateConnection())
+            using (IDbConnection connection = _dbContext.CreateConnection())
             {
                 return connection.Query<PromocodeEntity>("SELECT * FROM Promocode");
             }
