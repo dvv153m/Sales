@@ -2,6 +2,7 @@
 using Sales.Contracts.Entity.Product;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Infrastructure.Data.Context;
+using System.Data;
 
 namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
 {
@@ -15,7 +16,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
         }
         public IEnumerable<ProductDetailEntity> GetAll()
         {
-            using (var connection = _dapperContext.CreateConnection())
+            using (IDbConnection connection = _dapperContext.CreateConnection())
             {
                 var res = connection.Query<ProductDetailEntity>("SELECT * FROM ProductDetail");//todo async
                 return res;

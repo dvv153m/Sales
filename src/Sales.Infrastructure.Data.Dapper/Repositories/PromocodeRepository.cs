@@ -4,48 +4,46 @@ using Microsoft.Extensions.Options;
 using Sales.Contracts.Configuration;
 using Sales.Contracts.Entity;
 using Sales.Core.Interfaces.Repositories;
+using Sales.Infrastructure.Data.Context;
 using System.Data;
 
 namespace Sales.Infrastructure.Promocode.Data.Dapper.Repositories
 {
     public class PromocodeRepository : IPromocodeRepository
     {
-        private readonly PromocodeApiOptions _config;
+        private readonly DapperContext _dapperContext;
 
-        public PromocodeRepository(IOptions<PromocodeApiOptions> config)
+        public PromocodeRepository(DapperContext dapperContext)
         {
-            if (config == null)
-                throw new ArgumentNullException(nameof(config));
-
-            _config = config.Value;
+            _dapperContext = dapperContext ?? throw new ArgumentNullException(nameof(dapperContext));
         }
 
         public async Task AddAsync(PromocodeEntity entity)
         {
             entity.CreatedDate = DateTime.Now;
-            using (IDbConnection db = new SqlConnection(_config.SqlConnectionString))
+            using (IDbConnection connection = _dapperContext.CreateConnection())
             {                
                 var sqlQuery = "INSERT INTO Promocode (Value, CreatedDate) VALUES(@Value, @CreatedDate)";                
-                await db.ExecuteAsync(sqlQuery, entity);                
+                await connection.ExecuteAsync(sqlQuery, entity);                
             }
         }
 
         public async Task<PromocodeEntity> GetByPromocodeAsync(string promocode)
         {
-            using (IDbConnection db = new SqlConnection(_config.SqlConnectionString))
+            using (IDbConnection connection = _dapperContext.CreateConnection())
             {
                 var parameters = new DynamicParameters();
                 parameters.Add("Value", promocode);
-                var result = await db.QueryAsync<PromocodeEntity>("SELECT * FROM Promocode WHERE Value = @Value", parameters);
+                var result = await connection.QueryAsync<PromocodeEntity>("SELECT * FROM Promocode WHERE Value = @Value", parameters);
                 return result.FirstOrDefault();                
             }
         }
 
         public IEnumerable<PromocodeEntity> GetAll()
         {
-            using (IDbConnection db = new SqlConnection(_config.SqlConnectionString))
+            using (IDbConnection connection = _dapperContext.CreateConnection())
             {
-                return db.Query<PromocodeEntity>("SELECT * FROM Promocode");
+                return connection.Query<PromocodeEntity>("SELECT * FROM Promocode");
             }
         }
     }
