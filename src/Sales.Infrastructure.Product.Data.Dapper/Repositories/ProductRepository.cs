@@ -16,17 +16,27 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
         }
         public IEnumerable<ProductDetailEntity> GetAll()
         {
-            /*var query = "SELECT * FROM ProductDetail p JOIN Attribute a ON p.AttributeId = a.Id";
+            var query = "SELECT * FROM ProductDetail p JOIN Attribute a ON p.AttributeId = a.Id";
 
-            using (var connection = _context.CreateConnection())
-            { 
-                var products = connection.Query<ProductDetailEntity, AttributeEntity, ProductDetailEntity>
-            }*/
-            using (IDbConnection connection = _dbContext.CreateConnection())
+            using (var connection = _dbContext.CreateConnection())
+            {
+                var productEntities = new List<ProductDetailEntity>();
+                var products = connection.Query<ProductDetailEntity, AttributeEntity, ProductDetailEntity>(
+                    query, (productDetails, attribute) =>
+                    {
+                        productDetails.Attribute = attribute;
+                        productEntities.Add(productDetails);
+                        return productDetails;
+                    });
+
+                return productEntities;
+            }            
+        }
+
+        /*using (IDbConnection connection = _dbContext.CreateConnection())
             {
                 var res = connection.Query<ProductDetailEntity>("SELECT * FROM ProductDetail");//todo async
                 return res;
-            }
-        }
+            }*/
     }
 }
