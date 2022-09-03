@@ -13,10 +13,9 @@ namespace Sales.Core.Services
             _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
         }
 
-        public IEnumerable<ProductDetailEntity> GetAll()
+        public IEnumerable<ProductEntity> GetAll()
         {
              var entities = _productRepository.GetAll();
-
             return entities;
         }
     }

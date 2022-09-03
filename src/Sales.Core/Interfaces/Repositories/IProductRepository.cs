@@ -10,6 +10,6 @@ namespace Sales.Core.Interfaces.Repositories
 {
     public interface IProductRepository
     {
-        IEnumerable<ProductDetailEntity> GetAll();
+        IEnumerable<ProductEntity> GetAll();
     }
 }
