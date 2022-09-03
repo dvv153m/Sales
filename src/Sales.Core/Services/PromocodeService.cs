@@ -12,9 +12,8 @@ namespace Sales.Core.Services
 
         public PromocodeService(IPromocodeRepository promocodeRepository, int promocodeLenght)
         {
-            promocodeRepository = promocodeRepository ?? throw new ArgumentNullException(nameof(promocodeRepository));            
+            _promocodeRepository = promocodeRepository ?? throw new ArgumentNullException(nameof(promocodeRepository));            
 
-            _promocodeRepository = promocodeRepository;
             _promocodeLenght = promocodeLenght;
         }
 
