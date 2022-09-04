@@ -8,6 +8,8 @@ namespace Sales.Core.Interfaces.Repositories
 
         Task<IEnumerable<ProductEntity>> GetAll();
 
+        Task<ProductEntity> GetById(long id);
+
         //Task UpdateAsync(ProductEntity entity);
     }
 }

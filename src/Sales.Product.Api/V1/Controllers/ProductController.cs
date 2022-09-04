@@ -34,12 +34,12 @@ namespace Sales.Product.Api.V1.Controllers
             }
         }
 
-        /*[HttpGet("{productId}")]
+        [HttpGet("{productId}")]
         public async Task<IActionResult> Get(long productId)
         {
             try
             {
-                var products = await _productService.GetAll();
+                var products = await _productService.GetById(productId);
                 return Ok(products);
             }
             catch (Exception ex)
@@ -47,7 +47,7 @@ namespace Sales.Product.Api.V1.Controllers
                 _logger.LogError(ex, "Failed to get products");
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
-        }*/
+        }
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateProductRequest request)

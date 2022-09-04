@@ -91,6 +91,21 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
             }*/
         }
 
+        public async Task<ProductEntity> GetById(long id)
+        {
+            var query = @"SELECT * FROM Product p WHERE Id= @Id;
+                          SELECT * FROM ProductDetail WHERE ProductId= @Id";
+
+            using (var connection = _dbContext.CreateConnection())
+            using (var multi = await connection.QueryMultipleAsync(query, new { id }))
+            {
+                var product = await multi.ReadSingleOrDefaultAsync<ProductEntity>();
+                if (product != null)
+                    product.ProductDetails = (await multi.ReadAsync<ProductDetailEntity>()).ToList();
+                return product;
+            }
+        }
+
         public async Task<IEnumerable<ProductEntity>> GetAll()
         {
             var query = @"SELECT * FROM Product p 

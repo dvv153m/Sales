@@ -9,5 +9,7 @@ namespace Sales.Core.Interfaces.Services
         Task<ProductDto> AddAsync(CreateProductRequest request);
 
         Task<IEnumerable<ProductEntity>> GetAll();
+
+        Task<ProductDto> GetById(long id);
     }
 }
