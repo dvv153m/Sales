@@ -30,7 +30,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                       Title = "Медный всадник",
                       CopyNumber = 10,
                       Price = 500,
-                      PhotoPath = "",
+                      ImagePath = "",
                       CreatedDate = DateTime.Now
                   });
 
@@ -42,7 +42,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                       Title = "Станционный смотритель",
                       CopyNumber = 20,
                       Price = 600,
-                      PhotoPath = "",
+                      ImagePath = "",
                       CreatedDate = DateTime.Now
                   });
 
@@ -54,7 +54,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                       Title = "Анна Каренина",
                       CopyNumber = 30,
                       Price = 700,
-                      PhotoPath = "",
+                      ImagePath = "",
                       CreatedDate = DateTime.Now
                   });
         }
