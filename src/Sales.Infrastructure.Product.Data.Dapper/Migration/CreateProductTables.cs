@@ -22,7 +22,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                   .WithColumn("Title").AsString(150).NotNullable()
                   .WithColumn("CopyNumber").AsInt32().NotNullable()
                   .WithColumn("Price").AsInt32().NotNullable()
-                  .WithColumn("PhotoPath").AsString()
+                  .WithColumn("ImagePath").AsString()
                   .WithColumn("CreatedDate").AsDateTime().NotNullable();
 
             Create.Table("ProductDetail")

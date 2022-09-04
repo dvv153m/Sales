@@ -42,7 +42,8 @@ namespace Sales.Core.Services
                 Title = request.Title,
                 CopyNumber = request.CopyNumber,
                 Price = request.Price,
-                ProductDetails = productDetails
+                ProductDetails = productDetails,
+                ImagePath = request.ImagePath
             };
         }
     }

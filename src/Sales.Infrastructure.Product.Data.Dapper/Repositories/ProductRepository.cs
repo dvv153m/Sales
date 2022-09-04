@@ -25,8 +25,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
                                           VALUES (@ProductId, @AttributeId, @Value, @CreatedDate)";
 
             entity.CreatedDate = DateTime.Now;
-            entity.PhotoPath = "123";
-
+            
             using (IDbConnection connection = _dbContext.CreateConnection())
             {
                 connection.Open();
@@ -38,7 +37,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
                         productParameters.Add("Title", entity.Title, DbType.String);
                         productParameters.Add("CopyNumber", entity.CopyNumber, DbType.Int32);
                         productParameters.Add("Price", entity.Price, DbType.Decimal);
-                        productParameters.Add("PhotoPath", entity.PhotoPath, DbType.String);
+                        productParameters.Add("PhotoPath", entity.ImagePath, DbType.String);
                         productParameters.Add("CreatedDate", entity.CreatedDate, DbType.DateTime);
 
                         var productId = await connection.QuerySingleAsync<int>(insertProductQuery, productParameters, transaction);

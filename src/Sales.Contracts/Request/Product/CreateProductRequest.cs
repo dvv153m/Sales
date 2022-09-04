@@ -21,7 +21,7 @@ namespace Sales.Contracts.Request.Product
         /// <summary>
         /// Путь к фотографии
         /// </summary>
-        //public string PhotoPath { get; set; }
+        public string ImagePath { get; set; }        
 
         public List<ProductDetailModel> ProductDetails { get; set; }
     }
