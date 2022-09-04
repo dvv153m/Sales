@@ -23,7 +23,7 @@ namespace Sales.Infrastructure.Promocode.Data.Dapper.Migration
             {
                 Value = "5RVPQ31",
                 Role = "Admin",
-                CreatedDate = DateTime.Now
+                CreatedDate = DateTime.UtcNow
             });
         }
     }

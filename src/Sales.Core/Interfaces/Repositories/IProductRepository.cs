@@ -7,5 +7,7 @@ namespace Sales.Core.Interfaces.Repositories
         Task AddAsync(ProductEntity entity); 
 
         Task<IEnumerable<ProductEntity>> GetAll();
+
+        //Task UpdateAsync(ProductEntity entity);
     }
 }

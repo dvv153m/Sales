@@ -17,7 +17,7 @@ namespace Sales.Infrastructure.Promocode.Data.Dapper.Repositories
 
         public async Task AddAsync(PromocodeEntity entity)
         {
-            entity.CreatedDate = DateTime.Now;
+            entity.CreatedDate = DateTime.UtcNow;
             using (IDbConnection connection = _dbContext.CreateConnection())
             {                
                 var sqlQuery = "INSERT INTO Promocode (Value, CreatedDate) VALUES(@Value, @CreatedDate)";                

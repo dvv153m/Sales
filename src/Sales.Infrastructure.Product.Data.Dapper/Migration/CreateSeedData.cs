@@ -31,7 +31,8 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                       CopyNumber = 10,
                       Price = 500,
                       ImagePath = "",
-                      CreatedDate = DateTime.Now
+                      CreatedDate = DateTime.UtcNow,
+                      UpdateDate = DateTime.UtcNow
                   });
 
             Insert.IntoTable("Product")
@@ -43,7 +44,8 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                       CopyNumber = 20,
                       Price = 600,
                       ImagePath = "",
-                      CreatedDate = DateTime.Now
+                      CreatedDate = DateTime.UtcNow,
+                      UpdateDate = DateTime.UtcNow
                   });
 
             Insert.IntoTable("Product")
@@ -55,7 +57,8 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                       CopyNumber = 30,
                       Price = 700,
                       ImagePath = "",
-                      CreatedDate = DateTime.Now
+                      CreatedDate = DateTime.UtcNow,
+                      UpdateDate = DateTime.UtcNow
                   });
         }
 
@@ -67,7 +70,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                   {
                       Id = 1,
                       Name = "Автор",
-                      CreatedDate = DateTime.Now
+                      CreatedDate = DateTime.UtcNow
                   });
 
             Insert.IntoTable("Attribute")
@@ -76,7 +79,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                   {
                       Id = 2,
                       Name = "Год издания",
-                      CreatedDate = DateTime.Now
+                      CreatedDate = DateTime.UtcNow
                   });
 
             Insert.IntoTable("Attribute")
@@ -85,7 +88,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                   {
                       Id = 3,
                       Name = "ISBN код",
-                      CreatedDate = DateTime.Now
+                      CreatedDate = DateTime.UtcNow
                   });
         }
 
@@ -97,7 +100,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                       ProductId = 1,
                       AttributeId = 1,
                       Value = "Пушкин",
-                      CreatedDate = DateTime.Now
+                      CreatedDate = DateTime.UtcNow
                   });
 
             Insert.IntoTable("ProductDetail")
@@ -106,7 +109,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                       ProductId = 1,
                       AttributeId = 2,
                       Value = "2000",
-                      CreatedDate = DateTime.Now
+                      CreatedDate = DateTime.UtcNow
                   });
 
             Insert.IntoTable("ProductDetail")
@@ -115,7 +118,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                       ProductId = 1,
                       AttributeId = 3,
                       Value = "978-5-699-12014-7",
-                      CreatedDate = DateTime.Now
+                      CreatedDate = DateTime.UtcNow
                   });
 
 
@@ -125,7 +128,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                       ProductId = 2,
                       AttributeId = 1,
                       Value = "Пушкин",
-                      CreatedDate = DateTime.Now
+                      CreatedDate = DateTime.UtcNow
                   });
 
             Insert.IntoTable("ProductDetail")
@@ -134,7 +137,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                       ProductId = 2,
                       AttributeId = 2,
                       Value = "1997",
-                      CreatedDate = DateTime.Now
+                      CreatedDate = DateTime.UtcNow
                   });
 
             Insert.IntoTable("ProductDetail")
@@ -143,7 +146,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                       ProductId = 2,
                       AttributeId = 3,
                       Value = "571-3-256-18092-2",
-                      CreatedDate = DateTime.Now
+                      CreatedDate = DateTime.UtcNow
                   });
 
             Insert.IntoTable("ProductDetail")
@@ -152,7 +155,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                       ProductId = 3,
                       AttributeId = 1,
                       Value = "Толстой",
-                      CreatedDate = DateTime.Now
+                      CreatedDate = DateTime.UtcNow
                   });
 
             Insert.IntoTable("ProductDetail")
@@ -161,7 +164,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                       ProductId = 3,
                       AttributeId = 2,
                       Value = "2004",
-                      CreatedDate = DateTime.Now
+                      CreatedDate = DateTime.UtcNow
                   });
 
             Insert.IntoTable("ProductDetail")
@@ -170,7 +173,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
                       ProductId = 3,
                       AttributeId = 3,
                       Value = "111-2-486-16092-7",
-                      CreatedDate = DateTime.Now
+                      CreatedDate = DateTime.UtcNow
                   });
         }
 
@@ -187,21 +190,21 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
             {
                 Id = 1,
                 Name = "Автор",
-                CreatedDate = DateTime.Now
+                CreatedDate = DateTime.UtcNow
             });
 
             Delete.FromTable("Attribute").Row(new
             {
                 Id = 2,
                 Name = "Год издания",
-                CreatedDate = DateTime.Now
+                CreatedDate = DateTime.UtcNow
             });
 
             Delete.FromTable("Attribute").Row(new
             {
                 Id = 3,
                 Name = "ISBN код",
-                CreatedDate = DateTime.Now
+                CreatedDate = DateTime.UtcNow
             });
         }
 
@@ -211,21 +214,21 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
             {
                 AttributeId = 1,
                 Value = "Пушкин",
-                CreatedDate = DateTime.Now
+                CreatedDate = DateTime.UtcNow
             });
 
             Delete.FromTable("ProductDetail").Row(new
             {
                 AttributeId = 2,
                 Value = "2000",
-                CreatedDate = DateTime.Now
+                CreatedDate = DateTime.UtcNow
             });
 
             Delete.FromTable("ProductDetail").Row(new
             {
                 AttributeId = 3,
                 Value = "978-5-699-12014-7",
-                CreatedDate = DateTime.Now
+                CreatedDate = DateTime.UtcNow
             });
 
 
@@ -233,21 +236,21 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
             {
                 AttributeId = 1,
                 Value = "Бунин",
-                CreatedDate = DateTime.Now
+                CreatedDate = DateTime.UtcNow
             });
 
             Delete.FromTable("ProductDetail").Row(new
             {
                 AttributeId = 2,
                 Value = "1997",
-                CreatedDate = DateTime.Now
+                CreatedDate = DateTime.UtcNow
             });
 
             Delete.FromTable("ProductDetail").Row(new
             {
                 AttributeId = 3,
                 Value = "571-3-256-18092-2",
-                CreatedDate = DateTime.Now
+                CreatedDate = DateTime.UtcNow
             });
         }
     }

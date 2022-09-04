@@ -15,16 +15,30 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));            
         }
 
+        /*public Task UpdateAsync(ProductEntity entity)
+        {
+            var updateQuery = @"UPDATE Product SET Title=@Title, CopyNumber=@CopyNumber, Price=@Price 
+                                ImagePath=@ImagePath, UpdateDate = @UpdateDate";
+
+            entity.UpdateDate = DateTime.UtcNow;
+
+            var parameters = new DynamicParameters();
+            parameters.Add("Id", id, DbType.Int32);
+            parameters.Add("Name", company.Name, DbType.String);
+            parameters.Add("Address", company.Address, DbType.String);
+            parameters.Add("Country", company.Country, DbType.String);
+        }*/
+
         public async Task AddAsync(ProductEntity entity)
         {            
-            var insertProductQuery = @"INSERT INTO Product (Title, CopyNumber, Price, PhotoPath, CreatedDate) 
-                                          VALUES (@Title, @CopyNumber, @Price, @PhotoPath, @CreatedDate)
+            var insertProductQuery = @"INSERT INTO Product (Title, CopyNumber, Price, ImagePath, CreatedDate) 
+                                          VALUES (@Title, @CopyNumber, @Price, @ImagePath, @CreatedDate)
                                           SELECT CAST(SCOPE_IDENTITY() as int)";
 
             var insertProductDetailsQuery = @"INSERT INTO ProductDetail (ProductId, AttributeId, Value, CreatedDate) 
                                           VALUES (@ProductId, @AttributeId, @Value, @CreatedDate)";
 
-            entity.CreatedDate = DateTime.Now;
+            entity.CreatedDate = DateTime.UtcNow;
             
             using (IDbConnection connection = _dbContext.CreateConnection())
             {
@@ -37,7 +51,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
                         productParameters.Add("Title", entity.Title, DbType.String);
                         productParameters.Add("CopyNumber", entity.CopyNumber, DbType.Int32);
                         productParameters.Add("Price", entity.Price, DbType.Decimal);
-                        productParameters.Add("PhotoPath", entity.ImagePath, DbType.String);
+                        productParameters.Add("ImagePath", entity.ImagePath, DbType.String);
                         productParameters.Add("CreatedDate", entity.CreatedDate, DbType.DateTime);
 
                         var productId = await connection.QuerySingleAsync<int>(insertProductQuery, productParameters, transaction);
