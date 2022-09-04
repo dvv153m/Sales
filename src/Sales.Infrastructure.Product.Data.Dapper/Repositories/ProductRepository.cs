@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Sales.Contracts.Entity;
 using Sales.Contracts.Entity.Product;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Infrastructure.Data.Context;
@@ -17,63 +16,54 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
         }
 
         public async Task AddAsync(ProductEntity entity)
-        {
-            //transaction
-            //add in product table
-            //add product details table
-            try
-            {
-                var insertProductQuery = @"INSERT INTO Product (Title, CopyNumber, Price, PhotoPath, CreatedDate) 
+        {            
+            var insertProductQuery = @"INSERT INTO Product (Title, CopyNumber, Price, PhotoPath, CreatedDate) 
                                           VALUES (@Title, @CopyNumber, @Price, @PhotoPath, @CreatedDate)
                                           SELECT CAST(SCOPE_IDENTITY() as int)";
 
-                var insertProductDetailsQuery = @"INSERT INTO ProductDetail (ProductId, AttributeId, Value, CreatedDate) 
+            var insertProductDetailsQuery = @"INSERT INTO ProductDetail (ProductId, AttributeId, Value, CreatedDate) 
                                           VALUES (@ProductId, @AttributeId, @Value, @CreatedDate)";
 
-                entity.CreatedDate = DateTime.Now;
-                entity.PhotoPath = "123";
+            entity.CreatedDate = DateTime.Now;
+            entity.PhotoPath = "123";
 
-                using (IDbConnection connection = _dbContext.CreateConnection())
+            using (IDbConnection connection = _dbContext.CreateConnection())
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
                 {
-                    connection.Open();
-                    using (var transaction = connection.BeginTransaction())
+                    try
                     {
-                        try
+                        var productParameters = new DynamicParameters();
+                        productParameters.Add("Title", entity.Title, DbType.String);
+                        productParameters.Add("CopyNumber", entity.CopyNumber, DbType.Int32);
+                        productParameters.Add("Price", entity.Price, DbType.Decimal);
+                        productParameters.Add("PhotoPath", entity.PhotoPath, DbType.String);
+                        productParameters.Add("CreatedDate", entity.CreatedDate, DbType.DateTime);
+
+                        var productId = await connection.QuerySingleAsync<int>(insertProductQuery, productParameters, transaction);
+
+                        foreach (var productDetail in entity.ProductDetails)
                         {
-                            var productParameters = new DynamicParameters();
-                            productParameters.Add("Title", entity.Title, DbType.String);
-                            productParameters.Add("CopyNumber", entity.CopyNumber, DbType.Int32);
-                            productParameters.Add("Price", entity.Price, DbType.Decimal);
-                            productParameters.Add("PhotoPath", entity.PhotoPath, DbType.String);
-                            productParameters.Add("CreatedDate", entity.CreatedDate, DbType.DateTime);
+                            var productDetailParameters = new DynamicParameters();
+                            productDetailParameters.Add("ProductId", productId, DbType.Int64);
+                            productDetailParameters.Add("AttributeId", productDetail.AttributeId, DbType.Int64);
+                            productDetailParameters.Add("Value", productDetail.Value, DbType.String);
+                            productDetailParameters.Add("CreatedDate", entity.CreatedDate, DbType.DateTime);
 
-                            var productId = await connection.QuerySingleAsync<int>(insertProductQuery, productParameters, transaction);
-
-                            foreach (var productDetail in entity.ProductDetails)
-                            {
-                                var productDetailParameters = new DynamicParameters();
-                                productDetailParameters.Add("ProductId", productId, DbType.Int64);
-                                productDetailParameters.Add("AttributeId", productDetail.AttributeId, DbType.Int64);
-                                productDetailParameters.Add("Value", productDetail.Value, DbType.String);                                
-                                productDetailParameters.Add("CreatedDate", entity.CreatedDate, DbType.DateTime);
-
-                                await connection.ExecuteAsync(insertProductDetailsQuery, productDetailParameters, transaction);
-                            }                            
-
-                            transaction.Commit();
+                            await connection.ExecuteAsync(insertProductDetailsQuery, productDetailParameters, transaction);
                         }
-                        catch (Exception)
-                        {
-                            transaction.Rollback();
-                            throw;
-                        }                        
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
                     }
                 }
             }
-            catch (Exception ex)
-            { 
-            
-            }
+
             /*using (IDbConnection connection = _dbContext.CreateConnection())
             {
                 var sqlQuery = "INSERT INTO Promocode (Value, CreatedDate) VALUES(@Value, @CreatedDate)";

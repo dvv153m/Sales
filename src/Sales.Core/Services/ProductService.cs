@@ -16,20 +16,34 @@ namespace Sales.Core.Services
 
         public async Task AddAsync(CreateProductRequest request)
         {
-            var productEntity = new ProductEntity
-            {
-                Title = request.Title,
-                CopyNumber = request.CopyNumber,
-                Price = request.Price
-            };
-
+            ProductEntity productEntity = Map(request);
             await _productRepository.AddAsync(productEntity);
-        }
+        }        
 
         public async Task<IEnumerable<ProductEntity>> GetAll()
         {
              var entities = await _productRepository.GetAll();
             return entities;
+        }
+
+        private ProductEntity Map(CreateProductRequest request)
+        {
+            var productDetails = new List<ProductDetailEntity>();
+            foreach (var productDetail in request.ProductDetails)
+            {
+                productDetails.Add(new ProductDetailEntity
+                {
+                    AttributeId = productDetail.AttributeId,
+                    Value = productDetail.Value
+                });
+            }
+            return new ProductEntity
+            {
+                Title = request.Title,
+                CopyNumber = request.CopyNumber,
+                Price = request.Price,
+                ProductDetails = productDetails
+            };
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Sales.Contracts.Request.Product
 {
     public class CreateProductRequest
@@ -27,5 +22,14 @@ namespace Sales.Contracts.Request.Product
         /// Путь к фотографии
         /// </summary>
         //public string PhotoPath { get; set; }
+
+        public List<ProductDetailModel> ProductDetails { get; set; }
+    }
+
+    public class ProductDetailModel
+    {        
+        public long AttributeId { get; set; }
+
+        public string Value { get; set; }
     }
 }
