@@ -44,6 +44,11 @@ namespace Sales.Core.Services
             await _productRepository.UpdateAsync(productEntity);
         }
 
+        public async Task DeleteAsync(int id)
+        {
+            await _productRepository.DeleteAsync(id);
+        }
+
         private ProductEntity Map(UpdateProductRequest request)
         {
             return new ProductEntity

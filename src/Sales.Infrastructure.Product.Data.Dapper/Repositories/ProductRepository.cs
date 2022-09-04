@@ -13,29 +13,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
         public ProductRepository(DapperContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));            
-        }
-
-        public async Task UpdateAsync(ProductEntity entity)
-        {
-            var updateQuery = @"UPDATE Product SET Title=@Title, CopyNumber=@CopyNumber, Price=@Price 
-                                ImagePath=@ImagePath, UpdateDate = @UpdateDate
-                                WHERE Id=@Id";
-
-            entity.UpdateDate = DateTime.UtcNow;
-
-            var parameters = new DynamicParameters();
-            parameters.Add("Id", entity.Id, DbType.Int32);
-            parameters.Add("Title", entity.Title, DbType.String);
-            parameters.Add("CopyNumber", entity.CopyNumber, DbType.Int32);
-            parameters.Add("Price", entity.Price, DbType.Decimal);
-            parameters.Add("ImagePath", entity.ImagePath, DbType.String);
-            parameters.Add("UpdateDate", entity.UpdateDate, DbType.String);
-
-            using (var connection = _dbContext.CreateConnection())
-            {
-                await connection.ExecuteAsync(updateQuery, parameters);
-            }
-        }
+        }        
 
         public async Task<ProductEntity> AddAsync(ProductEntity entity)
         {            
@@ -142,6 +120,38 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
 
                 return productDict.Values.ToList();                
             }
-        }        
+        }
+
+        public async Task UpdateAsync(ProductEntity entity)
+        {
+            var updateQuery = @"UPDATE Product SET Title=@Title, CopyNumber=@CopyNumber, Price=@Price, 
+                                ImagePath=@ImagePath, UpdateDate = @UpdateDate
+                                WHERE Id=@Id";
+
+            entity.UpdateDate = DateTime.UtcNow;
+
+            var parameters = new DynamicParameters();
+            parameters.Add("Id", entity.Id, DbType.Int32);
+            parameters.Add("Title", entity.Title, DbType.String);
+            parameters.Add("CopyNumber", entity.CopyNumber, DbType.Int32);
+            parameters.Add("Price", entity.Price, DbType.Decimal);
+            parameters.Add("ImagePath", entity.ImagePath, DbType.String);
+            parameters.Add("UpdateDate", entity.UpdateDate, DbType.String);
+
+            using (var connection = _dbContext.CreateConnection())
+            {
+                await connection.ExecuteAsync(updateQuery, parameters);
+            }
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var query = @"DELETE FROM ProductDetail WHERE ProductId = @Id;
+                          DELETE FROM Product WHERE Id = @Id ";
+            using (var connection = _dbContext.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, new { id });
+            }
+        }
     }
 }

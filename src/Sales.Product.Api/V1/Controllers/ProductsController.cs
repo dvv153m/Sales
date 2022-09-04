@@ -78,7 +78,22 @@ namespace Sales.Product.Api.V1.Controllers
                 _logger.LogError(ex, "Failed to update product");
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
-            return Ok();
+            return NoContent();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _productService.DeleteAsync(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to delete product");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+            return NoContent();
         }
     }
 }

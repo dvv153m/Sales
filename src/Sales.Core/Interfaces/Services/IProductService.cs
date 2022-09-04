@@ -13,5 +13,7 @@ namespace Sales.Core.Interfaces.Services
         Task<ProductDto> GetById(long id);
 
         Task UpdateAsync(UpdateProductRequest entity);
+
+        Task DeleteAsync(int id);
     }
 }
