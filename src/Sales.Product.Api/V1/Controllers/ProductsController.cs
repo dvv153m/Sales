@@ -34,8 +34,8 @@ namespace Sales.Product.Api.V1.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(long id)
+        [HttpGet("{id}", Name = nameof(GetById))]
+        public async Task<IActionResult> GetById(long id)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace Sales.Product.Api.V1.Controllers
             try
             {
                 ProductDto productDto = await _productService.AddAsync(request);
-                return CreatedAtRoute(routeName: String.Empty,
+                return CreatedAtRoute(routeName: nameof(GetById),
                                       routeValues: new { id = productDto.Id },
                                       value: productDto);
             }
