@@ -3,15 +3,15 @@ using Sales.Core.Interfaces.Services;
 
 namespace Sales.Promocode.Api.V1.Controllers
 {
-    [Route("api/v1/promocode")]
+    [Route("api/v1/promocodes")]
     [ApiController]
-    public class PromocodeController : ControllerBase
+    public class PromocodesController : ControllerBase
     {
         private readonly IPromocodeService _promocodeService;
-        private readonly ILogger<PromocodeController> _logger;
+        private readonly ILogger<PromocodesController> _logger;
 
-        public PromocodeController(IPromocodeService promocodeService,
-                                   ILogger<PromocodeController> logger)
+        public PromocodesController(IPromocodeService promocodeService,
+                                   ILogger<PromocodesController> logger)
         {
             promocodeService = promocodeService ?? throw new ArgumentNullException(nameof(promocodeService));
             logger = logger ?? throw new ArgumentNullException(nameof(logger));

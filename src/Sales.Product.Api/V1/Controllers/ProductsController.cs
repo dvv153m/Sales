@@ -5,15 +5,15 @@ using Sales.Core.Interfaces.Services;
 
 namespace Sales.Product.Api.V1.Controllers
 {
-    [Route("api/v1/product")]
+    [Route("api/v1/products")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
-        private readonly ILogger<ProductController> _logger;
+        private readonly ILogger<ProductsController> _logger;
 
-        public ProductController(IProductService productService,
-                                 ILogger<ProductController> logger)
+        public ProductsController(IProductService productService,
+                                 ILogger<ProductsController> logger)
         {
             _productService = productService ?? throw new ArgumentNullException(nameof(productService));
             _logger = logger;
@@ -34,12 +34,12 @@ namespace Sales.Product.Api.V1.Controllers
             }
         }
 
-        [HttpGet("{productId}")]
-        public async Task<IActionResult> Get(long productId)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(long id)
         {
             try
             {
-                var products = await _productService.GetById(productId);
+                var products = await _productService.GetById(id);
                 return Ok(products);
             }
             catch (Exception ex)
@@ -56,7 +56,7 @@ namespace Sales.Product.Api.V1.Controllers
             {
                 ProductDto productDto = await _productService.AddAsync(request);
                 return CreatedAtRoute(routeName: String.Empty,
-                                      routeValues: new { productId = productDto.Id },
+                                      routeValues: new { id = productDto.Id },
                                       value: productDto);
             }
             catch (Exception ex)
