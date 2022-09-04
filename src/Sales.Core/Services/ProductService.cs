@@ -1,4 +1,5 @@
 ﻿using Sales.Contracts.Entity.Product;
+using Sales.Contracts.Models;
 using Sales.Contracts.Request.Product;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Core.Interfaces.Services;
@@ -14,16 +15,41 @@ namespace Sales.Core.Services
             _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
         }
 
-        public async Task AddAsync(CreateProductRequest request)
+        public async Task<ProductDto> AddAsync(CreateProductRequest request)
         {
             ProductEntity productEntity = Map(request);
-            await _productRepository.AddAsync(productEntity);
+            productEntity = await _productRepository.AddAsync(productEntity);
+
+            ProductDto productDto = Map(productEntity);
+            return productDto;
         }        
 
         public async Task<IEnumerable<ProductEntity>> GetAll()
         {
              var entities = await _productRepository.GetAll();
             return entities;
+        }
+
+        private ProductDto Map(ProductEntity request)
+        {
+            var productDetails = new List<ProductDetailDto>();
+            foreach (var productDetail in request.ProductDetails)
+            {
+                productDetails.Add(new ProductDetailDto
+                {
+                    AttributeId = productDetail.AttributeId,
+                    Value = productDetail.Value
+                });
+            }
+            return new ProductDto
+            {
+                Id = request.Id,
+                Title = request.Title,
+                CopyNumber = request.CopyNumber,
+                Price = request.Price,
+                ProductDetails = productDetails,
+                ImagePath = request.ImagePath
+            };
         }
 
         private ProductEntity Map(CreateProductRequest request)

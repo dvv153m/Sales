@@ -32,7 +32,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
             parameters.Add("UpdateDate", entity.UpdateDate, DbType.String);
         }*/
 
-        public async Task AddAsync(ProductEntity entity)
+        public async Task<ProductEntity> AddAsync(ProductEntity entity)
         {            
             var insertProductQuery = @"INSERT INTO Product (Title, CopyNumber, Price, ImagePath, CreatedDate, UpdateDate) 
                                           VALUES (@Title, @CopyNumber, @Price, @ImagePath, @CreatedDate, @UpdateDate)
@@ -60,6 +60,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
                         productParameters.Add("UpdateDate", entity.UpdateDate, DbType.DateTime);
 
                         var productId = await connection.QuerySingleAsync<int>(insertProductQuery, productParameters, transaction);
+                        entity.Id = productId;
 
                         foreach (var productDetail in entity.ProductDetails)
                         {
@@ -82,6 +83,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
                 }
             }
 
+            return entity;
             /*using (IDbConnection connection = _dbContext.CreateConnection())
             {
                 var sqlQuery = "INSERT INTO Promocode (Value, CreatedDate) VALUES(@Value, @CreatedDate)";

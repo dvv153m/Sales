@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Sales.Contracts.Models;
 using Sales.Contracts.Request.Product;
 using Sales.Core.Interfaces.Services;
 
@@ -33,12 +34,30 @@ namespace Sales.Product.Api.V1.Controllers
             }
         }
 
+        /*[HttpGet("{productId}")]
+        public async Task<IActionResult> Get(long productId)
+        {
+            try
+            {
+                var products = await _productService.GetAll();
+                return Ok(products);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to get products");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }*/
+
         [HttpPost]
         public async Task<IActionResult> Create(CreateProductRequest request)
         {
             try
             {
-                await _productService.AddAsync(request);
+                ProductDto productDto = await _productService.AddAsync(request);
+                return CreatedAtRoute(routeName: String.Empty,
+                                      routeValues: new { productId = productDto.Id },
+                                      value: productDto);
             }
             catch (Exception ex)
             {
