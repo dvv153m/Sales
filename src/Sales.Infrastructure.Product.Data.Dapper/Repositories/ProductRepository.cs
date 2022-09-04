@@ -18,28 +18,32 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
         /*public Task UpdateAsync(ProductEntity entity)
         {
             var updateQuery = @"UPDATE Product SET Title=@Title, CopyNumber=@CopyNumber, Price=@Price 
-                                ImagePath=@ImagePath, UpdateDate = @UpdateDate";
+                                ImagePath=@ImagePath, UpdateDate = @UpdateDate
+                                WHERE Id=@Id";
 
             entity.UpdateDate = DateTime.UtcNow;
 
             var parameters = new DynamicParameters();
-            parameters.Add("Id", id, DbType.Int32);
-            parameters.Add("Name", company.Name, DbType.String);
-            parameters.Add("Address", company.Address, DbType.String);
-            parameters.Add("Country", company.Country, DbType.String);
+            parameters.Add("Id", entity.Id, DbType.Int32);
+            parameters.Add("Title", entity.Title, DbType.String);
+            parameters.Add("CopyNumber", entity.CopyNumber, DbType.Int32);
+            parameters.Add("Price", entity.Price, DbType.Decimal);
+            parameters.Add("ImagePath", entity.ImagePath, DbType.String);
+            parameters.Add("UpdateDate", entity.UpdateDate, DbType.String);
         }*/
 
         public async Task AddAsync(ProductEntity entity)
         {            
-            var insertProductQuery = @"INSERT INTO Product (Title, CopyNumber, Price, ImagePath, CreatedDate) 
-                                          VALUES (@Title, @CopyNumber, @Price, @ImagePath, @CreatedDate)
+            var insertProductQuery = @"INSERT INTO Product (Title, CopyNumber, Price, ImagePath, CreatedDate, UpdateDate) 
+                                          VALUES (@Title, @CopyNumber, @Price, @ImagePath, @CreatedDate, @UpdateDate)
                                           SELECT CAST(SCOPE_IDENTITY() as int)";
 
             var insertProductDetailsQuery = @"INSERT INTO ProductDetail (ProductId, AttributeId, Value, CreatedDate) 
                                           VALUES (@ProductId, @AttributeId, @Value, @CreatedDate)";
 
             entity.CreatedDate = DateTime.UtcNow;
-            
+            entity.UpdateDate = DateTime.UtcNow;
+
             using (IDbConnection connection = _dbContext.CreateConnection())
             {
                 connection.Open();
@@ -53,6 +57,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
                         productParameters.Add("Price", entity.Price, DbType.Decimal);
                         productParameters.Add("ImagePath", entity.ImagePath, DbType.String);
                         productParameters.Add("CreatedDate", entity.CreatedDate, DbType.DateTime);
+                        productParameters.Add("UpdateDate", entity.UpdateDate, DbType.DateTime);
 
                         var productId = await connection.QuerySingleAsync<int>(insertProductQuery, productParameters, transaction);
 
