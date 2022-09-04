@@ -15,7 +15,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));            
         }
 
-        /*public Task UpdateAsync(ProductEntity entity)
+        public async Task UpdateAsync(ProductEntity entity)
         {
             var updateQuery = @"UPDATE Product SET Title=@Title, CopyNumber=@CopyNumber, Price=@Price 
                                 ImagePath=@ImagePath, UpdateDate = @UpdateDate
@@ -30,7 +30,12 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
             parameters.Add("Price", entity.Price, DbType.Decimal);
             parameters.Add("ImagePath", entity.ImagePath, DbType.String);
             parameters.Add("UpdateDate", entity.UpdateDate, DbType.String);
-        }*/
+
+            using (var connection = _dbContext.CreateConnection())
+            {
+                await connection.ExecuteAsync(updateQuery, parameters);
+            }
+        }
 
         public async Task<ProductEntity> AddAsync(ProductEntity entity)
         {            

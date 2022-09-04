@@ -44,7 +44,7 @@ namespace Sales.Product.Api.V1.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to get products");
+                _logger.LogError(ex, "Failed to get product");
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
@@ -64,7 +64,20 @@ namespace Sales.Product.Api.V1.Controllers
                 _logger.LogError(ex, "Failed to add product");
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
+        }
 
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateProductRequest updateProductRequest)
+        {
+            try
+            {
+                await _productService.UpdateAsync(updateProductRequest);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to update product");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
             return Ok();
         }
     }

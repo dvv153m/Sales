@@ -10,6 +10,6 @@ namespace Sales.Core.Interfaces.Repositories
 
         Task<ProductEntity> GetById(long id);
 
-        //Task UpdateAsync(ProductEntity entity);
+        Task UpdateAsync(ProductEntity entity);
     }
 }

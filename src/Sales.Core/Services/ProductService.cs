@@ -38,6 +38,24 @@ namespace Sales.Core.Services
             return entities;
         }
 
+        public async Task UpdateAsync(UpdateProductRequest entity)
+        {
+            var productEntity = Map(entity);
+            await _productRepository.UpdateAsync(productEntity);
+        }
+
+        private ProductEntity Map(UpdateProductRequest request)
+        {
+            return new ProductEntity
+            {
+                Id= request.Id,
+                Title = request.Title,
+                CopyNumber = request.CopyNumber,
+                Price = request.Price,                
+                ImagePath = request.ImagePath
+            };
+        }
+
         private ProductDto Map(ProductEntity request)
         {
             var productDetails = new List<ProductDetailDto>();
@@ -79,6 +97,6 @@ namespace Sales.Core.Services
                 ProductDetails = productDetails,
                 ImagePath = request.ImagePath
             };
-        }
+        }        
     }
 }
