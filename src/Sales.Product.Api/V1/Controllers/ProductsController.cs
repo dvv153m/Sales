@@ -34,13 +34,20 @@ namespace Sales.Product.Api.V1.Controllers
             }
         }
 
-        [HttpGet("{id}", Name = nameof(GetById))]
-        public async Task<IActionResult> GetById(long id)
+        [HttpGet("{id}", Name = nameof(GetProductById))]
+        public async Task<IActionResult> GetProductById(long id)
         {
             try
             {
                 var products = await _productService.GetById(id);
-                return Ok(products);
+                if (products != null)
+                {
+                    return Ok(products);
+                }
+                else
+                {
+                    return NotFound(id);
+                }
             }
             catch (Exception ex)
             {
@@ -54,8 +61,12 @@ namespace Sales.Product.Api.V1.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
                 ProductDto productDto = await _productService.AddAsync(request);
-                return CreatedAtRoute(routeName: nameof(GetById),
+                return CreatedAtRoute(routeName: nameof(GetProductById),
                                       routeValues: new { id = productDto.Id },
                                       value: productDto);
             }
@@ -70,7 +81,12 @@ namespace Sales.Product.Api.V1.Controllers
         public async Task<IActionResult> Update(UpdateProductRequest updateProductRequest)
         {
             try
-            {
+            {                
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
+
                 await _productService.UpdateAsync(updateProductRequest);
             }
             catch (Exception ex)
@@ -86,6 +102,11 @@ namespace Sales.Product.Api.V1.Controllers
         {
             try
             {
+                if (id <= 0)
+                {
+                    return BadRequest();
+                }
+
                 await _productService.DeleteAsync(id);
             }
             catch (Exception ex)

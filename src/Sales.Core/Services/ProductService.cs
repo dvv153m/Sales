@@ -24,12 +24,15 @@ namespace Sales.Core.Services
             return productDto;
         }
 
-        public async Task<ProductDto> GetById(long id)
+        public async Task<ProductDto?> GetById(long id)
         {
             ProductEntity productEntity = await _productRepository.GetById(id);
-
-            ProductDto productDto = Map(productEntity);
-            return productDto;
+            if (productEntity != null)
+            {
+                ProductDto productDto = Map(productEntity);
+                return productDto;
+            }
+            return null;
         }
 
         public async Task<IEnumerable<ProductEntity>> GetAll()
