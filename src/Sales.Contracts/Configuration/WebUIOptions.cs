@@ -10,7 +10,7 @@ namespace Sales.Contracts.Configuration
     {
         public const string SectionName = "AppSettings";
         
-        public string PromoocodeApiUrl { get; set; }
+        public string PromocodeApiUrl { get; set; }
 
         public string ProductApiUrl { get; set; }
     }

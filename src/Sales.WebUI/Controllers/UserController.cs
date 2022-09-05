@@ -34,7 +34,7 @@ namespace Sales.WebUI.Controllers
         {
             using (var httpClient = _httpClientFactory.CreateClient())
             {
-                var response = await httpClient.PostAsync($"{_config.PromoocodeApiUrl}/promocode/register", null);
+                var response = await httpClient.PostAsync($"{_config.PromocodeApiUrl}/promocode/register", null);
                 var newPromocode = await response.Content.ReadAsStringAsync();
                 return await HandleResponse(newPromocode, response.IsSuccessStatusCode);                
             }
@@ -45,7 +45,7 @@ namespace Sales.WebUI.Controllers
         {                        
             using (var httpClient = _httpClientFactory.CreateClient())
             {
-                var response = await httpClient.GetAsync($"{_config.PromoocodeApiUrl}/promocode/exists/{model.Promocode}");
+                var response = await httpClient.GetAsync($"{_config.PromocodeApiUrl}/promocode/exists/{model.Promocode}");
                 return await HandleResponse(model.Promocode, response.IsSuccessStatusCode);                
             }
         }
