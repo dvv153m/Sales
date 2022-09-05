@@ -1,13 +1,15 @@
 ﻿
+using Sales.Core.Interfaces.Services;
+
 namespace Sales.Core.Helper
-{
-    public static class PromocodeGenerator
+{    
+    public class PromocodeGenerator : IPromocodeGenerator
     {
-        private static Random _random = new Random();
+        private Random _random = new Random();
 
-        private static string _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        private string _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-        public static string Build(int promocodeLenght)
+        public string Build(int promocodeLenght)
         {
             if (promocodeLenght < 4)
                 throw new ArgumentException("Min promocode lenght is 4 simbol");
