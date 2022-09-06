@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Sales.Contracts.Configuration;
-using Sales.Core.Helper;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Core.Interfaces.Services;
 using Sales.Core.Services;

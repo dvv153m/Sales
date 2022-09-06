@@ -1,8 +1,7 @@
-﻿
-using Sales.Core.Interfaces.Services;
+﻿using Sales.Core.Interfaces.Services;
 
-namespace Sales.Core.Helper
-{    
+namespace Sales.Core.Services
+{
     public class PromocodeGenerator : IPromocodeGenerator
     {
         private Random _random = new Random();
@@ -20,7 +19,7 @@ namespace Sales.Core.Helper
                 {
                     span[i] = chars[_random.Next(chars.Length)];
                 }
-            });            
+            });
         }
     }
 }

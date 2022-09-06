@@ -1,34 +1,38 @@
 
+
+
 namespace Sales.Core.Tests.PromocodeGenerator
 {
     public class TestPromocodeGenerator
     {
         [Fact]
-        public void Build_OnSuccess_EqualsPromocodeLength()
+        public void Build_EqualsPromocodeLength_OnSuccess()
         {
             //arrange
             const int expected = 7;
+            var promocodeGenerator = new Services.PromocodeGenerator();
 
             //act
-            int actual = 7;//Helper.PromocodeGenerator.Build(promocodeLenght: expected).Length;
+            int actual = promocodeGenerator.Build(promocodeLenght: expected).Length;
 
             //arrange
             Assert.True(expected == actual);
         }
 
-        /*[Fact]
-        public void Build_ThrowArgumentException_PromocodeLenghtLess4()
+        [Fact]
+        public void Build_PromocodeLenghtLess4_ThrowArgumentException()
         {
             //arrange
             const int promocodeLenght = 3;
+            var promocodeGenerator = new Services.PromocodeGenerator();
 
             //act            
             //arrange
             Assert.Throws<ArgumentException>(
                 () => 
                 {
-                    return Helper.PromocodeGenerator.Build(promocodeLenght);                    
+                    return promocodeGenerator.Build(promocodeLenght);                    
                 });
-        }*/
+        }
     }
 }
