@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Sales.Core.Rules.Products
 {
     /// <summary>
-    /// Обработчик правил добавления товаров в корзину
+    /// Правила добавления товаров в корзину
     /// </summary>
     public abstract class CartRuleHandler
     {

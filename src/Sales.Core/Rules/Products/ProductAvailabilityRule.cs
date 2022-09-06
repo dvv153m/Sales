@@ -6,7 +6,7 @@ namespace Sales.Core.Rules.Products
     /// <summary>
     /// Правило описывающее, что добавляемый товар есть в наличии
     /// </summary>
-    public class AvailableProductHandler : CartRuleHandler
+    public class ProductAvailabilityRule : CartRuleHandler
     {        
         public override void Handle(Cart cart, ProductDto product, ref string errorInfo)
         {            

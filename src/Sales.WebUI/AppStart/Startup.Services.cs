@@ -1,8 +1,4 @@
-﻿using Sales.Contracts.Configuration;
-using Sales.Core.Interfaces.Repositories;
-using Sales.Core.Interfaces.Services;
-using Sales.Core.Rules.Products;
-using Sales.Core.Services;
+﻿using Sales.Core.Rules.Products;
 
 namespace Sales.WebUI.AppStart
 {
@@ -15,8 +11,8 @@ namespace Sales.WebUI.AppStart
             //правила добавления в корзину
             builder.Services.AddScoped<CartRuleHandler>(x =>
             {
-                var rule1 = new AvailableProductHandler();
-                var rule2 = new UniqueProductHandler();
+                var rule1 = new ProductAvailabilityRule();
+                var rule2 = new ProductUniquenessRule();
 
                 rule1.SetNextHandler(rule2);
                 return rule1;

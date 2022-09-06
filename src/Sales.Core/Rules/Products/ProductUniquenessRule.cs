@@ -5,7 +5,7 @@ namespace Sales.Core.Rules.Products
     /// <summary>
     /// Правило описывающее, что в корзине только уникальные товары
     /// </summary>
-    public class UniqueProductHandler : CartRuleHandler
+    public class ProductUniquenessRule : CartRuleHandler
     {
         public override void Handle(Cart cart, ProductDto product, ref string errorInfo)
         {            
