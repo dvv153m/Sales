@@ -1,9 +1,4 @@
 ﻿using Sales.Contracts.Entity.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sales.Contracts.Entity.Order
 {
@@ -23,5 +18,7 @@ namespace Sales.Contracts.Entity.Order
         /// Стоимость заказа
         /// </summary>
         public decimal Price { get; set; }
+
+        public List<OrderDetailsEntity> OrderDetails { get; set; }
     }    
 }

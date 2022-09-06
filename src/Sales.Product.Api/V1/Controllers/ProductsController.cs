@@ -82,7 +82,7 @@ namespace Sales.Product.Api.V1.Controllers
         {
             try
             {                
-                if (!ModelState.IsValid)
+                if (!ModelState.IsValid)//через fluent validation сделать
                 {
                     return BadRequest();
                 }
