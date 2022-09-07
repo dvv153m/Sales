@@ -6,13 +6,13 @@ namespace Sales.Core.Rules.Products
     /// <summary>
     /// Правило описывающее, что добавляемый товар есть в наличии
     /// </summary>
-    public class ProductAvailabilityRule : CartRuleHandler
+    public class ProductAvailabilityRule : CartAddRules
     {        
         public override void Handle(Cart cart, ProductDto product, ref string errorInfo)
         {            
             if (product.CopyNumber > 0)
             {
-                base.NextHandle(cart, product, ref errorInfo);
+                base.NextRule(cart, product, ref errorInfo);
             }
             else
             {

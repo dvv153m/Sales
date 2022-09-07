@@ -10,11 +10,11 @@ namespace Sales.Core.Rules.Products
     /// <summary>
     /// Правила добавления товаров в корзину
     /// </summary>
-    public abstract class CartRuleHandler
+    public abstract class CartAddRules
     {
-        protected CartRuleHandler _nextRuleHandler;
+        protected CartAddRules _nextRuleHandler;
 
-        public void SetNextHandler(CartRuleHandler ruleHandler)
+        public void SetNextRule(CartAddRules ruleHandler)
         {
             _nextRuleHandler = ruleHandler;
         }
@@ -23,7 +23,7 @@ namespace Sales.Core.Rules.Products
         /// 
         /// </summary>
         /// <param name="request"></param>
-        public void NextHandle(Cart cart, ProductDto request, ref string errorInfo)
+        public void NextRule(Cart cart, ProductDto request, ref string errorInfo)
         {            
             if (_nextRuleHandler != null)
                 _nextRuleHandler.Handle(cart, request, ref errorInfo);

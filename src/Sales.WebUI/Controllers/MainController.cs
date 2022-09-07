@@ -9,9 +9,9 @@ namespace Sales.WebUI.Controllers
     public class MainController : Controller
     {
         private readonly ILogger<MainController> _logger;
-        private readonly CartRuleHandler _cartRuleHandler;
+        private readonly CartAddRules _cartRuleHandler;
 
-        public MainController(CartRuleHandler cartRuleHandler,
+        public MainController(CartAddRules cartRuleHandler,
                               ILogger<MainController> logger)
         {
             _cartRuleHandler = cartRuleHandler;

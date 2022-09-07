@@ -1,6 +1,4 @@
 
-
-
 namespace Sales.Core.Tests.PromocodeGenerator
 {
     public class TestPromocodeGenerator
