@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Sales.Contracts.Configuration;
+using Sales.Contracts.Models;
 using Sales.Core.Interfaces.Services;
 using System.Reflection;
 
@@ -27,6 +29,8 @@ namespace Sales.Infrastructure.Services
             using (var httpClient = _httpClientFactory.CreateClient())
             {
                 var response = await httpClient.GetAsync($"{_config.ProductApiUrl}/{paramsUri}");
+                string responseBody = await response.Content.ReadAsStringAsync();
+                var res = JsonConvert.DeserializeObject<ProductDto>(responseBody);
             }
 
             //_config.ProductApiUrl = https://localhost:7033/api/v1
