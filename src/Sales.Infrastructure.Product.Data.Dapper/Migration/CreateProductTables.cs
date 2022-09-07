@@ -8,6 +8,8 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Migration
         public override void Down()
         {
             Delete.Table("Attribute");
+            Delete.Table("ProductDetail");
+            Delete.Table("Product");
         }
 
         public override void Up()

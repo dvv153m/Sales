@@ -1,14 +1,26 @@
 ﻿using Sales.Contracts.Entity.Order;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Sales.Core.Interfaces.Repositories
 {
     public interface IOrderRepository
     {
+        Task<OrderEntity> AddAsync(OrderEntity entity);
+
         OrderEntity GetOrderByPromocodeId(long promocodeId);
+    }
+
+    public class OrderRepository : IOrderRepository
+    {
+        public async Task<OrderEntity> AddAsync(OrderEntity entity)
+        {
+            await Task.Delay(1000); 
+            return new OrderEntity();
+        }
+
+        public OrderEntity GetOrderByPromocodeId(long promocodeId)
+        {            
+            return new OrderEntity();
+        }
     }
 }

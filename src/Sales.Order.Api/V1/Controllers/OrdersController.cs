@@ -16,9 +16,10 @@ namespace Sales.Order.Api.V1.Controllers
         public OrdersController(IOrderService orderService,
                                 ILogger<OrdersController> logger)
         {
-            orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
+            _orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
         [HttpPost]
         public async Task<IActionResult> Create(CreateOrderRequest request)
         {
@@ -31,8 +32,8 @@ namespace Sales.Order.Api.V1.Controllers
             }
             catch (OrderException ex)
             {
-                _logger.LogError(ex, "Failed to get products");
-                return BadRequest();
+                _logger.LogError(ex, $"Failed to create order. {ex.Message}");
+                return BadRequest(ex.Message);
             }
 
         }
@@ -54,8 +55,8 @@ namespace Sales.Order.Api.V1.Controllers
             }
             catch (ProductException ex)
             {
-                _logger.LogError(ex, "Failed to get product");
-                return BadRequest();
+                _logger.LogError(ex, $"Failed to get order. {ex.Message}");
+                return BadRequest(ex.Message);
             }
         }
     }

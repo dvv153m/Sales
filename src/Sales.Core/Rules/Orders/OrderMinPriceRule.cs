@@ -19,6 +19,7 @@ namespace Sales.Core.Rules.Orders
             {
                 throw new OrderException($"минимальная сумма заказа: {_minPrice}") ;
             }
+            base.NextRule(order);
         }
     }
 }

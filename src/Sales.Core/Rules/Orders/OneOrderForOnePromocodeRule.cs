@@ -24,6 +24,7 @@ namespace Sales.Core.Rules.Orders
             {
                 throw new OrderException("с таким промокодом уже оформляли заказ");
             }
+            base.NextRule(order);
         }
     }
 }
