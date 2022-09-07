@@ -4,12 +4,6 @@ using Sales.Contracts.Models;
 using Sales.Core.Exceptions;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Core.Rules.Orders;
-using Sales.Core.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sales.Core.Tests.OrderRules
 {
