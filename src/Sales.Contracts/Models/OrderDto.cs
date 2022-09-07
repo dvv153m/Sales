@@ -1,15 +1,16 @@
-﻿using Sales.Contracts.Entity.Base;
+﻿using Sales.Contracts.Entity.Order;
 
-namespace Sales.Contracts.Entity.Order
+
+namespace Sales.Contracts.Models
 {
-    public class OrderEntity : EntityBase
-    {        
+    public class OrderDto
+    {
         public long PromocodeId { get; set; }
 
         /// <summary>
         /// Дата заказа
         /// </summary>
-        public DateTime Date { get; set; }  
+        public DateTime Date { get; set; }
 
         /// <summary>
         /// Статус заказа
@@ -22,5 +23,5 @@ namespace Sales.Contracts.Entity.Order
         public decimal Price { get; set; }
 
         public List<OrderDetailsEntity> OrderDetails { get; set; }
-    }    
+    }
 }
