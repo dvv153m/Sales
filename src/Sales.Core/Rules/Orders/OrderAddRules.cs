@@ -26,7 +26,7 @@ namespace Sales.Core.Rules.Orders
         }
 
         /// <summary>
-        /// Обработчика правил
+        /// Обработчик правил
         /// </summary>
         /// <param name="cart">Корзина</param>
         /// <param name="product">Добавляемый товар в корзину</param>
