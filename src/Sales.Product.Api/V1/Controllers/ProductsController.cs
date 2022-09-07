@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sales.Contracts.Models;
 using Sales.Contracts.Request.Product;
+using Sales.Core.Exceptions;
 using Sales.Core.Interfaces.Services;
 
 namespace Sales.Product.Api.V1.Controllers
@@ -16,7 +17,7 @@ namespace Sales.Product.Api.V1.Controllers
                                  ILogger<ProductsController> logger)
         {
             _productService = productService ?? throw new ArgumentNullException(nameof(productService));
-            _logger = logger;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));            
         }
 
         [HttpGet("")]
@@ -27,10 +28,27 @@ namespace Sales.Product.Api.V1.Controllers
                 var products = await _productService.GetAll();
                 return Ok(products);
             }
-            catch (Exception ex)
+            catch (ProductException ex)
             {
                 _logger.LogError(ex, "Failed to get products");
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+                return BadRequest();
+            }
+        }        
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateProductRequest request)
+        {
+            try
+            {                
+                ProductDto productDto = await _productService.AddAsync(request);
+                return CreatedAtRoute(routeName: nameof(GetProductById),
+                                      routeValues: new { id = productDto.Id },
+                                      value: productDto);
+            }
+            catch (ProductException ex)
+            {
+                _logger.LogError(ex, "Failed to add product");
+                return BadRequest();
             }
         }
 
@@ -39,41 +57,20 @@ namespace Sales.Product.Api.V1.Controllers
         {
             try
             {
-                var products = await _productService.GetById(id);
-                if (products != null)
+                var product = await _productService.GetById(id);
+                if (product != null)
                 {
-                    return Ok(products);
+                    return Ok(product);
                 }
                 else
                 {
                     return NotFound(id);
                 }
             }
-            catch (Exception ex)
+            catch (ProductException ex)
             {
                 _logger.LogError(ex, "Failed to get product");
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
-            }
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateProductRequest request)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest();
-                }
-                ProductDto productDto = await _productService.AddAsync(request);
-                return CreatedAtRoute(routeName: nameof(GetProductById),
-                                      routeValues: new { id = productDto.Id },
-                                      value: productDto);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Failed to add product");
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+                return BadRequest();
             }
         }
 
@@ -89,10 +86,10 @@ namespace Sales.Product.Api.V1.Controllers
 
                 await _productService.UpdateAsync(updateProductRequest);
             }
-            catch (Exception ex)
+            catch (ProductException ex)
             {
                 _logger.LogError(ex, "Failed to update product");
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+                return BadRequest();
             }
             return NoContent();
         }
@@ -109,10 +106,10 @@ namespace Sales.Product.Api.V1.Controllers
 
                 await _productService.DeleteAsync(id);
             }
-            catch (Exception ex)
+            catch (ProductException ex)
             {
                 _logger.LogError(ex, "Failed to delete product");
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+                return BadRequest();
             }
             return NoContent();
         }
