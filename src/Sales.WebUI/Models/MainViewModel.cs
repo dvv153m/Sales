@@ -7,6 +7,6 @@ namespace Sales.WebUI.Models
         [Required]
         public string Promocode { get; set; }
 
-        List<ProductViewModel> Products { get; set; }
+        public IEnumerable<ProductViewModel> Products { get; set; }
     }
 }

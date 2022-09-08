@@ -1,9 +1,20 @@
-﻿@model Sales.WebUI.Models.UserViewModel
+﻿@model Sales.WebUI.Models.MainViewModel
 
 Promocode: @Model.Promocode
 
 <div class="text-center">
     <h1 class="display-4">Книги</h1>
+    <table class="table">
+        <tr><td>Название</td><td>Цена</td><td>Кол-во на складе</td></tr>
+        @foreach (var product in @Model.Products)
+        {
+            <tr><td>@product.Title</td><td>@product.Price</td><td>@product.CopyNumber</td></tr>
+            @foreach (var productDetail in product.ProductDetails)
+            {
+                <tr><td>@productDetail.Attribute - @productDetail.Value</td></tr>                
+            }
+        }
+    </table>
 
     <h1 class="display-4">Корзина</h1>
 

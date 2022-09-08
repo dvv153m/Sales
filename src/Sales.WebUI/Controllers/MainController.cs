@@ -25,10 +25,7 @@ namespace Sales.WebUI.Controllers
                 promocode = claim.Value;
             }
 
-            //запрос товаров
-            IEnumerable<ProductViewModel> products = GetProducts();
-
-            return View(new UserViewModel { Promocode = promocode });
+            return View(new MainViewModel { Promocode = promocode, Products = GetProducts() });
         }
 
         private IEnumerable<ProductViewModel> GetProducts()

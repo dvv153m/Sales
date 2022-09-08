@@ -29,17 +29,19 @@ namespace Sales.WebUI.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Генерация промокода и аутентификация пользователя в системе
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> GenerateAndLogin()
+        public async Task<IActionResult> GeneratePromocode()
         {
             try
             {
-                using (var httpClient = _httpClientFactory.CreateClient())
-                {
-                    var response = await httpClient.PostAsync($"{_config.PromocodeApiUrl}/promocode/register", null);
-                    var newPromocode = await response.Content.ReadAsStringAsync();
-                    return await HandleResponse(newPromocode, response.IsSuccessStatusCode);
-                }
+                var httpClient = _httpClientFactory.CreateClient();
+                var response = await httpClient.PostAsync($"{_config.PromocodeApiUrl}/promocode/register", null);
+                var newPromocode = await response.Content.ReadAsStringAsync();
+                return await HandleResponse(newPromocode, response.IsSuccessStatusCode);                
             }
             catch (Exception ex)
             {
