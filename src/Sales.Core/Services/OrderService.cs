@@ -23,7 +23,7 @@ namespace Sales.Core.Services
 
         public async Task<OrderDto> AddAsync(CreateOrderRequest request)
         {            
-            var res = _salesProxy.Get($"products/1");
+            var res = await _salesProxy.GetAsync<ProductDto>($"products/1");
 
             //var product =  _salesProxy.Get<Product>(url);
 

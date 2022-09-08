@@ -8,7 +8,6 @@ namespace Sales.Core.Interfaces.Services
 {
     public interface ISalesProxy
     {
-        //Task<TOut> Get<TOut>(string uri);
-        Task<string> Get(string paramsUri);
+        Task<TOut> GetAsync<TOut>(string paramsUri);        
     }
 }

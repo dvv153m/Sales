@@ -1,10 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Sales.Contracts.Configuration;
-using Sales.Contracts.Models;
 using Sales.Core.Interfaces.Services;
-using System.Reflection;
-
 
 namespace Sales.Infrastructure.Services
 {
@@ -22,21 +19,15 @@ namespace Sales.Infrastructure.Services
 
             _config = config.Value;
         }
-
-        //public Task<TOut> Get<TOut>(string uri)
-        public async Task<string> Get(string paramsUri)
+        
+        public async Task<TOut> GetAsync<TOut>(string paramsUri)
         {
             using (var httpClient = _httpClientFactory.CreateClient())
             {
                 var response = await httpClient.GetAsync($"{_config.ProductApiUrl}/{paramsUri}");
                 string responseBody = await response.Content.ReadAsStringAsync();
-                var res = JsonConvert.DeserializeObject<ProductDto>(responseBody);
-            }
-
-            //_config.ProductApiUrl = https://localhost:7033/api/v1
-            //paramsUri = products/1
-
-            return "";
+                return JsonConvert.DeserializeObject<TOut>(responseBody);                
+            }            
         }
     }
 }
