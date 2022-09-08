@@ -35,16 +35,18 @@ namespace Sales.Core.Services
             return null;
         }
 
-        public async Task<IEnumerable<ProductEntity>> GetAll()
+        public async Task<IEnumerable<ProductDto>> GetAll()
         {
              var entities = await _productRepository.GetAll();
-            return entities;
+            var productDto = Map(entities);
+            return productDto;
         }
 
-        public async Task<IEnumerable<ProductEntity>> GetByIds(int[] ids)
+        public async Task<IEnumerable<ProductDto>> GetByIds(int[] ids)
         {
             var entities = await _productRepository.GetByIds(ids);
-            return entities;
+            var productDtos = Map(entities);
+            return productDtos;
         }
 
         public async Task UpdateAsync(UpdateProductRequest entity)
@@ -113,5 +115,14 @@ namespace Sales.Core.Services
             };
         }
 
+        private IEnumerable<ProductDto> Map(IEnumerable<ProductEntity> productEntities)
+        {
+            List<ProductDto> productDtos = new List<ProductDto>();
+            foreach (var productEntity in productEntities)
+            {                 
+                productDtos.Add(Map(productEntity));
+            }
+            return productDtos;
+        }
     }
 }

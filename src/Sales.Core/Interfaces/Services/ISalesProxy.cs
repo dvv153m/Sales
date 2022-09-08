@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sales.Core.Interfaces.Services
 {
-    public interface ISalesProxy
+    public interface IHttpProxy
     {
         Task<TOut> GetAsync<TOut>(string paramsUri);        
     }

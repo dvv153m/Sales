@@ -31,6 +31,8 @@ namespace Sales.Contracts.Models
 
     public class ProductDetailDto
     {
+        public string Attribute { get; set; }
+
         public long AttributeId { get; set; }
 
         public string Value { get; set; }

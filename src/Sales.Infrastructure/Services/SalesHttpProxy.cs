@@ -3,12 +3,11 @@ using Sales.Core.Interfaces.Services;
 
 namespace Sales.Infrastructure.Services
 {
-    public class SalesHttpProxy : ISalesProxy
+    public class HttpProxy : IHttpProxy
     {
         private readonly IHttpClientFactory _httpClientFactory;
          
-
-        public SalesHttpProxy(IHttpClientFactory httpClientFactory)
+        public HttpProxy(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));            
         }

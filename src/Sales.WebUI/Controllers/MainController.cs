@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Sales.Contracts.Configuration;
+using Sales.Contracts.Models;
+using Sales.Core.Interfaces.Services;
 using Sales.WebUI.Models;
 using System.Diagnostics;
 
@@ -8,22 +8,17 @@ namespace Sales.WebUI.Controllers
 {
     public class MainController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-        private readonly WebUIOptions _config;
-        private readonly ILogger<MainController> _logger;        
+        private readonly IProductClient _productClient;                
+        private readonly ILogger<MainController> _logger;          
 
-        public MainController(IHttpClientFactory httpClientFactory,
-                              IOptions<WebUIOptions> config,
+        public MainController(IProductClient productClient,                                                            
                               ILogger<MainController> logger)
         {            
-            _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));           
-            if (config?.Value == null) throw new ArgumentNullException(nameof(config));
+            _productClient = productClient ?? throw new ArgumentNullException(nameof(productClient));            
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-
-            _config = config.Value;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {            
             string promocode = "---";
 
@@ -33,11 +28,42 @@ namespace Sales.WebUI.Controllers
                 promocode = claim.Value;
             }
 
-            var products = GetProducts();
-            var p = products.Take(2);
+            var products = await _productClient.GetAllAsync();
+            var productsViewModel = Map(products);
+            
+            return View(new MainViewModel { Promocode = promocode, Products = productsViewModel, Cart = productsViewModel.Take(1) });
+        }
 
-            return View(new MainViewModel { Promocode = promocode, Products = products, Cart = products.Take(2) });
-        }        
+        private IEnumerable<ProductViewModel> Map(IEnumerable<ProductDto> products)
+        {            
+            var productDtos = new List<ProductViewModel>();
+            foreach (ProductDto product in products)
+            {                
+                productDtos.Add(Map(product));                
+            }
+            return productDtos;
+        }
+
+        private ProductViewModel Map(ProductDto product)
+        {
+            var productDetails = new List<ProductDetailViewModel>();
+            foreach (var productDetail in product.ProductDetails)
+            {
+                productDetails.Add(new ProductDetailViewModel
+                {
+                    Attribute = productDetail.Attribute,
+                    Value = productDetail.Value
+                });
+            }
+            return new ProductViewModel
+            {
+                Id = product.Id,
+                Title = product.Title,
+                CopyNumber = product.CopyNumber,
+                Price = product.Price,
+                ProductDetails = productDetails                
+            };
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -54,9 +80,9 @@ namespace Sales.WebUI.Controllers
         {
             //promocodeId productId
             //todo это делать через сервис OrderClient
-            var httpClient = _httpClientFactory.CreateClient();
+            /*var httpClient = _httpClientFactory.CreateClient();
             var response = await httpClient.PostAsync($"{_config.OrderApiUrl}/promocode/register", null);
-            var newPromocode = await response.Content.ReadAsStringAsync();
+            var newPromocode = await response.Content.ReadAsStringAsync();*/
 
             return RedirectToAction("Index");
         }

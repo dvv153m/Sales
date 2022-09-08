@@ -26,12 +26,12 @@ namespace Sales.Core.Services
             //узнать есть ли такой промокод если нет OrderException
 
             //получить продукт            
-            var res = await _productClient.GetProductV1(productId: request.ProductId);
+            var res = await _productClient.GetProductByIdAsync(productId: request.ProductId);
         }
 
         public async Task<OrderDto> AddAsync(CreateOrderRequest request)
         {
-            var res = await _productClient.GetProductV1(productId: 1);
+            var res = await _productClient.GetProductByIdAsync(productId: 1);
 
             //var product =  _salesProxy.Get<Product>(url);
 

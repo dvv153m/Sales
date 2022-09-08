@@ -8,9 +8,9 @@ namespace Sales.Core.Interfaces.Services
     {
         Task<ProductDto> AddAsync(CreateProductRequest request);
 
-        Task<IEnumerable<ProductEntity>> GetAll();
+        Task<IEnumerable<ProductDto>> GetAll();
 
-        Task<IEnumerable<ProductEntity>> GetByIds(int[] ids);
+        Task<IEnumerable<ProductDto>> GetByIds(int[] ids);
 
         Task<ProductDto?> GetById(long id);
 
