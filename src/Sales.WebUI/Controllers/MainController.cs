@@ -8,20 +8,15 @@ namespace Sales.WebUI.Controllers
 {
     public class MainController : Controller
     {
-        private readonly ILogger<MainController> _logger;
-        private readonly CartAddProductRules _cartRuleHandler;
+        private readonly ILogger<MainController> _logger;        
 
-        public MainController(CartAddProductRules cartRuleHandler,
-                              ILogger<MainController> logger)
-        {
-            _cartRuleHandler = cartRuleHandler;
-            _logger = logger;            
+        public MainController(ILogger<MainController> logger)
+        {            
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));     
         }
 
         public IActionResult Index()
-        {
-            
-
+        {            
             string promocode = "---";
 
             var claim = HttpContext.User.Claims.FirstOrDefault(p => p.Type == "Promocode");
@@ -30,9 +25,62 @@ namespace Sales.WebUI.Controllers
                 promocode = claim.Value;
             }
 
+            //запрос товаров
+            IEnumerable<ProductViewModel> products = GetProducts();
+
             return View(new UserViewModel { Promocode = promocode });
         }
 
+        private IEnumerable<ProductViewModel> GetProducts()
+        {
+            return new List<ProductViewModel> 
+            {
+                new ProductViewModel
+                { 
+                    Id = 1,
+                    Title = "book1",
+                    Price = 500,
+                    CopyNumber = 10,
+                    ProductDetails = new List<ProductDetailViewModel>
+                    {
+                        new ProductDetailViewModel
+                        {
+                            Attribute = "Автор", Value = "Author1",
+                        },
+                        new ProductDetailViewModel
+                        {
+                            Attribute = "Год издания", Value = "2000",
+                        },
+                        new ProductDetailViewModel
+                        {
+                            Attribute = "ISBN код", Value = "2132423452",
+                        }
+                    }
+                },
+                new ProductViewModel
+                {
+                    Id = 2,
+                    Title = "book2",
+                    Price = 700,
+                    CopyNumber = 4,
+                    ProductDetails = new List<ProductDetailViewModel>
+                    {
+                        new ProductDetailViewModel
+                        {
+                            Attribute = "Автор", Value = "Author2",
+                        },
+                        new ProductDetailViewModel
+                        {
+                            Attribute = "Год издания", Value = "2002",
+                        },
+                        new ProductDetailViewModel
+                        {
+                            Attribute = "ISBN код", Value = "7878787878",
+                        }
+                    }
+                }
+            };
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

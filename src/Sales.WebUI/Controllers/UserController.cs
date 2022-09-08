@@ -32,11 +32,19 @@ namespace Sales.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> GenerateAndLogin()
         {
-            using (var httpClient = _httpClientFactory.CreateClient())
+            try
             {
-                var response = await httpClient.PostAsync($"{_config.PromocodeApiUrl}/promocode/register", null);
-                var newPromocode = await response.Content.ReadAsStringAsync();
-                return await HandleResponse(newPromocode, response.IsSuccessStatusCode);                
+                using (var httpClient = _httpClientFactory.CreateClient())
+                {
+                    var response = await httpClient.PostAsync($"{_config.PromocodeApiUrl}/promocode/register", null);
+                    var newPromocode = await response.Content.ReadAsStringAsync();
+                    return await HandleResponse(newPromocode, response.IsSuccessStatusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                //logger(ex)
+                return await HandleResponse(promocode: String.Empty, isSuccessStatusCode: false);
             }
         }
 
