@@ -50,9 +50,10 @@ namespace Sales.WebUI.Controllers
         /// </summary>
         /// <param name="productId"></param>
         /// <returns></returns>
-        public IActionResult AddToCart(int productId)
+        public async Task<IActionResult> AddToCart(int productId)
         {
             //promocodeId productId
+            //todo это делать через сервис OrderClient
             var httpClient = _httpClientFactory.CreateClient();
             var response = await httpClient.PostAsync($"{_config.OrderApiUrl}/promocode/register", null);
             var newPromocode = await response.Content.ReadAsStringAsync();

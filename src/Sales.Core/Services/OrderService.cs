@@ -10,28 +10,28 @@ namespace Sales.Core.Services
     {
         private readonly IOrderRepository _orderService;
         private readonly OrderAddRules _orderRules;
-        private readonly ISalesProxy _salesProxy;
+        private readonly IProductClient _productClient;
 
         public OrderService(IOrderRepository orderRepository,
                             OrderAddRules orderRules,
-                            ISalesProxy salesProxy)
+                            IProductClient productClient)
         {
             //orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
             _orderRules = orderRules ?? throw new ArgumentNullException(nameof(orderRules));
-            _salesProxy = salesProxy ?? throw new ArgumentNullException(nameof(salesProxy));
+            _productClient = productClient ?? throw new ArgumentNullException(nameof(productClient));
         }        
 
         public async Task AddProductToOrderAsync(AddProductToOrderRequest request)
         {
             //узнать есть ли такой промокод если нет OrderException
 
-            //получить продукт
-            var res = await _salesProxy.GetAsync<ProductDto>($"products/1");
+            //получить продукт            
+            var res = await _productClient.GetProductV1(productId: request.ProductId);
         }
 
         public async Task<OrderDto> AddAsync(CreateOrderRequest request)
         {
-            var res = await _salesProxy.GetAsync<ProductDto>($"products/1");
+            var res = await _productClient.GetProductV1(productId: 1);
 
             //var product =  _salesProxy.Get<Product>(url);
 

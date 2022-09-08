@@ -20,7 +20,8 @@ namespace Sales.Order.Api.V1.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        [HttpPost(Name = "AddProductToOrder")]
+        [Route("addProductToOrder")]
+        [HttpPost]
         public async Task<IActionResult> AddProductToOrder(AddProductToOrderRequest request)
         {
             try
@@ -32,8 +33,10 @@ namespace Sales.Order.Api.V1.Controllers
                 _logger.LogError(ex, $"Failed to add product to order. {ex.Message}");
                 return BadRequest(ex.Message);
             }
+            return Ok();
         }
-        
+
+        [HttpPost]
         public async Task<IActionResult> Create(CreateOrderRequest request)
         {
             try

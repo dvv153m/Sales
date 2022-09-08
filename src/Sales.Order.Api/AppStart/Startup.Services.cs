@@ -16,6 +16,7 @@ namespace Sales.Order.Api.AppStart
             builder.Services.AddHttpClient();
 
             builder.Services.AddScoped<ISalesProxy, SalesHttpProxy>();
+            builder.Services.AddScoped<IProductClient, ProductClient>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IOrderService, OrderService>();
 
