@@ -41,6 +41,12 @@ namespace Sales.Core.Services
             return entities;
         }
 
+        public async Task<IEnumerable<ProductEntity>> GetByIds(int[] ids)
+        {
+            var entities = await _productRepository.GetAll();
+            return entities;
+        }
+
         public async Task UpdateAsync(UpdateProductRequest entity)
         {
             var productEntity = Map(entity);
@@ -105,6 +111,7 @@ namespace Sales.Core.Services
                 ProductDetails = productDetails,
                 ImagePath = request.ImagePath
             };
-        }        
+        }
+
     }
 }

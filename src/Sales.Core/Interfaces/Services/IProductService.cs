@@ -10,6 +10,8 @@ namespace Sales.Core.Interfaces.Services
 
         Task<IEnumerable<ProductEntity>> GetAll();
 
+        Task<IEnumerable<ProductEntity>> GetByIds(int[] ids);
+
         Task<ProductDto?> GetById(long id);
 
         Task UpdateAsync(UpdateProductRequest entity);

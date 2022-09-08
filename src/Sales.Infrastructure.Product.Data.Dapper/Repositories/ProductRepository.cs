@@ -89,6 +89,24 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
             }
         }
 
+        public async Task<IEnumerable<ProductEntity>> GetByIds(int[] ids)
+        {
+            var query = @"SELECT * FROM Product p WHERE Id IN @Ids;
+                          SELECT * FROM ProductDetail WHERE ProductId IN @Ids";
+
+            using (var connection = _dbContext.CreateConnection())
+            using (var multi = await connection.QueryMultipleAsync(query, new { ids }))
+            {                
+                var products = await multi.ReadAsync<ProductEntity>();
+                var res = (await multi.ReadAsync<ProductDetailEntity>()).ToList();
+                //if (products != null)
+                //product.ProductDetails = (await multi.ReadAsync<ProductDetailEntity>()).ToList();
+
+            }
+
+            return new List<ProductEntity>();
+        }
+
         public async Task<IEnumerable<ProductEntity>> GetAll()
         {
             var query = @"SELECT * FROM Product p 
@@ -120,7 +138,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
 
                 return productDict.Values.ToList();                
             }
-        }
+        }        
 
         public async Task UpdateAsync(ProductEntity entity)
         {

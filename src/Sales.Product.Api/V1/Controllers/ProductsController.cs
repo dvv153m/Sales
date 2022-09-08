@@ -4,6 +4,7 @@ using Sales.Contracts.Request.Product;
 using Sales.Core.Exceptions;
 using Sales.Core.Interfaces.Services;
 
+
 namespace Sales.Product.Api.V1.Controllers
 {
     [Route("api/v1/products")]
@@ -33,7 +34,22 @@ namespace Sales.Product.Api.V1.Controllers
                 _logger.LogError(ex, "Failed to get products");
                 return BadRequest();
             }
-        }        
+        }
+
+        [HttpGet("{ids}", Name = nameof(GetByIds))]
+        public async Task<IActionResult> GetByIds(int[] ids)
+        {
+            try
+            {
+                var products = await _productService.GetByIds(ids);
+                return Ok(products);
+            }
+            catch (ProductException ex)
+            {
+                _logger.LogError(ex, "Failed to get products");
+                return BadRequest();
+            }
+        }
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateProductRequest request)

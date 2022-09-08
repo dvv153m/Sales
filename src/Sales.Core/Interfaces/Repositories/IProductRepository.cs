@@ -10,6 +10,8 @@ namespace Sales.Core.Interfaces.Repositories
 
         Task<ProductEntity> GetById(long id);
 
+        Task<IEnumerable<ProductEntity>> GetByIds(int[] ids);
+
         Task UpdateAsync(ProductEntity entity);
 
         Task DeleteAsync(int id);
