@@ -10,6 +10,9 @@ namespace Sales.Contracts.Entity.Product
 
         public AttributeEntity Attribute { get; set; }
 
+        /// <summary>
+        /// Значение характеристики товара (например, если характеристика Автор, то значение например Толстой)
+        /// </summary>
         public string Value { get; set; }        
     }
 }

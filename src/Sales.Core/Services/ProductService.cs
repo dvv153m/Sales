@@ -80,6 +80,7 @@ namespace Sales.Core.Services
                 productDetails.Add(new ProductDetailDto
                 {
                     AttributeId = productDetail.AttributeId,
+                    Attribute = productDetail.Attribute.Name,
                     Value = productDetail.Value
                 });
             }

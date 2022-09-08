@@ -32,38 +32,7 @@ namespace Sales.WebUI.Controllers
             var productsViewModel = Map(products);
             
             return View(new MainViewModel { Promocode = promocode, Products = productsViewModel, Cart = productsViewModel.Take(1) });
-        }
-
-        private IEnumerable<ProductViewModel> Map(IEnumerable<ProductDto> products)
-        {            
-            var productDtos = new List<ProductViewModel>();
-            foreach (ProductDto product in products)
-            {                
-                productDtos.Add(Map(product));                
-            }
-            return productDtos;
-        }
-
-        private ProductViewModel Map(ProductDto product)
-        {
-            var productDetails = new List<ProductDetailViewModel>();
-            foreach (var productDetail in product.ProductDetails)
-            {
-                productDetails.Add(new ProductDetailViewModel
-                {
-                    Attribute = productDetail.Attribute,
-                    Value = productDetail.Value
-                });
-            }
-            return new ProductViewModel
-            {
-                Id = product.Id,
-                Title = product.Title,
-                CopyNumber = product.CopyNumber,
-                Price = product.Price,
-                ProductDetails = productDetails                
-            };
-        }
+        }                
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -97,76 +66,35 @@ namespace Sales.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
-        private IEnumerable<ProductViewModel> GetProducts()
+
+        private IEnumerable<ProductViewModel> Map(IEnumerable<ProductDto> products)
         {
-            return new List<ProductViewModel>
+            var productDtos = new List<ProductViewModel>();
+            foreach (ProductDto product in products)
             {
-                new ProductViewModel
+                productDtos.Add(Map(product));
+            }
+            return productDtos;
+        }
+
+        private ProductViewModel Map(ProductDto product)
+        {
+            var productDetails = new List<ProductDetailViewModel>();
+            foreach (var productDetail in product.ProductDetails)
+            {
+                productDetails.Add(new ProductDetailViewModel
                 {
-                    Id = 1,
-                    Title = "book1",
-                    Price = 500,
-                    CopyNumber = 10,
-                    ProductDetails = new List<ProductDetailViewModel>
-                    {
-                        new ProductDetailViewModel
-                        {
-                            Attribute = "Автор", Value = "Author1",
-                        },
-                        new ProductDetailViewModel
-                        {
-                            Attribute = "Год издания", Value = "2000",
-                        },
-                        new ProductDetailViewModel
-                        {
-                            Attribute = "ISBN код", Value = "2132423452",
-                        }
-                    }
-                },
-                new ProductViewModel
-                {
-                    Id = 2,
-                    Title = "book2",
-                    Price = 700,
-                    CopyNumber = 4,
-                    ProductDetails = new List<ProductDetailViewModel>
-                    {
-                        new ProductDetailViewModel
-                        {
-                            Attribute = "Автор", Value = "Author2",
-                        },
-                        new ProductDetailViewModel
-                        {
-                            Attribute = "Год издания", Value = "2002",
-                        },
-                        new ProductDetailViewModel
-                        {
-                            Attribute = "ISBN код", Value = "7878787878",
-                        }
-                    }
-                },
-                new ProductViewModel
-                {
-                    Id = 3,
-                    Title = "book3",
-                    Price = 800,
-                    CopyNumber = 5,
-                    ProductDetails = new List<ProductDetailViewModel>
-                    {
-                        new ProductDetailViewModel
-                        {
-                            Attribute = "Автор", Value = "Author3",
-                        },
-                        new ProductDetailViewModel
-                        {
-                            Attribute = "Год издания", Value = "2014",
-                        },
-                        new ProductDetailViewModel
-                        {
-                            Attribute = "ISBN код", Value = "4545667565",
-                        }
-                    }
-                }
+                    Attribute = productDetail.Attribute,
+                    Value = productDetail.Value
+                });
+            }
+            return new ProductViewModel
+            {
+                Id = product.Id,
+                Title = product.Title,
+                CopyNumber = product.CopyNumber,
+                Price = product.Price,
+                ProductDetails = productDetails
             };
         }
     }
