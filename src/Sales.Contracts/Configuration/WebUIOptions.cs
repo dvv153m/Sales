@@ -13,5 +13,7 @@ namespace Sales.Contracts.Configuration
         public string PromocodeApiUrl { get; set; }
 
         public string ProductApiUrl { get; set; }
+
+        public string OrderApiUrl { get; set; }
     }
 }

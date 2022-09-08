@@ -20,7 +20,20 @@ namespace Sales.Order.Api.V1.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        [HttpPost]
+        [HttpPost(Name = "AddProductToOrder")]
+        public async Task<IActionResult> AddProductToOrder(AddProductToOrderRequest request)
+        {
+            try
+            {
+                await _orderService.AddProductToOrderAsync(request);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Failed to add product to order. {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
+        
         public async Task<IActionResult> Create(CreateOrderRequest request)
         {
             try

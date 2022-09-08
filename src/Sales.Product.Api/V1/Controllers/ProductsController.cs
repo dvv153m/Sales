@@ -36,7 +36,7 @@ namespace Sales.Product.Api.V1.Controllers
             }
         }
         
-        [HttpGet]
+        /*[HttpGet]
         [Route("servicesbyproductids")]
         public async Task<IActionResult> GetByIds([FromQuery(Name = "ids")] int[] ids)
         {
@@ -50,7 +50,7 @@ namespace Sales.Product.Api.V1.Controllers
                 _logger.LogError(ex, "Failed to get products");
                 return BadRequest();
             }
-        }
+        }*/
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateProductRequest request)

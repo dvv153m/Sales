@@ -13,7 +13,7 @@ Promocode: @Model.Promocode
         <tr><td>Название</td><td>Цена</td><td>Кол-во на складе</td></tr>
         @foreach (var product in @Model.Products)
         {
-                <tr><td>@product.Title</td><td>@product.Price</td><td>@product.CopyNumber</td><td><button name="productId" value="@product.Id" asp-action="check">Добавить в корзину</button></td></tr>
+                <tr><td>@product.Title</td><td>@product.Price</td><td>@product.CopyNumber</td><td><button name="productId" value="@product.Id" asp-action="AddToCart">Добавить в корзину</button></td></tr>
             @foreach (var productDetail in product.ProductDetails)
             {
                 <tr><td>@productDetail.Attribute - @productDetail.Value</td></tr>                
@@ -22,6 +22,21 @@ Promocode: @Model.Promocode
     </table>
     </form>
 
+    <form>
     <h1 class="display-4">Корзина</h1>
+        <table class="table">
+            <tr><td>Название</td><td>Цена</td><td>Кол-во на складе</td></tr>
+            @foreach (var product in @Model.Cart)
+            {
+                <tr><td>@product.Title</td><td>@product.Price</td><td>@product.CopyNumber</td><td><button name="productId" value="@product.Id" asp-action="DeleteFromCart">Удалить из корзину</button></td></tr>
+                @foreach (var productDetail in product.ProductDetails)
+                {
+                    <tr><td>@productDetail.Attribute - @productDetail.Value</td></tr>
+                }
+            }
+        </table>
+        </br>
+        <button asp-action="CreateOrder">Оформить заказ</button></td>
+    </form>
 
 </div>
