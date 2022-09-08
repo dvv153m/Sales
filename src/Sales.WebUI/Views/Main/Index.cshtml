@@ -3,18 +3,24 @@
 Promocode: @Model.Promocode
 
 <div class="text-center">
+    <!--<form>
+        <button name="button" value="first" asp-action="check">123</button>
+        <button name="button" value="second" asp-action="check">223</button>
+    </form>-->
+    <form>
     <h1 class="display-4">Книги</h1>
     <table class="table">
         <tr><td>Название</td><td>Цена</td><td>Кол-во на складе</td></tr>
         @foreach (var product in @Model.Products)
         {
-            <tr><td>@product.Title</td><td>@product.Price</td><td>@product.CopyNumber</td></tr>
+                <tr><td>@product.Title</td><td>@product.Price</td><td>@product.CopyNumber</td><td><button name="productId" value="@product.Id" asp-action="check">Добавить в корзину</button></td></tr>
             @foreach (var productDetail in product.ProductDetails)
             {
                 <tr><td>@productDetail.Attribute - @productDetail.Value</td></tr>                
             }
         }
     </table>
+    </form>
 
     <h1 class="display-4">Корзина</h1>
 

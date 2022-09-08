@@ -17,9 +17,8 @@ namespace Sales.WebUI.Controllers
                               IOptions<WebUIOptions> config)
         {
             _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
-
-            if (config == null || config.Value == null)
-                throw new ArgumentNullException(nameof(config));
+           
+            if (config?.Value == null) throw new ArgumentNullException(nameof(config));
 
             _config = config.Value;
         }

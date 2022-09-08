@@ -14,10 +14,9 @@ namespace Sales.Infrastructure.Services
         {
             _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
 
-            if (config == null || config.Value == null)
-                throw new ArgumentNullException(nameof(config));
+            if (config?.Value == null) throw new ArgumentNullException(nameof(config));
 
-            _config = config.Value;
+            _config = config.Value;            
         }
         
         public async Task<TOut> GetAsync<TOut>(string paramsUri)
