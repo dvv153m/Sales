@@ -35,9 +35,10 @@ namespace Sales.Product.Api.V1.Controllers
                 return BadRequest();
             }
         }
-
-        [HttpGet("{ids}", Name = nameof(GetByIds))]
-        public async Task<IActionResult> GetByIds(int[] ids)
+        
+        [HttpGet]
+        [Route("servicesbyproductids")]
+        public async Task<IActionResult> GetByIds([FromQuery(Name = "ids")] int[] ids)
         {
             try
             {

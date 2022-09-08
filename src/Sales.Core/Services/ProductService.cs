@@ -43,7 +43,7 @@ namespace Sales.Core.Services
 
         public async Task<IEnumerable<ProductEntity>> GetByIds(int[] ids)
         {
-            var entities = await _productRepository.GetAll();
+            var entities = await _productRepository.GetByIds(ids);
             return entities;
         }
 

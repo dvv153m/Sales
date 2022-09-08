@@ -98,13 +98,14 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
             using (var multi = await connection.QueryMultipleAsync(query, new { ids }))
             {                
                 var products = await multi.ReadAsync<ProductEntity>();
-                var res = (await multi.ReadAsync<ProductDetailEntity>()).ToList();
-                //if (products != null)
-                //product.ProductDetails = (await multi.ReadAsync<ProductDetailEntity>()).ToList();
+                var productDetails = (await multi.ReadAsync<ProductDetailEntity>()).ToList();
 
-            }
-
-            return new List<ProductEntity>();
+                foreach (var product in products)
+                { 
+                    product.ProductDetails = productDetails.Where(x => x.ProductId == product.Id).ToList();
+                }                
+                return products;
+            }            
         }
 
         public async Task<IEnumerable<ProductEntity>> GetAll()
