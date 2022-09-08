@@ -20,18 +20,7 @@ namespace Sales.WebUI.Controllers
 
         public IActionResult Index()
         {
-            //здесь пока для теста проверка правил добвления в корзину
-
-            string errorInfo = "";
-            _cartRuleHandler.Handle(new Cart 
-            {
-                Products = new List<ProductDto>
-                { 
-                    new ProductDto{Id = 1, Title="book1", CopyNumber=1 },
-                    new ProductDto{Id = 2, Title="book2", CopyNumber=0 }
-                }
-            }, new ProductDto { Id = 2, Title = "book2", CopyNumber = 0 });
-
+            
 
             string promocode = "---";
 

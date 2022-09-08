@@ -27,7 +27,6 @@ namespace Sales.Core.Services
 
             //var product =  _salesProxy.Get<Product>(url);
 
-            //вызвать правила бл
             //_orderRules.Handle(new OrderDto());
             await Task.Delay(200);
 

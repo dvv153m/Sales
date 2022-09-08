@@ -8,15 +8,7 @@ namespace Sales.WebUI.AppStart
         {
             builder.Services.AddHttpClient();            
 
-            //правила добавления в корзину
-            builder.Services.AddScoped<CartAddProductRules>(x =>
-            {
-                var rule1 = new ProductAvailabilityRule();
-                var rule2 = new ProductUniquenessRule();
-
-                rule1.SetNextRule(rule2);
-                return rule1;
-            });
+            
         }
     }
 }
