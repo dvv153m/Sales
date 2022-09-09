@@ -27,19 +27,19 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
             await _repository.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<ProductEntity>> GetAll()
+        public async Task<IEnumerable<ProductEntity>> GetAllAsync()
         {
-            return await _repository.GetAll();
+            return await _repository.GetAllAsync();
         }
 
-        public async Task<ProductEntity> GetById(long id)
+        public async Task<ProductEntity> GetByIdAsync(long id)
         {
             if (_productsCache.TryGetValue(id, out ProductEntity entity))
             {
                 return entity;
             }
 
-            var productEntity = await _repository.GetById(id);
+            var productEntity = await _repository.GetByIdAsync(id);
             if (productEntity != null)
             {
                 _productsCache.TryAdd(productEntity.Id, productEntity);
@@ -48,7 +48,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
             return productEntity;
         }
 
-        public async Task<IEnumerable<ProductEntity>> GetByIds(int[] ids)
+        public async Task<IEnumerable<ProductEntity>> GetByIdsAsync(int[] ids)
         {
             var products = new List<ProductEntity>(ids.Length);
             var notFoundIds = new List<int>(ids.Length);
@@ -64,7 +64,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
                 }
             }
 
-            IEnumerable<ProductEntity> productEntities = await _repository.GetByIds(notFoundIds.ToArray());
+            IEnumerable<ProductEntity> productEntities = await _repository.GetByIdsAsync(notFoundIds.ToArray());
             if (productEntities != null && productEntities.Any())
             {
                 foreach (var entity in productEntities)

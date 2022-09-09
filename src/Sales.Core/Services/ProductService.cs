@@ -26,7 +26,7 @@ namespace Sales.Core.Services
 
         public async Task<ProductDto?> GetById(long id)
         {
-            ProductEntity productEntity = await _productRepository.GetById(id);
+            ProductEntity productEntity = await _productRepository.GetByIdAsync(id);
             if (productEntity != null)
             {
                 ProductDto productDto = Map(productEntity);
@@ -37,14 +37,14 @@ namespace Sales.Core.Services
 
         public async Task<IEnumerable<ProductDto>> GetAll()
         {
-             var entities = await _productRepository.GetAll();
+             var entities = await _productRepository.GetAllAsync();
             var productDto = Map(entities);
             return productDto;
         }
 
         public async Task<IEnumerable<ProductDto>> GetByIds(int[] ids)
         {
-            var entities = await _productRepository.GetByIds(ids);
+            var entities = await _productRepository.GetByIdsAsync(ids);
             var productDtos = Map(entities);
             return productDtos;
         }

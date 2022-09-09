@@ -74,7 +74,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
             }*/
         }
 
-        public async Task<ProductEntity> GetById(long id)
+        public async Task<ProductEntity> GetByIdAsync(long id)
         {
             var query = @"SELECT * FROM Product p WHERE Id= @Id;
                           SELECT * FROM ProductDetail WHERE ProductId= @Id";
@@ -89,7 +89,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
             }
         }
 
-        public async Task<IEnumerable<ProductEntity>> GetByIds(int[] ids)
+        public async Task<IEnumerable<ProductEntity>> GetByIdsAsync(int[] ids)
         {
             var query = @"SELECT * FROM Product p WHERE Id IN @Ids;
                           SELECT * FROM ProductDetail WHERE ProductId IN @Ids";
@@ -108,7 +108,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
             }            
         }
 
-        public async Task<IEnumerable<ProductEntity>> GetAll()
+        public async Task<IEnumerable<ProductEntity>> GetAllAsync()
         {
             var query = @"SELECT * FROM Product p 
                           JOIN ProductDetail d 

@@ -6,11 +6,11 @@ namespace Sales.Core.Interfaces.Repositories
     {
         Task<ProductEntity> AddAsync(ProductEntity entity); 
 
-        Task<IEnumerable<ProductEntity>> GetAll();
+        Task<IEnumerable<ProductEntity>> GetAllAsync();
 
-        Task<ProductEntity> GetById(long id);
+        Task<ProductEntity> GetByIdAsync(long id);
 
-        Task<IEnumerable<ProductEntity>> GetByIds(int[] ids);
+        Task<IEnumerable<ProductEntity>> GetByIdsAsync(int[] ids);
 
         Task UpdateAsync(ProductEntity entity);
 
