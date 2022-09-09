@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Sales.Contracts.Configuration;
+﻿using Sales.Contracts.Configuration;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Core.Interfaces.Services;
 using Sales.Core.Services;
@@ -10,8 +9,7 @@ namespace Sales.Promocode.Api.AppStart
     public partial class Startup
     {
         void ConfigureServices(WebApplicationBuilder builder)
-        {
-            //builder.Services.AddScoped<IPromocodeRepository, PromocodeRepository>();
+        {            
             builder.Services.AddScoped<PromocodeRepository>();
             builder.Services.AddScoped<IPromocodeRepository>(x => new PromocodeCacheDecoratorRepository(x.GetRequiredService<PromocodeRepository>()));
 
