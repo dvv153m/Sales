@@ -1,4 +1,5 @@
 ﻿using Sales.Contracts.Entity;
+using Sales.Core.Domain;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Core.Interfaces.Services;
 
@@ -27,10 +28,17 @@ namespace Sales.Core.Services
             return newPromocode;
         }
 
-        public async Task<bool> ExistsAsync(string promocode)
+        public async Task<Promocode> GetByPromocodeAsync(string promocode)
         {
             PromocodeEntity promocodeEntity = await _promocodeRepository.GetByPromocodeAsync(promocode);
-            return promocodeEntity != null;
+            if (promocodeEntity != null)
+            {
+                return new Promocode { Value = promocodeEntity.Value };
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

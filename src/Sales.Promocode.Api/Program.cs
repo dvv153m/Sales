@@ -1,6 +1,7 @@
 using Sales.Promocode.Api.AppStart;
 using FluentMigrator.Runner;
 using Sales.Infrastructure.Data.Migration;
+using Sales.Infrastructure.Exception;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,8 @@ else
 }
 
 app.UseHttpsRedirection();
+
+app.UseExceptionHandlerMiddleware(logger);
 
 app.UseAuthorization();
 

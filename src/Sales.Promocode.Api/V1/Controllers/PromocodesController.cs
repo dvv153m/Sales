@@ -24,28 +24,18 @@ namespace Sales.Promocode.Api.V1.Controllers
         /// Определяет, существует ли заданный промокод
         /// </summary>
         /// <returns></returns>
-        [HttpGet("exists/{promocode}")]
-        public async Task<IActionResult> Exists(string promocode)
-        {
-            bool isExist = false;
-            try
-            {
-                isExist = await _promocodeService.ExistsAsync(promocode);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Failed to get promocode");
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
-            }
-
-            return isExist ? Ok() : NotFound();
+        [HttpGet("{promocode}")]
+        public async Task<IActionResult> Get(string promocode)
+        {                        
+            Sales.Core.Domain.Promocode promocodeModel = await _promocodeService.GetByPromocodeAsync(promocode);
+            return promocodeModel != null ? Ok(promocodeModel) : NotFound();
         }
 
         /// <summary>
         /// Регистрирует новый промокод
         /// </summary>
         /// <returns>Возвращает созданный промокод</returns>
-        [HttpPost("register")]
+        [HttpPost]
         public async Task<IActionResult> Register()
         {
             string newPromocode;
@@ -61,7 +51,6 @@ namespace Sales.Promocode.Api.V1.Controllers
 
             return CreatedAtRoute(routeName: String.Empty,                                      
                                       value: newPromocode);
-        }
-        //return Ok(newPromocode);    
+        }           
     }
 }

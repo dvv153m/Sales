@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <PackageReference Include="FluentMigrator" Version="3.3.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentMigrator" Version="3.3.2" />
+    <ProjectReference Include="..\Sales.Core\Sales.Core.csproj" />
   </ItemGroup>
 
 </Project>

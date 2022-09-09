@@ -20,9 +20,9 @@ namespace Sales.Order.Api.V1.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        [Route("addProductToOrder")]
-        [HttpPost]
-        public async Task<IActionResult> AddProductToOrder(AddProductToOrderRequest request)
+        //[Route("addProductToOrder")]
+        [HttpPost("{orderId}/product")]
+        public async Task<IActionResult> AddProductToOrder(int orderId, AddProductToOrderRequest request)
         {
             try
             {

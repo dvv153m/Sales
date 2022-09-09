@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Sales.Core.Domain;
 
 namespace Sales.Core.Interfaces.Services
 {
@@ -10,6 +6,6 @@ namespace Sales.Core.Interfaces.Services
     {
         Task<string> AddPromocodeAsync();
 
-        Task<bool> ExistsAsync(string promocode);        
+        Task<Promocode> GetByPromocodeAsync(string promocode);        
     }
 }

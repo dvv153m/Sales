@@ -1,6 +1,7 @@
 using FluentMigrator.Runner;
 using Microsoft.Extensions.Logging;
 using Sales.Infrastructure.Data.Migration;
+using Sales.Infrastructure.Exception;
 using Sales.Product.Api.AppStart;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseExceptionHandlerMiddleware(logger);
 
 app.UseAuthorization();
 
