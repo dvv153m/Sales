@@ -19,10 +19,14 @@ namespace Sales.Order.Api.V1.Controllers
             _orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-
-        //[Route("addProductToOrder")]
-        [HttpPost("{orderId}/product")]
-        public async Task<IActionResult> AddProductToOrder(int orderId, AddProductToOrderRequest request)
+        
+        /// <summary>
+        /// Добавление товара в корзину
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost("product")]
+        public async Task<IActionResult> AddProductToOrder(AddProductToOrderRequest request)
         {
             try
             {
