@@ -26,10 +26,11 @@ namespace Sales.Order.Api.AppStart
             {
                 return new PromocodeClient(x.GetRequiredService<IHttpProxy>(), appConf.PromocodeApiUrl);
             });
+
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IOrderService, OrderService>();
 
-            //правила добавления в корзину
+            //правила при оформлении заказа
             builder.Services.AddScoped<OrderAddRules>(x =>
             {                
                 var rule1 = new OneOrderForOnePromocodeRule(x.GetRequiredService<IOrderRepository>());
@@ -38,6 +39,18 @@ namespace Sales.Order.Api.AppStart
                 rule1.SetNextRule(rule2);
                 return rule1;
             });
+
+            //правила добавления в корзину
+            builder.Services.AddScoped<CartAddProductRules>(x =>
+            {
+                var rule1 = new ProductAvailabilityRule();
+                var rule2 = new ProductUniquenessRule();
+
+                rule1.SetNextRule(rule2);
+                return rule1;
+            });
+
+            
         }
     }
 }

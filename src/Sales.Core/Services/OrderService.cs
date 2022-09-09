@@ -4,38 +4,48 @@ using Sales.Core.Exceptions;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Core.Interfaces.Services;
 using Sales.Core.Rules.Orders;
+using Sales.Core.Rules.Products;
 
 namespace Sales.Core.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly IOrderRepository _orderService;
-        private readonly OrderAddRules _orderRules;
+        private readonly IOrderRepository _orderRepository;        
         private readonly IProductClient _productClient;
         private readonly IPromocodeClient _promocodeClient;
+        private readonly OrderAddRules _orderRules;
+        private readonly CartAddProductRules _cartAddProductRules;
 
-        public OrderService(IOrderRepository orderRepository,
-                            OrderAddRules orderRules,
+        public OrderService(IOrderRepository orderRepository,                            
                             IProductClient productClient,
-                            IPromocodeClient promocodeClient)
+                            IPromocodeClient promocodeClient,
+                            OrderAddRules orderRules,
+                            CartAddProductRules cartAddProductRules)
         {
-            //orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
-            _orderRules = orderRules ?? throw new ArgumentNullException(nameof(orderRules));
+            _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));            
             _productClient = productClient ?? throw new ArgumentNullException(nameof(productClient));
             _promocodeClient = promocodeClient ?? throw new ArgumentNullException(nameof(promocodeClient));
+            _orderRules = orderRules ?? throw new ArgumentNullException(nameof(orderRules));
+            _cartAddProductRules = cartAddProductRules ?? throw new ArgumentNullException(nameof(cartAddProductRules));
         }        
 
         public async Task AddProductToOrderAsync(AddProductToOrderRequest request)
-        {
-            //узнать есть ли такой промокод если нет OrderException
+        {            
             var promocode = await _promocodeClient.GetByPromocodeAsync(request.Promocode);
             if (promocode == null)
             {
-                throw new OrderException("такого промокода не существует");
+                throw new OrderException("данного промокода не существует");
+            }
+                       
+            var product = await _productClient.GetProductByIdAsync(productId: request.ProductId);
+            if(product == null)
+            {
+                throw new OrderException("данного товара не существует");
             }
 
-            //получить продукт            
-            var res = await _productClient.GetProductByIdAsync(productId: request.ProductId);
+            //получить текущий заказ
+
+            //_cartAddProductRules.Handle
         }
 
         public async Task<OrderDto> AddAsync(CreateOrderRequest request)

@@ -4,7 +4,7 @@
 namespace Sales.Core.Rules.Orders
 {
     /// <summary>
-    /// Правила добавления заказа
+    /// Правила при оформлении заказа
     /// </summary>
     public abstract class OrderAddRules
     {
