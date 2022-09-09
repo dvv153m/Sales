@@ -9,6 +9,6 @@ namespace Sales.Core.Interfaces.Repositories
 
         Task<PromocodeEntity> GetByPromocodeAsync(string promocode);
 
-        IEnumerable<PromocodeEntity> GetAll();
+        Task<IEnumerable<PromocodeEntity>> GetAllAsync();
     }
 }

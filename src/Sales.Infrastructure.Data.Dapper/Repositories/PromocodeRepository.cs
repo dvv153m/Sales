@@ -37,11 +37,11 @@ namespace Sales.Infrastructure.Promocode.Data.Dapper.Repositories
             }
         }
 
-        public IEnumerable<PromocodeEntity> GetAll()
+        public async Task<IEnumerable<PromocodeEntity>> GetAllAsync()
         {
             using (IDbConnection connection = _dbContext.CreateConnection())
             {
-                return connection.Query<PromocodeEntity>("SELECT * FROM Promocode");
+                return await connection.QueryAsync<PromocodeEntity>("SELECT * FROM Promocode");
             }
         }
     }
