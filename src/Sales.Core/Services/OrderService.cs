@@ -44,8 +44,10 @@ namespace Sales.Core.Services
             }
 
             //получить текущий заказ
-
-            //_cartAddProductRules.Handle
+            //var order = GetCurrentOrder()
+            
+            //прогоняем по правилам добавления в корзину
+            //_cartAddProductRules.Handle(order, product)
         }
 
         public async Task<OrderDto> AddAsync(CreateOrderRequest request)

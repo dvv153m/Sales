@@ -47,6 +47,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
 
                         foreach (var productDetail in entity.ProductDetails)
                         {
+                            productDetail.CreatedDate = DateTime.UtcNow;
                             var productDetailParameters = new DynamicParameters();
                             productDetailParameters.Add("ProductId", productId, DbType.Int64);
                             productDetailParameters.Add("AttributeId", productDetail.AttributeId, DbType.Int64);
@@ -66,12 +67,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
                 }
             }
 
-            return entity;
-            /*using (IDbConnection connection = _dbContext.CreateConnection())
-            {
-                var sqlQuery = "INSERT INTO Promocode (Value, CreatedDate) VALUES(@Value, @CreatedDate)";
-                await connection.ExecuteAsync(sqlQuery, entity);
-            }*/
+            return entity;            
         }
 
         public async Task<ProductEntity> GetByIdAsync(long id)

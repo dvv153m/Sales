@@ -5,6 +5,7 @@ using Sales.Core.Interfaces.Services;
 using Sales.Core.Rules.Orders;
 using Sales.Core.Rules.Products;
 using Sales.Core.Services;
+using Sales.Infrastructure.Order.Data.Dapper.Repositories;
 using Sales.Infrastructure.Services;
 
 namespace Sales.Order.Api.AppStart

@@ -33,12 +33,7 @@ namespace Sales.Infrastructure.Services
             var httpClient = _httpClientFactory.CreateClient();
 
             var response = await httpClient.PostAsync(url, stringContent);
-            if (response.StatusCode == System.Net.HttpStatusCode.OK || response.StatusCode == System.Net.HttpStatusCode.Created)
-            {
-                string responseBody = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<TOut>(responseBody);
-            }
-            return default(TOut);
+            return await GetResult<TOut>(response);
         }
 
         public async Task<TOut> PostAsync<TOut>(string url)
@@ -48,6 +43,11 @@ namespace Sales.Infrastructure.Services
             var httpClient = _httpClientFactory.CreateClient();
 
             var response = await httpClient.PostAsync(url, stringContent);
+            return await GetResult<TOut>(response);
+        }
+
+        private async Task<TOut> GetResult<TOut>(HttpResponseMessage response)
+        {
             if (response.StatusCode == System.Net.HttpStatusCode.OK || response.StatusCode == System.Net.HttpStatusCode.Created)
             {
                 string responseBody = await response.Content.ReadAsStringAsync();

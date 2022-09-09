@@ -21,6 +21,8 @@ namespace Sales.Contracts.Entity.Order
         /// </summary>
         public decimal Price { get; set; }
 
+        public DateTime UpdateDate { get; set; }
+
         public List<OrderDetailsEntity> OrderDetails { get; set; }
     }    
 }

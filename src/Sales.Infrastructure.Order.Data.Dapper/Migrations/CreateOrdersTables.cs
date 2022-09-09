@@ -3,7 +3,7 @@
 namespace Sales.Infrastructure.Order.Data.Dapper.Migrations
 {
     [Migration(1)]
-    public class CreateOrderTables : Migration
+    public class CreateOrdersTables : Migration
     {
         public override void Down()
         {
@@ -19,6 +19,7 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Migrations
                   .WithColumn("Date").AsDateTime().NotNullable()
                   .WithColumn("Status").AsInt32().NotNullable()
                   .WithColumn("Price").AsDecimal().NotNullable()
+                  .WithColumn("UpdateDate").AsDateTime().NotNullable()
                   .WithColumn("CreatedDate").AsDateTime().NotNullable();
 
             Create.Table("OrderDetail")
