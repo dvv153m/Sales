@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Sales.Core.Interfaces.Services
 {
     public interface IHttpProxy
     {
-        Task<TOut> GetAsync<TOut>(string paramsUri);        
+        Task<TOut> GetAsync<TOut>(string url);
+
+        Task<TOut> PostAsync<TIn, TOut>(TIn input, string url);
+
+        Task<TOut> PostAsync<TOut>(string url);
     }
 }

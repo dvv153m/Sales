@@ -19,7 +19,7 @@ namespace Sales.Promocode.Api.AppStart
                 PromocodeApiOptions appConf = builder.Configuration.GetSection(PromocodeApiOptions.SectionName).Get<PromocodeApiOptions>();
                 return new PromocodeService(x.GetRequiredService<IPromocodeRepository>(),
                                             x.GetRequiredService<IPromocodeGenerator>(),
-                                            appConf.PromoocodeLenght);
+                                            appConf.PromocodeLenght);
             });            
         }
     }

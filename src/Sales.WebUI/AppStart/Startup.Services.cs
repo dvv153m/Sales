@@ -10,14 +10,21 @@ namespace Sales.WebUI.AppStart
     {
         void ConfigureServices(WebApplicationBuilder builder)
         {
+            WebUIOptions appConf = builder.Configuration.GetSection(WebUIOptions.SectionName).Get<WebUIOptions>();
+
             builder.Services.AddHttpClient();            
 
             builder.Services.AddScoped<IHttpProxy, HttpProxy>();
+            
             builder.Services.AddScoped<IProductClient, ProductClient>(x=>
-            {
-                WebUIOptions appConf = builder.Configuration.GetSection(WebUIOptions.SectionName).Get<WebUIOptions>();
+            {                
                 return new ProductClient(x.GetRequiredService<IHttpProxy>(), appConf.ProductApiUrl);
-            });            
+            });
+
+            builder.Services.AddScoped<IPromocodeClient, PromocodeClient>(x =>
+            {                
+                return new PromocodeClient(x.GetRequiredService<IHttpProxy>(), appConf.PromocodeApiUrl);
+            });
         }
     }
 }

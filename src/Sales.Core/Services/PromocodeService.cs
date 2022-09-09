@@ -21,24 +21,17 @@ namespace Sales.Core.Services
             _promocodeLenght = promocodeLenght;
         }
 
-        public async Task<string> AddPromocodeAsync()
-        {
-            string newPromocode = _promocodeGenerator.Build(_promocodeLenght);
-            await _promocodeRepository.AddAsync(new PromocodeEntity { Value = newPromocode, Role="User" });
-            return newPromocode;
-        }
-
         public async Task<Promocode> GetByPromocodeAsync(string promocode)
         {
             PromocodeEntity promocodeEntity = await _promocodeRepository.GetByPromocodeAsync(promocode);
-            if (promocodeEntity != null)
-            {
-                return new Promocode { Value = promocodeEntity.Value };
-            }
-            else
-            {
-                return null;
-            }
+            return promocodeEntity != null ? new Promocode { Value = promocodeEntity.Value } : null;
         }
+
+        public async Task<Promocode> AddPromocodeAsync()
+        {
+            string newPromocode = _promocodeGenerator.Build(_promocodeLenght);
+            await _promocodeRepository.AddAsync(new PromocodeEntity { Value = newPromocode, Role="User" });
+            return new Promocode { Value = newPromocode };
+        }        
     }
 }

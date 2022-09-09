@@ -8,15 +8,20 @@ namespace Sales.Infrastructure.Services
         private readonly IHttpProxy _httpProxy;
         private readonly string _promocodeApiUrl;
 
-        public PromocodeClient(IHttpProxy httpProxy, string productApiUrl)
+        public PromocodeClient(IHttpProxy httpProxy, string promocodeApiUrl)
         {
             _httpProxy = httpProxy ?? throw new ArgumentNullException(nameof(httpProxy));
-            _promocodeApiUrl = productApiUrl;
+            _promocodeApiUrl = promocodeApiUrl;
         }
 
-        public async Task<Promocode> GetByPromocode(string promocode)
+        public async Task<Promocode> GetByPromocodeAsync(string promocode)
         {
             return await _httpProxy.GetAsync<Promocode>($"{_promocodeApiUrl}/{promocode}");
+        }
+
+        public async Task<Promocode> GeneratePromocodeAsync()
+        {
+            return await _httpProxy.PostAsync<Promocode>($"{_promocodeApiUrl}");
         }
     }
 }

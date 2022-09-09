@@ -1,26 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Sales.Contracts.Configuration;
+using Sales.Core.Interfaces.Services;
 using Sales.WebUI.Models;
 using System.Security.Claims;
 
 namespace Sales.WebUI.Controllers
 {
     public class UserController : Controller
-    {
-        private readonly IHttpClientFactory _httpClientFactory;
+    {        
+        private readonly IPromocodeClient _promocodeClient;        
 
-        private readonly WebUIOptions _config;
-
-        public UserController(IHttpClientFactory httpClientFactory,
-                              IOptions<WebUIOptions> config)
+        public UserController(IPromocodeClient promocodeClient)                                                               
         {
-            _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
-           
-            if (config?.Value == null) throw new ArgumentNullException(nameof(config));
-
-            _config = config.Value;
+            _promocodeClient = promocodeClient ?? throw new ArgumentNullException(nameof(promocodeClient));            
         }
 
         public IActionResult Index()
@@ -35,28 +27,15 @@ namespace Sales.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> GeneratePromocode()
         {
-            try
-            {
-                var httpClient = _httpClientFactory.CreateClient();
-                var response = await httpClient.PostAsync($"{_config.PromocodeApiUrl}", null);
-                var newPromocode = await response.Content.ReadAsStringAsync();
-                return await HandleResponse(newPromocode, response.IsSuccessStatusCode);                
-            }
-            catch (Exception ex)
-            {
-                //logger(ex)
-                return await HandleResponse(promocode: String.Empty, isSuccessStatusCode: false);
-            }
+            var newPromocode = await _promocodeClient.GeneratePromocodeAsync();
+            return await HandleResponse(newPromocode.Value, true);            
         }
 
         [HttpPost]
         public async Task<IActionResult> Login(UserViewModel model)
-        {                        
-            using (var httpClient = _httpClientFactory.CreateClient())
-            {
-                var response = await httpClient.GetAsync($"{_config.PromocodeApiUrl}/{model.Promocode}");
-                return await HandleResponse(model.Promocode, response.IsSuccessStatusCode);                
-            }
+        {      
+            var promocode = await _promocodeClient.GetByPromocodeAsync(model.Promocode);            
+            return await HandleResponse(model.Promocode, isSuccessStatusCode: promocode != null);            
         }
 
         private async Task<IActionResult> HandleResponse(string promocode, bool isSuccessStatusCode)

@@ -20,10 +20,6 @@ namespace Sales.Promocode.Api.V1.Controllers
             _logger = logger;   
         }
 
-        /// <summary>
-        /// Определяет, существует ли заданный промокод
-        /// </summary>
-        /// <returns></returns>
         [HttpGet("{promocode}")]
         public async Task<IActionResult> Get(string promocode)
         {                        
@@ -37,18 +33,9 @@ namespace Sales.Promocode.Api.V1.Controllers
         /// <returns>Возвращает созданный промокод</returns>
         [HttpPost]
         public async Task<IActionResult> Register()
-        {
-            string newPromocode;
-            try
-            {
-                newPromocode = await _promocodeService.AddPromocodeAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Failed to register promocode");
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
-            }
-
+        {            
+            var newPromocode = await _promocodeService.AddPromocodeAsync();
+            
             return CreatedAtRoute(routeName: String.Empty,                                      
                                       value: newPromocode);
         }           

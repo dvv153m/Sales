@@ -14,6 +14,6 @@ namespace Sales.Contracts.Configuration
 
         public string MasterConnectionString { get; set; }
 
-        public int PromoocodeLenght { get; set; }
+        public int PromocodeLenght { get; set; }
     }
 }
