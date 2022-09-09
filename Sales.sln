@@ -34,6 +34,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Infrastructure.Data",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Order.Api", "src\Sales.Order.Api\Sales.Order.Api.csproj", "{CD053001-30E8-4792-A920-889CCAB4200D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sales.Infrastructure.Order.Data.Dapper", "src\Sales.Infrastructure.Order.Data.Dapper\Sales.Infrastructure.Order.Data.Dapper.csproj", "{E71BEB8C-A2A3-499B-BB71-235BF55D31AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +86,10 @@ Global
 		{CD053001-30E8-4792-A920-889CCAB4200D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD053001-30E8-4792-A920-889CCAB4200D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD053001-30E8-4792-A920-889CCAB4200D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E71BEB8C-A2A3-499B-BB71-235BF55D31AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E71BEB8C-A2A3-499B-BB71-235BF55D31AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E71BEB8C-A2A3-499B-BB71-235BF55D31AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E71BEB8C-A2A3-499B-BB71-235BF55D31AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,6 +106,7 @@ Global
 		{C8F46472-E56C-4FCA-9306-FC14BBD87616} = {C0A2A1DC-2AD7-4FAE-A253-5CB9F36D0207}
 		{244B49D8-8158-430D-864D-634E01FAA897} = {C0A2A1DC-2AD7-4FAE-A253-5CB9F36D0207}
 		{CD053001-30E8-4792-A920-889CCAB4200D} = {C0A2A1DC-2AD7-4FAE-A253-5CB9F36D0207}
+		{E71BEB8C-A2A3-499B-BB71-235BF55D31AD} = {C0A2A1DC-2AD7-4FAE-A253-5CB9F36D0207}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {39AC0E70-BD20-42AE-B1F3-C5B3C3943551}

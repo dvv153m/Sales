@@ -17,8 +17,7 @@ namespace Sales.WebUI.AppStart
             {
                 WebUIOptions appConf = builder.Configuration.GetSection(WebUIOptions.SectionName).Get<WebUIOptions>();
                 return new ProductClient(x.GetRequiredService<IHttpProxy>(), appConf.ProductApiUrl);
-            });
-            
+            });            
         }
     }
 }

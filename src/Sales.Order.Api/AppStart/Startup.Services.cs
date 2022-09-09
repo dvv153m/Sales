@@ -13,18 +13,21 @@ namespace Sales.Order.Api.AppStart
     {
         void ConfigureServices(WebApplicationBuilder builder)
         {
+            OrderApiOptions appConf = builder.Configuration.GetSection(OrderApiOptions.SectionName).Get<OrderApiOptions>();
+
             builder.Services.AddHttpClient();
 
-            builder.Services.AddScoped<IHttpProxy, HttpProxy>();
-            builder.Services.AddScoped<IProductClient, ProductClient>();
+            builder.Services.AddScoped<IHttpProxy, HttpProxy>();            
+            builder.Services.AddScoped<IProductClient, ProductClient>(x =>
+            {                
+                return new ProductClient(x.GetRequiredService<IHttpProxy>(), appConf.ProductApiUrl);
+            });
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IOrderService, OrderService>();
 
             //правила добавления в корзину
             builder.Services.AddScoped<OrderAddRules>(x =>
-            {
-                OrderApiOptions appConf = builder.Configuration.GetSection(OrderApiOptions.SectionName).Get<OrderApiOptions>();
-
+            {                
                 var rule1 = new OneOrderForOnePromocodeRule(x.GetRequiredService<IOrderRepository>());
                 var rule2 = new OrderMinPriceRule(appConf.MinimalOrderPrice);
 
