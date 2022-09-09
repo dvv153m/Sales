@@ -15,7 +15,7 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Migrations
         {
             Create.Table("Order")
                   .WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
-                  .WithColumn("PromocodeId").AsInt64().NotNullable()
+                  .WithColumn("Promocode").AsString().NotNullable()
                   .WithColumn("Date").AsDateTime().NotNullable()
                   .WithColumn("Status").AsInt32().NotNullable()
                   .WithColumn("Price").AsDecimal().NotNullable()

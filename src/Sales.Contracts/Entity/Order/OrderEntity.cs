@@ -4,7 +4,7 @@ namespace Sales.Contracts.Entity.Order
 {
     public class OrderEntity : EntityBase
     {        
-        public long PromocodeId { get; set; }
+        public string Promocode { get; set; }
 
         /// <summary>
         /// Дата заказа

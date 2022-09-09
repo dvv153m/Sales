@@ -15,10 +15,10 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        /*public Task<OrderEntity> AddAsync(OrderEntity entity)
+        public async Task<OrderEntity> AddAsync(OrderEntity entity)
         {
-            var insertOrderQuery = @"INSERT INTO Order (PromocodeId, Date, Status, Price, UpdateDate) 
-                                          VALUES (@PromocodeId, @Date, @Status, @Price, @CreatedDate, @UpdateDate)
+            var insertOrderQuery = @"INSERT INTO Order (Promocode, Date, Status, Price, UpdateDate, CreatedDate) 
+                                          VALUES (@Promocode, @Date, @Status, @Price, @UpdateDate, @CreatedDate)
                                           SELECT CAST(SCOPE_IDENTITY() as int)";
 
             var insertProductDetailsQuery = @"INSERT INTO OrderDetail (OrderId, ProductId, Quantity, Price, CreatedDate) 
@@ -31,24 +31,25 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
                 {
                     try
                     {
-                        var productParameters = new DynamicParameters();
-                        productParameters.Add("Title", entity.PromocodeId, DbType.Int64);
-                        productParameters.Add("CopyNumber", entity.Date, DbType.DateTime);
-                        productParameters.Add("Price", entity.Status, DbType.Int32);
-                        productParameters.Add("ImagePath", entity.ImagePath, DbType.String);
-                        productParameters.Add("CreatedDate", entity.CreatedDate, DbType.DateTime);
-                        productParameters.Add("UpdateDate", entity.UpdateDate, DbType.DateTime);
+                        var orderParameters = new DynamicParameters();
+                        orderParameters.Add("Promocode", entity.Promocode, DbType.String);
+                        orderParameters.Add("Date", entity.Date, DbType.DateTime);
+                        orderParameters.Add("Status", entity.Status, DbType.Int32);
+                        orderParameters.Add("Price", entity.Price, DbType.Decimal);
+                        orderParameters.Add("UpdateDate", entity.UpdateDate, DbType.DateTime);
+                        orderParameters.Add("CreatedDate", entity.CreatedDate, DbType.DateTime);                        
 
-                        var productId = await connection.QuerySingleAsync<int>(insertProductQuery, productParameters, transaction);
-                        entity.Id = productId;
+                        var orderId = await connection.QuerySingleAsync<int>(insertOrderQuery, orderParameters, transaction);
+                        entity.Id = orderId;
 
-                        foreach (var productDetail in entity.ProductDetails)
+                        foreach (var productDetail in entity.OrderDetails)
                         {
                             productDetail.CreatedDate = DateTime.UtcNow;
                             var productDetailParameters = new DynamicParameters();
-                            productDetailParameters.Add("ProductId", productId, DbType.Int64);
-                            productDetailParameters.Add("AttributeId", productDetail.AttributeId, DbType.Int64);
-                            productDetailParameters.Add("Value", productDetail.Value, DbType.String);
+                            productDetailParameters.Add("OrderId", orderId, DbType.Int64);
+                            productDetailParameters.Add("ProductId", productDetail.ProductId, DbType.Int64);
+                            productDetailParameters.Add("Quantity", productDetail.Quantity, DbType.Int32);
+                            productDetailParameters.Add("Price", productDetail.Quantity, DbType.Decimal);
                             productDetailParameters.Add("CreatedDate", entity.CreatedDate, DbType.DateTime);
 
                             await connection.ExecuteAsync(insertProductDetailsQuery, productDetailParameters, transaction);
@@ -63,7 +64,8 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
                     }
                 }
             }
-        }*/
+            return entity;
+        }
 
         public OrderEntity GetOrderByPromocodeId(long promocodeId)
         {

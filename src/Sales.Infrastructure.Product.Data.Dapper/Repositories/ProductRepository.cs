@@ -17,8 +17,8 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
 
         public async Task<ProductEntity> AddAsync(ProductEntity entity)
         {            
-            var insertProductQuery = @"INSERT INTO Product (Title, CopyNumber, Price, ImagePath, CreatedDate, UpdateDate) 
-                                          VALUES (@Title, @CopyNumber, @Price, @ImagePath, @CreatedDate, @UpdateDate)
+            var insertProductQuery = @"INSERT INTO Product (Title, CopyNumber, Price, ImagePath, UpdateDate, CreatedDate) 
+                                          VALUES (@Title, @CopyNumber, @Price, @ImagePath, @UpdateDate, @CreatedDate)
                                           SELECT CAST(SCOPE_IDENTITY() as int)";
 
             var insertProductDetailsQuery = @"INSERT INTO ProductDetail (ProductId, AttributeId, Value, CreatedDate) 
@@ -39,8 +39,8 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
                         productParameters.Add("CopyNumber", entity.CopyNumber, DbType.Int32);
                         productParameters.Add("Price", entity.Price, DbType.Decimal);
                         productParameters.Add("ImagePath", entity.ImagePath, DbType.String);
-                        productParameters.Add("CreatedDate", entity.CreatedDate, DbType.DateTime);
                         productParameters.Add("UpdateDate", entity.UpdateDate, DbType.DateTime);
+                        productParameters.Add("CreatedDate", entity.CreatedDate, DbType.DateTime);                        
 
                         var productId = await connection.QuerySingleAsync<int>(insertProductQuery, productParameters, transaction);
                         entity.Id = productId;

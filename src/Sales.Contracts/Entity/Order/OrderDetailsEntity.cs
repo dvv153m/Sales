@@ -7,12 +7,12 @@ namespace Sales.Contracts.Entity.Order
         /// <summary>
         /// Id заказа
         /// </summary>
-        public int OrderId { get; set; }
+        public long OrderId { get; set; }
 
         /// <summary>
         /// Id товара
         /// </summary>
-        public int ProductId { get; set; }
+        public long ProductId { get; set; }
 
         /// <summary>
         /// Кол-во товара
