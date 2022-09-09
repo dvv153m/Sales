@@ -10,8 +10,11 @@ namespace Sales.Promocode.Api.AppStart
     public partial class Startup
     {
         void ConfigureServices(WebApplicationBuilder builder)
-        {                        
-            builder.Services.AddScoped<IPromocodeRepository, PromocodeRepository>();
+        {
+            //builder.Services.AddScoped<IPromocodeRepository, PromocodeRepository>();
+            builder.Services.AddScoped<PromocodeRepository>();
+            builder.Services.AddScoped<IPromocodeRepository>(x => new PromocodeCacheDecoratorRepository(x.GetRequiredService<PromocodeRepository>()));
+
             builder.Services.AddScoped<IPromocodeGenerator, PromocodeGenerator>();
 
             builder.Services.AddScoped<IPromocodeService>(x =>
