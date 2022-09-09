@@ -32,7 +32,7 @@ namespace Sales.Order.Api.V1.Controllers
             {
                 await _orderService.AddProductToOrderAsync(request);
             }
-            catch (Exception ex)
+            catch (OrderException ex)
             {
                 _logger.LogError(ex, $"Failed to add product to order. {ex.Message}");
                 return BadRequest(ex.Message);

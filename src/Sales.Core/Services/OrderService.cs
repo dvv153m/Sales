@@ -1,5 +1,6 @@
 ﻿using Sales.Contracts.Models;
 using Sales.Contracts.Request.Order;
+using Sales.Core.Exceptions;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Core.Interfaces.Services;
 using Sales.Core.Rules.Orders;
@@ -27,6 +28,11 @@ namespace Sales.Core.Services
         public async Task AddProductToOrderAsync(AddProductToOrderRequest request)
         {
             //узнать есть ли такой промокод если нет OrderException
+            var promocode = await _promocodeClient.GetByPromocodeAsync(request.Promocode);
+            if (promocode == null)
+            {
+                throw new OrderException("такого промокода не существует");
+            }
 
             //получить продукт            
             var res = await _productClient.GetProductByIdAsync(productId: request.ProductId);
