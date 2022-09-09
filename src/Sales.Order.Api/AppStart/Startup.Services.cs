@@ -22,6 +22,10 @@ namespace Sales.Order.Api.AppStart
             {                
                 return new ProductClient(x.GetRequiredService<IHttpProxy>(), appConf.ProductApiUrl);
             });
+            builder.Services.AddScoped<IPromocodeClient, PromocodeClient>(x =>
+            {
+                return new PromocodeClient(x.GetRequiredService<IHttpProxy>(), appConf.PromocodeApiUrl);
+            });
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IOrderService, OrderService>();
 

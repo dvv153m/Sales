@@ -11,14 +11,17 @@ namespace Sales.Core.Services
         private readonly IOrderRepository _orderService;
         private readonly OrderAddRules _orderRules;
         private readonly IProductClient _productClient;
+        private readonly IPromocodeClient _promocodeClient;
 
         public OrderService(IOrderRepository orderRepository,
                             OrderAddRules orderRules,
-                            IProductClient productClient)
+                            IProductClient productClient,
+                            IPromocodeClient promocodeClient)
         {
             //orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
             _orderRules = orderRules ?? throw new ArgumentNullException(nameof(orderRules));
             _productClient = productClient ?? throw new ArgumentNullException(nameof(productClient));
+            _promocodeClient = promocodeClient ?? throw new ArgumentNullException(nameof(promocodeClient));
         }        
 
         public async Task AddProductToOrderAsync(AddProductToOrderRequest request)

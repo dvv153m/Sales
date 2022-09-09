@@ -12,6 +12,8 @@ namespace Sales.Contracts.Configuration
 
         public string ProductApiUrl { get; set; }
 
+        public string PromocodeApiUrl { get; set; }
+
         public string SqlConnectionString { get; set; }
 
         public string MasterConnectionString { get; set; }

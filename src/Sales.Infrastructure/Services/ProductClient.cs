@@ -16,12 +16,12 @@ namespace Sales.Infrastructure.Services
 
         public async Task<IEnumerable<ProductDto>> GetAllAsync()
         {
-            return await _httpProxy.GetAsync<IEnumerable<ProductDto>>($"{_productApiUrl}/products");
+            return await _httpProxy.GetAsync<IEnumerable<ProductDto>>($"{_productApiUrl}");
         }
 
         public async Task<ProductDto> GetProductByIdAsync(long productId)
         {            
-            return await _httpProxy.GetAsync<ProductDto>($"{_productApiUrl}/products/{productId}");            
+            return await _httpProxy.GetAsync<ProductDto>($"{_productApiUrl}/{productId}");            
         }
     }
 }
