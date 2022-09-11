@@ -43,17 +43,13 @@ namespace Sales.Core.Services
             await ValidatePromocode(request.Promocode);
             ProductDto productDto = await GetProduct(request.ProductId);
 
-            //todo сделать если заказ уже есть и его статус оформлен то в корзину уже нельзя добавлять
-            //throw new OrderException("один промокод один заказ. Заказ уже есть с таким промокодом")
-
-
             IEnumerable<OrderEntity> orders = await _orderRepository.GetOrdersByPromocodeAsync(request.Promocode);
-
+            var completedOrder = orders.Where(x => x.Status == OrderStatus.UserCompleted);
             var order = orders.FirstOrDefault(x => x.Status == OrderStatus.UserCollect);
 
             OrderDto orderDto = Map(order);
 
-            var ruleContext = new RuleContext(orderDto, productDto, request.Quantity);
+            var ruleContext = new RuleContext(orderDto, productDto, request.Quantity, completedOrder.Count());
 
             _cartAddProductRules.Handle(ruleContext);
 
@@ -116,11 +112,21 @@ namespace Sales.Core.Services
         /// <summary>
         /// Оформит заказ
         /// </summary>
-        public void SetOrder(string promocode)
+        public async Task SetOrder(string promocode)
         {
-            //статус заказа сменить
+            await ValidatePromocode(promocode);
 
-            //сделать так чтобы можно было легко сделать 2 заказа по 1 промокоду
+            IEnumerable<OrderEntity> orders = await _orderRepository.GetOrdersByPromocodeAsync(promocode);
+            var order = orders.FirstOrDefault(x => x.Status == OrderStatus.UserCollect);
+            if (order != null)
+            {
+                order.Status = OrderStatus.UserCompleted;
+                await _orderRepository.UpdateAsync(order);
+            }
+            else
+            {
+                throw new OrderException($"не найден заказ по промокоду:{promocode}");
+            }            
         }
 
         public async Task<OrderDto> AddAsync(CreateOrderRequest request)

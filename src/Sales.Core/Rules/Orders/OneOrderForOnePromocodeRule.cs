@@ -1,8 +1,5 @@
-﻿using Sales.Contracts.Entity.Order;
-using Sales.Contracts.Models;
-using Sales.Core.Exceptions;
+﻿using Sales.Core.Exceptions;
 using Sales.Core.Interfaces.Repositories;
-
 
 namespace Sales.Core.Rules.Orders
 {
@@ -17,14 +14,12 @@ namespace Sales.Core.Rules.Orders
         {
             _orderRepository = orderRepository ?? throw new ArgumentException(nameof(orderRepository)); 
         }
-        public override void Handle(OrderDto order)
+        public override void Handle(RuleContext ruleContext)
         {
-            /*OrderEntity orderEntity = _orderRepository.GetOrderByPromocodeId(order.PromocodeId);
-            if (orderEntity != null)
-            {
+            if(ruleContext.OrderCountByPromocode > 0)
                 throw new OrderException("с таким промокодом уже оформляли заказ");
-            }*/
-            base.NextRule(order);
+            
+            base.NextRule(ruleContext);
         }
     }
 }

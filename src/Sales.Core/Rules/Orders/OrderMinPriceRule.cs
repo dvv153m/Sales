@@ -1,6 +1,4 @@
-﻿using Sales.Contracts.Models;
-using Sales.Core.Exceptions;
-
+﻿using Sales.Core.Exceptions;
 
 namespace Sales.Core.Rules.Orders
 {
@@ -13,13 +11,13 @@ namespace Sales.Core.Rules.Orders
             _minPrice = minPrice;
         }
 
-        public override void Handle(OrderDto order)
-        {
-            if (order.Price < _minPrice)
+        public override void Handle(RuleContext ruleContext)
+        {            
+            if (ruleContext?.Order?.Price < _minPrice)
             {
                 throw new OrderException($"минимальная сумма заказа: {_minPrice}") ;
             }
-            base.NextRule(order);
+            base.NextRule(ruleContext);
         }
     }
 }

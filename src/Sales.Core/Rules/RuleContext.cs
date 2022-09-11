@@ -1,6 +1,5 @@
 ﻿using Sales.Contracts.Models;
 
-
 namespace Sales.Core.Rules
 {
     /// <summary>
@@ -24,16 +23,23 @@ namespace Sales.Core.Rules
         public int Quantity { get; private set; }
 
         /// <summary>
+        /// Кол-во завершенных заказов по одному промокоду
+        /// </summary>
+        public int OrderCountByPromocode { get; private set; }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="order">Текущий заказ (уже в бд)</param>
         /// <param name="product">Добавляемый товар в заказ (корзину)</param>
         /// <param name="quantity">Кол-во экземпляров Product</param>
-        public RuleContext(OrderDto? order, ProductDto product,  int quantity)
+        /// <param name="orderCountByPromocode">Кол-во завершенных заказов по одному промокоду</param>
+        public RuleContext(OrderDto? order, ProductDto product,  int quantity, int orderCountByPromocode)
         {
             Order = order;
             Product = product;
             Quantity = quantity;
+            OrderCountByPromocode = orderCountByPromocode;
         }
     }
 }

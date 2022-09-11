@@ -1,6 +1,4 @@
-﻿using Sales.Contracts.Models;
-
-
+﻿
 namespace Sales.Core.Rules.Orders
 {
     /// <summary>
@@ -19,10 +17,10 @@ namespace Sales.Core.Rules.Orders
         /// 
         /// </summary>
         /// <param name="request"></param>
-        public void NextRule(OrderDto request)
+        public void NextRule(RuleContext ruleContext)
         {
             if (_nextRuleHandler != null)
-                _nextRuleHandler.Handle(request);
+                _nextRuleHandler.Handle(ruleContext);
         }
 
         /// <summary>
@@ -31,6 +29,6 @@ namespace Sales.Core.Rules.Orders
         /// <param name="cart">Корзина</param>
         /// <param name="product">Добавляемый товар в корзину</param>
         /// <param name="errorInfo">Описывает причину невозможности добавления товара</param>
-        public abstract void Handle(OrderDto order);
+        public abstract void Handle(RuleContext ruleContext);
     }
 }

@@ -10,6 +10,11 @@ namespace Sales.Core.Rules.Products
     {
         public override void Handle(RuleContext ruleContext)
         {
+            if (ruleContext.Quantity > 1)
+            {
+                throw new ProductException($"В корзину можно положить только один экземпляр одного и того же товара");
+            }
+
             if (ruleContext.Order?.OrderDetails != null)
             {                
                 foreach (OrderDetailsDto orderDetail in ruleContext.Order.OrderDetails)
