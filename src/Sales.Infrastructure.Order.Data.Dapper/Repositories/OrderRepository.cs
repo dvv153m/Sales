@@ -123,7 +123,8 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
                             orderDict.Add(order.Id, order);
                         }
 
-                        order.OrderDetails.Add(orderDetails);
+                        if(orderDetails != null)
+                            order.OrderDetails.Add(orderDetails);
 
                         return order;
                     });
@@ -171,25 +172,18 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
             }
         }
 
-        public async Task DeleteProductFromOrderAsync(long orderId,  long productId)
+        public async Task DeleteProductFromOrderAsync(long orderId, long productId)
         {
-            try
-            {
-                var deleteQuery = @$"DELETE FROM [{_databaseName}].[dbo].[OrderDetail]
+            var deleteQuery = @$"DELETE FROM [{_databaseName}].[dbo].[OrderDetail]
                                      WHERE OrderId=@OrderId AND ProductId=@ProductId";
 
-                var parameters = new DynamicParameters();
-                parameters.Add("OrderId", orderId, DbType.Int64);
-                parameters.Add("ProductId", productId, DbType.Int64);
+            var parameters = new DynamicParameters();
+            parameters.Add("OrderId", orderId, DbType.Int64);
+            parameters.Add("ProductId", productId, DbType.Int64);
 
-                using (var connection = _dbContext.CreateConnection())
-                {
-                    await connection.ExecuteAsync(deleteQuery, parameters);
-                }
-            }
-            catch (Exception ex)
-            { 
-            
+            using (var connection = _dbContext.CreateConnection())
+            {
+                await connection.ExecuteAsync(deleteQuery, parameters);
             }
         }
     }
