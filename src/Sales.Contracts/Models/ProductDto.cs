@@ -12,7 +12,7 @@ namespace Sales.Contracts.Models
         public string Title { get; set; }
 
         /// <summary>
-        /// Кол-во экземпляров
+        /// Кол-во экземпляров, участвующих в распродаже
         /// </summary>
         public int CopyNumber { get; set; }
 

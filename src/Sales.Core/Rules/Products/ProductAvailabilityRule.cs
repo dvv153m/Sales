@@ -1,5 +1,4 @@
-﻿using Sales.Contracts.Models;
-using Sales.Core.Exceptions;
+﻿using Sales.Core.Exceptions;
 
 namespace Sales.Core.Rules.Products
 {
@@ -8,15 +7,22 @@ namespace Sales.Core.Rules.Products
     /// </summary>
     public class ProductAvailabilityRule : CartAddProductRules
     {        
-        public override void Handle(Cart cart, ProductDto product)
+        public override void Handle(RuleContext ruleContext)
         {            
-            if (product.CopyNumber > 0)
+            if (ruleContext.Product.CopyNumber > 0)
             {
-                base.NextRule(cart, product);
+                if (ruleContext.Product.CopyNumber > ruleContext.Quantity)
+                {
+                    base.NextRule(ruleContext);
+                }
+                else
+                {
+                    throw new ProductException($"{ruleContext.Product.Title} нет в наличии необходимого количества");
+                }
             }
             else
             {
-                throw new ProductException($"{product.Title} нет в наличии");
+                throw new ProductException($"{ruleContext.Product.Title} нет в наличии");
             }
         }
     }

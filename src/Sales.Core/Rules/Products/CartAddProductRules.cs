@@ -1,6 +1,4 @@
-﻿using Sales.Contracts.Models;
-
-
+﻿
 namespace Sales.Core.Rules.Products
 {
     /// <summary>
@@ -14,22 +12,18 @@ namespace Sales.Core.Rules.Products
         {
             _nextRuleHandler = ruleHandler;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="request"></param>
-        public void NextRule(Cart cart, ProductDto request)
+        
+        public void NextRule(RuleContext ruleContext)
         {            
             if (_nextRuleHandler != null)
-                _nextRuleHandler.Handle(cart, request);
+                _nextRuleHandler.Handle(ruleContext);
         }
 
         /// <summary>
         /// Обработчика правил
         /// </summary>
-        /// <param name="cart">Корзина</param>
-        /// <param name="product">Добавляемый товар в корзину</param>        
-        public abstract void Handle(Cart cart, ProductDto product);
+        /// <param name="orderDto">Заказ с текущим содержимым</param>
+        /// <param name="product">Добавляемый товар в корзину(в заказ)</param>        
+        public abstract void Handle(RuleContext ruleContext);
     }
 }

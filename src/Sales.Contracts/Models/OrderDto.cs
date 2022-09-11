@@ -29,7 +29,7 @@ namespace Sales.Contracts.Models
 
     public class OrderDetailsDto
     {
-        public int ProductId { get; set; }
+        public long ProductId { get; set; }
 
         /// <summary>
         /// Кол-во товара
@@ -37,7 +37,7 @@ namespace Sales.Contracts.Models
         public int Quantity { get; set; }
 
         /// <summary>
-        /// Цена с учетом кол-ва товара
+        /// Цена за единицу товара
         /// </summary>
         public decimal Price { get; set; }
     }

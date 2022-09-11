@@ -8,18 +8,20 @@ namespace Sales.Core.Rules.Products
     /// </summary>
     public class ProductUniquenessRule : CartAddProductRules
     {
-        public override void Handle(Cart cart, ProductDto product)
-        {            
-            bool isUniqueProduct = !cart.Products.Select(p => p.Id).Contains(product.Id);
-
-            if (isUniqueProduct)
-            {
-                base.NextRule(cart, product);
+        public override void Handle(RuleContext ruleContext)
+        {
+            if (ruleContext.Order?.OrderDetails != null)
+            {                
+                foreach (OrderDetailsDto p in ruleContext.Order.OrderDetails)
+                { 
+                    if(p.ProductId == ruleContext.Product.Id)
+                    {
+                        throw new ProductException($"{ruleContext.Product.Title} уже есть в корзине");
+                    }
+                }
             }
-            else
-            {
-                throw new ProductException($"{product.Title} уже есть в корзине");                
-            }
+            
+            base.NextRule(ruleContext);            
         }
     }
 }

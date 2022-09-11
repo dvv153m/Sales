@@ -15,7 +15,7 @@ namespace Sales.Contracts.Entity.Order
         public long ProductId { get; set; }
 
         /// <summary>
-        /// Кол-во товара
+        /// Кол-во товара, заказываемого пользователем
         /// </summary>
         public int Quantity { get; set; }
 
