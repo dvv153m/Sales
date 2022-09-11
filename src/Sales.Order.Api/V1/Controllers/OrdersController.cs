@@ -32,7 +32,7 @@ namespace Sales.Order.Api.V1.Controllers
             {
                 await _orderService.AddProductToOrderAsync(request);
             }
-            catch (OrderException ex)
+            catch (ApplicationException ex)
             {
                 _logger.LogError(ex, $"Failed to add product to order. {ex.Message}");
                 return BadRequest(ex.Message);
@@ -52,7 +52,7 @@ namespace Sales.Order.Api.V1.Controllers
             {
                 await _orderService.DeleteProductFromOrderAsync(request);
             }
-            catch (OrderException ex)
+            catch (ApplicationException ex)
             {
                 _logger.LogError(ex, $"Failed to add product to order. {ex.Message}");
                 return BadRequest(ex.Message);
@@ -70,7 +70,7 @@ namespace Sales.Order.Api.V1.Controllers
                                       routeValues: new { id = orderDto.Id },
                                       value: orderDto);
             }
-            catch (OrderException ex)
+            catch (ApplicationException ex)
             {
                 _logger.LogError(ex, $"Failed to create order. {ex.Message}");
                 return BadRequest(ex.Message);
@@ -93,7 +93,7 @@ namespace Sales.Order.Api.V1.Controllers
                     return NotFound(id);
                 }
             }
-            catch (OrderException ex)
+            catch (ApplicationException ex)
             {
                 _logger.LogError(ex, $"Failed to get order. {ex.Message}");
                 return BadRequest(ex.Message);

@@ -39,17 +39,17 @@ namespace Sales.Core.Services
         /// <param name="request"></param>
         /// <returns></returns>
         public async Task AddProductToOrderAsync(AddProductToOrderRequest request)
-        {
-            ProductDto productDto = await ExistPromocodeAndProduct(request.Promocode, request.ProductId);
+        {            
+            await ValidatePromocode(request.Promocode);
+            ProductDto productDto = await GetProduct(request.ProductId);
 
-            //если кол-во заказываемого товара больше чем на складе (добавить правило)
+            //todo сделать если заказ уже есть и его статус оформлен то в корзину уже нельзя добавлять
+            //throw new OrderException("один промокод один заказ. Заказ уже есть с таким промокодом")
 
-            //прогоняем по правилам добавления в корзину
-            //todo сделать если заказ уже есть и его статус оформлен то в корзину уже нельзя добавлять            
 
-            //сделать так чтобы можно было легко сделать 2 заказа по 1 промокоду
+            IEnumerable<OrderEntity> orders = await _orderRepository.GetOrdersByPromocodeAsync(request.Promocode);
 
-            var order = await _orderRepository.GetOrderByPromocodeAsync(request.Promocode);
+            var order = orders.FirstOrDefault(x => x.Status == OrderStatus.UserCollect);
 
             OrderDto orderDto = Map(order);
 
@@ -82,7 +82,7 @@ namespace Sales.Core.Services
             }
             else
             {                
-                //это в транзакцию упаковать
+                //todo это в транзакцию упаковать
 
                 order.UpdateDate = DateTime.UtcNow;
                 
@@ -111,32 +111,18 @@ namespace Sales.Core.Services
                 }
                 await _orderRepository.UpdateAsync(order);
             }            
-        }        
-
-        public async Task<ProductDto> ExistPromocodeAndProduct(string promocode, long productId)
-        {
-            Promocode promocodeObj = await _promocodeClient.GetByPromocodeAsync(promocode);
-            if (promocodeObj == null || promocodeObj.Value == null)
-            {
-                throw new OrderException("данного промокода не существует");
-            }
-
-            ProductDto product = await _productClient.GetProductByIdAsync(productId);
-            if (product == null)
-            {
-                throw new OrderException("данного товара не существует");
-            }
-            return product;
-        }
+        }                
 
         /// <summary>
         /// Оформит заказ
         /// </summary>
-        public void SetOrder()
-        { 
+        public void SetOrder(string promocode)
+        {
             //статус заказа сменить
+
+            //сделать так чтобы можно было легко сделать 2 заказа по 1 промокоду
         }
-        
+
         public async Task<OrderDto> AddAsync(CreateOrderRequest request)
         {
             var res = await _productClient.GetProductByIdAsync(productId: 1);
@@ -170,10 +156,12 @@ namespace Sales.Core.Services
         }
 
         public async Task DeleteProductFromOrderAsync(DeleteProductFromOrderRequest request)
-        {
-            await ExistPromocodeAndProduct(request.Promocode, request.ProductId);
+        {            
+            await ValidatePromocode(request.Promocode);
+            await ValidateProduct(request.ProductId);            
 
-            var order = await _orderRepository.GetOrderByPromocodeAsync(request.Promocode);
+            var orders = await _orderRepository.GetOrdersByPromocodeAsync(request.Promocode);
+            var order = orders.FirstOrDefault(x => x.Status == OrderStatus.UserCollect);
             if (order != null)
             {
                 await _orderRepository.DeleteProductFromOrderAsync(order.Id, request.ProductId);
@@ -183,6 +171,41 @@ namespace Sales.Core.Services
                 throw new OrderException("заказ не найден");
             }
         }
+
+        /// <summary>
+        /// Проверка на существование промокода
+        /// </summary>
+        /// <param name="promocode">введеный пользователем промокод</param>
+        /// <returns>OrderException если промокод отсутствует</returns>
+        /// <exception cref="OrderException"></exception>
+        private async Task ValidatePromocode(string promocode)
+        {
+            Promocode promocodeObj = await _promocodeClient.GetByPromocodeAsync(promocode);
+            if (promocodeObj == null || promocodeObj.Value == null)
+            {
+                throw new OrderException("данного промокода не существует");
+            }
+        }
+
+        /// <summary>
+        /// Проверка на существование товара
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        private async Task ValidateProduct(long productId)
+        {
+            await GetProduct(productId);
+        }
+
+        private async Task<ProductDto> GetProduct(long productId)
+        {
+            ProductDto product = await _productClient.GetProductByIdAsync(productId);
+            if (product == null)
+            {
+                throw new OrderException("данного товара не существует");
+            }
+            return product;
+        }        
 
         private decimal GetOrderPrice(IEnumerable<OrderDetailsEntity> orderDetailEntities)
         {
@@ -194,30 +217,37 @@ namespace Sales.Core.Services
             return price;
         }
 
-        private OrderDto Map(OrderEntity orderEntity)
+        private OrderDto? Map(OrderEntity? orderEntity)
         {
-            var orderDetails = new List<OrderDetailsDto>();
-            if (orderEntity.OrderDetails != null)
+            if (orderEntity != null)
             {
-                foreach (var orderDetail in orderEntity.OrderDetails)
+                var orderDetails = new List<OrderDetailsDto>();
+                if (orderEntity.OrderDetails != null)
                 {
-                    orderDetails.Add(new OrderDetailsDto
+                    foreach (var orderDetail in orderEntity.OrderDetails)
                     {
-                        ProductId = orderDetail.ProductId,
-                        Quantity = orderDetail.Quantity,
-                        Price = orderDetail.Price,
-                    });
+                        orderDetails.Add(new OrderDetailsDto
+                        {
+                            ProductId = orderDetail.ProductId,
+                            Quantity = orderDetail.Quantity,
+                            Price = orderDetail.Price,
+                        });
+                    }
                 }
+                return new OrderDto
+                {
+                    Id = orderEntity.Id,
+                    Promocode = orderEntity.Promocode,
+                    Date = orderEntity.Date,
+                    Status = orderEntity.Status,
+                    Price = orderEntity.Price,
+                    OrderDetails = orderDetails
+                };
             }
-            return new OrderDto
+            else
             {
-                Id = orderEntity.Id,
-                Promocode = orderEntity.Promocode,
-                Date = orderEntity.Date,
-                Status = orderEntity.Status,
-                Price = orderEntity.Price,
-                OrderDetails = orderDetails
-            };
+                return null;
+            }
         }
 
         /*private OrderEntity Map(CreateOrderRequest createOrderRequest)

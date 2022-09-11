@@ -8,7 +8,7 @@ namespace Sales.Core.Interfaces.Repositories
 
         Task AddProductToOrder(OrderDetailsEntity entity);
 
-        Task<OrderEntity> GetOrderByPromocodeAsync(string promocode);
+        Task<IEnumerable<OrderEntity>> GetOrdersByPromocodeAsync(string promocode);
 
         Task UpdateAsync(OrderEntity entity);
 

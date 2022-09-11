@@ -100,13 +100,12 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
         /// </summary>
         /// <param name="promocode"></param>
         /// <returns></returns>
-        public async Task<OrderEntity> GetOrderByPromocodeAsync(string promocode)
-        {
-            int orderStatus = (int)OrderStatus.UserCollect;
+        public async Task<IEnumerable<OrderEntity>> GetOrdersByPromocodeAsync(string promocode)
+        {            
             var selectOrderQuery = @$"SELECT * FROM [{_databaseName}].[dbo].[Order] mainOrder
                                           LEFT JOIN [{_databaseName}].[dbo].[OrderDetail] orderDetail
                                           ON mainOrder.Id = orderDetail.OrderId
-                                          WHERE Promocode= '{promocode}' AND Status={orderStatus}";
+                                          WHERE Promocode= '{promocode}'";
 
             using (var connection = _dbContext.CreateConnection())
             {
@@ -123,13 +122,15 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
                             orderDict.Add(order.Id, order);
                         }
 
-                        if(orderDetails != null)
-                            order.OrderDetails.Add(orderDetails);
+                        if (orderDetails != null)
+                        {                            
+                            currentOrder.OrderDetails.Add(orderDetails);
+                        }
 
-                        return order;
+                        return currentOrder;
                     });
 
-                return orderDict.Values.FirstOrDefault();
+                return orderDict.Values;
             }
         }
 

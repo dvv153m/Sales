@@ -11,7 +11,7 @@ namespace Sales.Core.Rules
         /// <summary>
         /// Текущий заказ (уже в бд)
         /// </summary>
-        public OrderDto Order { get; private set; }
+        public OrderDto? Order { get; private set; }
         
         /// <summary>
         /// Добавляемый товар в заказ (корзину)
@@ -29,7 +29,7 @@ namespace Sales.Core.Rules
         /// <param name="order">Текущий заказ (уже в бд)</param>
         /// <param name="product">Добавляемый товар в заказ (корзину)</param>
         /// <param name="quantity">Кол-во экземпляров Product</param>
-        public RuleContext(OrderDto order, ProductDto product,  int quantity)
+        public RuleContext(OrderDto? order, ProductDto product,  int quantity)
         {
             Order = order;
             Product = product;

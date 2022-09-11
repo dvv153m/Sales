@@ -12,9 +12,9 @@ namespace Sales.Core.Rules.Products
         {
             if (ruleContext.Order?.OrderDetails != null)
             {                
-                foreach (OrderDetailsDto p in ruleContext.Order.OrderDetails)
+                foreach (OrderDetailsDto orderDetail in ruleContext.Order.OrderDetails)
                 { 
-                    if(p.ProductId == ruleContext.Product.Id)
+                    if(orderDetail.ProductId == ruleContext.Product.Id)
                     {
                         throw new ProductException($"{ruleContext.Product.Title} уже есть в корзине");
                     }
