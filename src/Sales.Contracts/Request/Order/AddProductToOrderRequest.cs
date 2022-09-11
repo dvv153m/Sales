@@ -11,5 +11,7 @@ namespace Sales.Contracts.Request.Order
         public string Promocode { get; set; }
 
         public long ProductId { get; set; }
+
+        public int Quantity { get; set; }
     }
 }

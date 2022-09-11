@@ -26,6 +26,7 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Migrations
                   .WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
                   .WithColumn("OrderId").AsInt64().NotNullable()
                   .WithColumn("ProductId").AsInt64().NotNullable()
+                  .WithColumn("Price").AsDecimal().NotNullable()
                   .WithColumn("Quantity").AsInt32().NotNullable()                                    
                   .WithColumn("CreatedDate").AsDateTime().NotNullable();
 

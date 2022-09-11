@@ -13,15 +13,15 @@ namespace Sales.Core.Tests.OrderRules
         public void Handle_OnePromocodeOneOrder_Success()
         {
             //Arrange
-            long promocodeId = 1;
-            OrderEntity orderEntity = null;
+            string promocode = "qwerty";
+            OrderEntity? orderEntity = null;
             Mock<IOrderRepository> orderRepositoryMock = new Mock<IOrderRepository>();
-            orderRepositoryMock.Setup(x => x.GetOrderByPromocodeId(promocodeId)).Returns(orderEntity);
+            orderRepositoryMock.Setup(x => x.GetOrderByPromocodeAsync(promocode)).Returns(Task.FromResult(orderEntity));
             var sut = new OneOrderForOnePromocodeRule(orderRepositoryMock.Object);            
             
             //Act
             //Assert
-            var exception = Record.Exception(() => sut.Handle(new OrderDto() { PromocodeId= promocodeId }));
+            var exception = Record.Exception(() => sut.Handle(new OrderDto() { Promocode= promocode }));
             Assert.Null(exception);           
         }
 
@@ -29,9 +29,9 @@ namespace Sales.Core.Tests.OrderRules
         public void Handle_OnePromocodeTwoOrder_ThrowOrderException()
         {
             //Arrange
-            OrderEntity orderEntity = new OrderEntity() { PromocodeId = 1};
+            OrderEntity orderEntity = new OrderEntity() { Promocode = "qwerty"};
             Mock<IOrderRepository> orderRepositoryMock = new Mock<IOrderRepository>();
-            orderRepositoryMock.Setup(x => x.GetOrderByPromocodeId(orderEntity.PromocodeId)).Returns(orderEntity);
+            orderRepositoryMock.Setup(x => x.GetOrderByPromocodeAsync(orderEntity.Promocode)).Returns(Task.FromResult(orderEntity));
             var sut = new OneOrderForOnePromocodeRule(orderRepositoryMock.Object);            
                         
             //Assert
@@ -39,7 +39,7 @@ namespace Sales.Core.Tests.OrderRules
             () =>
             {
                 //Act
-                sut.Handle(new OrderDto() { PromocodeId = orderEntity.PromocodeId});
+                sut.Handle(new OrderDto() { Promocode = orderEntity.Promocode});
             });
 
             Assert.NotNull(exception);

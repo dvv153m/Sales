@@ -72,36 +72,70 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
 
         public async Task<ProductEntity> GetByIdAsync(long id)
         {
-            var query = @"SELECT * FROM Product p WHERE Id= @Id;
-                          SELECT * FROM ProductDetail WHERE ProductId= @Id";
+            var query = @$"SELECT * FROM Product p 
+                          JOIN ProductDetail d 
+                          ON p.Id = d.ProductId
+                          JOIN Attribute a 
+                          ON d.AttributeId = a.Id
+                          WHERE p.Id = {id}";
 
             using (var connection = _dbContext.CreateConnection())
-            using (var multi = await connection.QueryMultipleAsync(query, new { id }))
             {
-                var product = await multi.ReadSingleOrDefaultAsync<ProductEntity>();
-                if (product != null)
-                    product.ProductDetails = (await multi.ReadAsync<ProductDetailEntity>()).ToList();
-                return product;
+                var productDict = new Dictionary<long, ProductEntity>();
+
+                var productEntities = new List<ProductEntity>();
+                var products = await connection.QueryAsync<ProductEntity, ProductDetailEntity, AttributeEntity, ProductEntity>(
+                    query, (product, productDetails, attribute) =>
+                    {
+                        if (!productDict.TryGetValue(product.Id, out var currentProduct))
+                        {
+                            currentProduct = product;
+                            currentProduct.ProductDetails = new List<ProductDetailEntity>();
+                            productDict.Add(currentProduct.Id, currentProduct);
+                        }
+
+                        productDetails.Attribute = attribute;
+                        currentProduct.ProductDetails.Add(productDetails);
+
+                        return currentProduct;
+                    });
+
+                return productDict.Values.FirstOrDefault();
             }
         }
+        //---
+        /*var query = @"SELECT * FROM Product p WHERE Id= @Id;
+                      SELECT * FROM ProductDetail WHERE ProductId= @Id";
 
+        using (var connection = _dbContext.CreateConnection())
+        using (var multi = await connection.QueryMultipleAsync(query, new { id }))
+        {
+            var product = await multi.ReadSingleOrDefaultAsync<ProductEntity>();
+            if (product != null)
+                product.ProductDetails = (await multi.ReadAsync<ProductDetailEntity>()).ToList();
+            return product;
+        }*/
+    //}
+    
+        //todo refactoring нужно чтобы возвращался еще Attribute Name
         public async Task<IEnumerable<ProductEntity>> GetByIdsAsync(int[] ids)
         {
+
             var query = @"SELECT * FROM Product p WHERE Id IN @Ids;
-                          SELECT * FROM ProductDetail WHERE ProductId IN @Ids";
+                      SELECT * FROM ProductDetail WHERE ProductId IN @Ids";
 
             using (var connection = _dbContext.CreateConnection())
             using (var multi = await connection.QueryMultipleAsync(query, new { ids }))
-            {                
+            {
                 var products = await multi.ReadAsync<ProductEntity>();
                 var productDetails = (await multi.ReadAsync<ProductDetailEntity>()).ToList();
 
                 foreach (var product in products)
-                { 
+                {
                     product.ProductDetails = productDetails.Where(x => x.ProductId == product.Id).ToList();
-                }                
+                }
                 return products;
-            }            
+            }
         }
 
         public async Task<IEnumerable<ProductEntity>> GetAllAsync()
@@ -151,7 +185,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
             parameters.Add("CopyNumber", entity.CopyNumber, DbType.Int32);
             parameters.Add("Price", entity.Price, DbType.Decimal);
             parameters.Add("ImagePath", entity.ImagePath, DbType.String);
-            parameters.Add("UpdateDate", entity.UpdateDate, DbType.String);
+            parameters.Add("UpdateDate", entity.UpdateDate, DbType.Date);
 
             using (var connection = _dbContext.CreateConnection())
             {

@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace Sales.Contracts.Request.Order
 {
+    /// <summary>
+    /// Оформление заказа
+    /// </summary>
     public class CreateOrderRequest
     {
-        public long PromocodeId { get; set; }
+        public string Promocode { get; set; }
 
         public List<OrderDetailsRequest> OrderDetails { get; set; }
     }

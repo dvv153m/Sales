@@ -1,4 +1,5 @@
-﻿using Sales.Contracts.Models;
+﻿using Sales.Contracts.Entity.Order;
+using Sales.Contracts.Models;
 using Sales.Contracts.Request.Order;
 using Sales.Core.Exceptions;
 using Sales.Core.Interfaces.Repositories;
@@ -27,12 +28,17 @@ namespace Sales.Core.Services
             _promocodeClient = promocodeClient ?? throw new ArgumentNullException(nameof(promocodeClient));
             _orderRules = orderRules ?? throw new ArgumentNullException(nameof(orderRules));
             _cartAddProductRules = cartAddProductRules ?? throw new ArgumentNullException(nameof(cartAddProductRules));
-        }        
+        }
+
+        public async Task DeleteProductFromOrderAsync(AddProductToOrderRequest request)
+        { 
+        
+        }
 
         public async Task AddProductToOrderAsync(AddProductToOrderRequest request)
         {            
             var promocode = await _promocodeClient.GetByPromocodeAsync(request.Promocode);
-            if (promocode == null)
+            if (promocode == null || promocode.Value == null)
             {
                 throw new OrderException("данного промокода не существует");
             }
@@ -43,13 +49,92 @@ namespace Sales.Core.Services
                 throw new OrderException("данного товара не существует");
             }
 
-            //получить текущий заказ
-            //var order = GetCurrentOrder()
-            
             //прогоняем по правилам добавления в корзину
+            //todo сделать если заказ уже есть и его статус оформлен то в корзину уже нельзя добавлять
+
             //_cartAddProductRules.Handle(order, product)
+
+            //сделать так чтобы можно было легко сделать 2 заказа по 1 промокоду
+
+            /*OrderDetailsEntity orderDetailsEntity = new OrderDetailsEntity()
+            {
+
+            };*/
+            var order = await _orderRepository.GetOrderByPromocodeAsync(promocode.Value);
+            if (order == null)
+            {
+                OrderEntity orderEntity = new OrderEntity
+                {
+                    Promocode = promocode.Value,
+                    Date = DateTime.UtcNow,
+                    Status = OrderStatus.UserCollect,
+                    Price = product.Price,
+                    UpdateDate = DateTime.UtcNow,
+                    CreatedDate = DateTime.UtcNow,
+                    OrderDetails = new List<OrderDetailsEntity>()
+                    {
+                        new OrderDetailsEntity
+                        {
+                            ProductId = product.Id,
+                            Quantity = request.Quantity,
+                            Price = product.Price
+                        }
+                    }
+                };
+
+                await _orderRepository.AddAsync(orderEntity);
+            }
+            else
+            {                
+                //это в транзакцию упаковать
+
+                order.UpdateDate = DateTime.UtcNow;
+                
+                var orderDetail = order.OrderDetails.Where(p => p.Id == request.ProductId).FirstOrDefault();
+                if (orderDetail != null)
+                {                    
+                    orderDetail.Quantity = request.Quantity;
+                    orderDetail.Price = product.Price;
+                    order.Price = GetOrderPrice(order.OrderDetails);
+
+                    await _orderRepository.UpdateOrderDetailAsync(orderDetail);
+                }
+                else
+                {
+                    var newOrderDetail = new OrderDetailsEntity()
+                    {
+                        OrderId = order.Id,
+                        ProductId = request.ProductId,
+                        Quantity = request.Quantity,
+                        Price= product.Price
+                    };
+                    await _orderRepository.AddProductToOrder(newOrderDetail);
+                    
+                    order.Price = GetOrderPrice(order.OrderDetails);
+                    order.Price += newOrderDetail.Price * newOrderDetail.Quantity;
+                }
+                await _orderRepository.UpdateAsync(order);
+            }            
         }
 
+        private decimal GetOrderPrice(IEnumerable<OrderDetailsEntity> orderDetailEntities)
+        {
+            decimal price = 0;
+            foreach (var orderDetailEntity in orderDetailEntities)
+            { 
+                price += orderDetailEntity.Price * orderDetailEntity.Quantity;
+            }
+            return price;
+        }
+
+        /// <summary>
+        /// Оформит заказ
+        /// </summary>
+        public void SetOrder()
+        { 
+            //статус заказа сменить
+        }
+        
         public async Task<OrderDto> AddAsync(CreateOrderRequest request)
         {
             var res = await _productClient.GetProductByIdAsync(productId: 1);
@@ -62,12 +147,22 @@ namespace Sales.Core.Services
             return new OrderDto();
         }
 
-        public Task<OrderDto?> GetById(long id)
+        public Task<OrderDto?> GetById(string promocode)
         {
+            //забираем из бд заказ с деталями стягиваем продукты чтобы цены были актуальные
+
+            //если статус заказа в процессе сборки то обновляем цены
+            //иначе цены в order details не обновляем
+
             throw new NotImplementedException();
         }
 
         public Task<OrderDto?> GetByPromocodeId(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<OrderDto?> GetById(long id)
         {
             throw new NotImplementedException();
         }

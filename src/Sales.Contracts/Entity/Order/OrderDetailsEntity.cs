@@ -20,7 +20,7 @@ namespace Sales.Contracts.Entity.Order
         public int Quantity { get; set; }
 
         /// <summary>
-        /// Цена с учетом кол-ва товара
+        /// Цена за единицу товара
         /// </summary>
         public decimal Price { get; set; }
     }

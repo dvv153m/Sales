@@ -19,11 +19,11 @@ namespace Sales.Core.Rules.Orders
         }
         public override void Handle(OrderDto order)
         {
-            OrderEntity orderEntity = _orderRepository.GetOrderByPromocodeId(order.PromocodeId);
+            /*OrderEntity orderEntity = _orderRepository.GetOrderByPromocodeId(order.PromocodeId);
             if (orderEntity != null)
             {
                 throw new OrderException("с таким промокодом уже оформляли заказ");
-            }
+            }*/
             base.NextRule(order);
         }
     }

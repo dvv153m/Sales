@@ -73,7 +73,7 @@ namespace Sales.Order.Api.V1.Controllers
                     return NotFound(id);
                 }
             }
-            catch (ProductException ex)
+            catch (OrderException ex)
             {
                 _logger.LogError(ex, $"Failed to get order. {ex.Message}");
                 return BadRequest(ex.Message);

@@ -7,7 +7,7 @@ namespace Sales.Contracts.Models
     {
         public long Id;
 
-        public long PromocodeId { get; set; }
+        public string Promocode { get; set; }
 
         /// <summary>
         /// Дата заказа
