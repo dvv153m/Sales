@@ -96,65 +96,49 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
 
         public async Task<OrderEntity> GetOrderByPromocodeAsync(string promocode)
         {
-            try
-            {
-                var selectOrderQuery = @$"SELECT * FROM [{_databaseName}].[dbo].[Order] amd
-                                     JOIN [{_databaseName}].[dbo].[OrderDetail] tel
-                                     ON amd.Id = tel.OrderId
-                                     WHERE Promocode= '{promocode}'";
-
-                using (var connection = _dbContext.CreateConnection())
-                {                    
-                    var orderDict = new Dictionary<long, OrderEntity>();
-                    var orderEntities = new List<OrderEntity>();
-
-                    var products = await connection.QueryAsync<OrderEntity, OrderDetailsEntity, OrderEntity>(
-                        selectOrderQuery, (order, orderDetails) =>
-                        {
-                            if (!orderDict.TryGetValue((long)order.Id, out var currentOrder))
-                            {
-                                currentOrder = order;
-                                currentOrder.OrderDetails = new List<OrderDetailsEntity>();
-                                orderDict.Add(order.Id, order);
-                            }
-
-                            order.OrderDetails.Add(orderDetails);
-
-                            return order;
-                        });
-
-                    return orderDict.Values.FirstOrDefault();
-                }
-            }
-            catch (Exception ex)
-            {
-                return await Task.FromResult(new OrderEntity());
-            }
-
-            /*var selectOrderQuery = @"SELECT * FROM Order WHERE Promocode= @Promocode";
-            var selectOrderDetailQuery = @"SELECT * FROM OrderDetail WHERE OrderId= @orderId";
+            var selectOrderQuery = @$"SELECT * FROM [{_databaseName}].[dbo].[Order] mainOrder
+                                          JOIN [{_databaseName}].[dbo].[OrderDetail] orderDetail
+                                          ON mainOrder.Id = orderDetail.OrderId
+                                          WHERE Promocode= '{promocode}'";
 
             using (var connection = _dbContext.CreateConnection())
             {
-                var order = await connection.QuerySingleOrDefaultAsync<OrderEntity>(selectOrderQuery, new { promocode});                
+                var orderDict = new Dictionary<long, OrderEntity>();
+                var orderEntities = new List<OrderEntity>();
 
-                await connection.QueryAsync<List<OrderDetailsEntity>>(selectOrderDetailQuery, new { promocode });
-            }*/
+                var products = await connection.QueryAsync<OrderEntity, OrderDetailsEntity, OrderEntity>(
+                    selectOrderQuery, (order, orderDetails) =>
+                    {
+                        if (!orderDict.TryGetValue((long)order.Id, out var currentOrder))
+                        {
+                            currentOrder = order;
+                            currentOrder.OrderDetails = new List<OrderDetailsEntity>();
+                            orderDict.Add(order.Id, order);
+                        }
+
+                        order.OrderDetails.Add(orderDetails);
+
+                        return order;
+                    });
+
+                return orderDict.Values.FirstOrDefault();
+            }
         }
 
         public async Task UpdateAsync(OrderEntity entity)
         {
-            var updateQuery = @"UPDATE [{_databaseName}].[dbo].[Order] SET Promocode=@Promocode, Status=@Status, Price=@Price, @UpdateDate,                                
+
+            var updateQuery = @$"UPDATE [{_databaseName}].[dbo].[Order] SET Promocode=@Promocode, Status=@Status, Price=@Price, UpdateDate=@UpdateDate
                                 WHERE Id=@Id";
 
             entity.UpdateDate = DateTime.UtcNow;
 
             var parameters = new DynamicParameters();
             parameters.Add("Id", entity.Id, DbType.Int64);
-            parameters.Add("Promocode", entity.Promocode, DbType.String);            
+            parameters.Add("Promocode", entity.Promocode, DbType.String);
             parameters.Add("Status", entity.Status, DbType.Int32);
             parameters.Add("Price", entity.Price, DbType.Decimal);
-            parameters.Add("UpdateDate", entity.UpdateDate, DbType.DateTime);            
+            parameters.Add("UpdateDate", entity.UpdateDate, DbType.DateTime);
 
             using (var connection = _dbContext.CreateConnection())
             {
@@ -164,17 +148,25 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
 
         public async Task UpdateOrderDetailAsync(OrderDetailsEntity entity)
         {
-            var updateQuery = @"UPDATE [{_databaseName}].[dbo].[Order] SET Quantity=@Quantity, Price=@Price
-                                WHERE Id=@Id";
+            try
+            {                                                                                
+                var updateQuery = @$"UPDATE [{_databaseName}].[dbo].[OrderDetail]
+                                     SET Quantity=@Quantity, Price=@Price
+                                     WHERE Id=@Id";
 
-            var parameters = new DynamicParameters();
-            parameters.Add("Id", entity.Id, DbType.Int64);
-            parameters.Add("Quantity", entity.Quantity, DbType.String);
-            parameters.Add("Price", entity.Price, DbType.Decimal);            
+                var parameters = new DynamicParameters();
+                parameters.Add("Id", entity.Id, DbType.Int64);
+                parameters.Add("Quantity", entity.Quantity, DbType.Int32);
+                parameters.Add("Price", entity.Price, DbType.Decimal);
 
-            using (var connection = _dbContext.CreateConnection())
+                using (var connection = _dbContext.CreateConnection())
+                {
+                    await connection.ExecuteAsync(updateQuery, parameters);
+                }
+            }
+            catch (Exception ex)
             {
-                await connection.ExecuteAsync(updateQuery, parameters);
+                throw ex;
             }
         }
     }
