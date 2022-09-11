@@ -40,6 +40,26 @@ namespace Sales.Order.Api.V1.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Удаление товара из корзины
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpDelete("product")]
+        public async Task<IActionResult> DeletProductFromOrder(DeleteProductFromOrderRequest request)
+        {
+            try
+            {
+                await _orderService.DeleteProductFromOrderAsync(request);
+            }
+            catch (OrderException ex)
+            {
+                _logger.LogError(ex, $"Failed to add product to order. {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+            return NoContent();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(CreateOrderRequest request)
         {

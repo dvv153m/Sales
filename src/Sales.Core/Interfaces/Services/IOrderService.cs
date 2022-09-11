@@ -8,6 +8,9 @@ namespace Sales.Core.Interfaces.Services
     {
         Task<OrderDto> AddAsync(CreateOrderRequest request);
 
+        Task DeleteProductFromOrderAsync(DeleteProductFromOrderRequest request);
+
+
         Task AddProductToOrderAsync(AddProductToOrderRequest request);
 
         Task<OrderDto?> GetById(long id);

@@ -3,6 +3,7 @@ using Sales.Contracts.Entity.Order;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Infrastructure.Data.Context;
 using System.Data;
+using static Dapper.SqlMapper;
 
 namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
 {
@@ -94,12 +95,18 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
             return entity;
         }
 
+        /// <summary>
+        /// Получить текущий заказ по промокоду
+        /// </summary>
+        /// <param name="promocode"></param>
+        /// <returns></returns>
         public async Task<OrderEntity> GetOrderByPromocodeAsync(string promocode)
         {
+            int orderStatus = (int)OrderStatus.UserCollect;
             var selectOrderQuery = @$"SELECT * FROM [{_databaseName}].[dbo].[Order] mainOrder
-                                          JOIN [{_databaseName}].[dbo].[OrderDetail] orderDetail
+                                          LEFT JOIN [{_databaseName}].[dbo].[OrderDetail] orderDetail
                                           ON mainOrder.Id = orderDetail.OrderId
-                                          WHERE Promocode= '{promocode}'";
+                                          WHERE Promocode= '{promocode}' AND Status={orderStatus}";
 
             using (var connection = _dbContext.CreateConnection())
             {
@@ -148,25 +155,41 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
 
         public async Task UpdateOrderDetailAsync(OrderDetailsEntity entity)
         {
-            try
-            {                                                                                
-                var updateQuery = @$"UPDATE [{_databaseName}].[dbo].[OrderDetail]
+
+            var updateQuery = @$"UPDATE [{_databaseName}].[dbo].[OrderDetail]
                                      SET Quantity=@Quantity, Price=@Price
                                      WHERE Id=@Id";
 
+            var parameters = new DynamicParameters();
+            parameters.Add("Id", entity.Id, DbType.Int64);
+            parameters.Add("Quantity", entity.Quantity, DbType.Int32);
+            parameters.Add("Price", entity.Price, DbType.Decimal);
+
+            using (var connection = _dbContext.CreateConnection())
+            {
+                await connection.ExecuteAsync(updateQuery, parameters);
+            }
+        }
+
+        public async Task DeleteProductFromOrderAsync(long orderId,  long productId)
+        {
+            try
+            {
+                var deleteQuery = @$"DELETE FROM [{_databaseName}].[dbo].[OrderDetail]
+                                     WHERE OrderId=@OrderId AND ProductId=@ProductId";
+
                 var parameters = new DynamicParameters();
-                parameters.Add("Id", entity.Id, DbType.Int64);
-                parameters.Add("Quantity", entity.Quantity, DbType.Int32);
-                parameters.Add("Price", entity.Price, DbType.Decimal);
+                parameters.Add("OrderId", orderId, DbType.Int64);
+                parameters.Add("ProductId", productId, DbType.Int64);
 
                 using (var connection = _dbContext.CreateConnection())
                 {
-                    await connection.ExecuteAsync(updateQuery, parameters);
+                    await connection.ExecuteAsync(deleteQuery, parameters);
                 }
             }
             catch (Exception ex)
-            {
-                throw ex;
+            { 
+            
             }
         }
     }

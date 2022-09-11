@@ -13,5 +13,7 @@ namespace Sales.Core.Interfaces.Repositories
         Task UpdateAsync(OrderEntity entity);
 
         Task UpdateOrderDetailAsync(OrderDetailsEntity entity);
+
+        Task DeleteProductFromOrderAsync(long orderId, long productId);
     }    
 }

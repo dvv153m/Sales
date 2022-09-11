@@ -30,9 +30,30 @@ namespace Sales.Core.Services
             _cartAddProductRules = cartAddProductRules ?? throw new ArgumentNullException(nameof(cartAddProductRules));
         }
 
-        public async Task DeleteProductFromOrderAsync(AddProductToOrderRequest request)
-        { 
-        
+        public async Task DeleteProductFromOrderAsync(DeleteProductFromOrderRequest request)
+        {
+            var promocode = await _promocodeClient.GetByPromocodeAsync(request.Promocode);
+            if (promocode == null || promocode.Value == null)
+            {
+                throw new OrderException("данного промокода не существует");
+            }
+
+            var product = await _productClient.GetProductByIdAsync(productId: request.ProductId);
+            if (product == null)
+            {
+                throw new OrderException("данного товара не существует");
+            }
+
+            
+            var order = await _orderRepository.GetOrderByPromocodeAsync(promocode.Value);
+            if (order != null)
+            {
+                _orderRepository.DeleteProductFromOrderAsync(order.Id, request.ProductId);
+            }
+            else
+            {
+                throw new OrderException("заказ не найден");
+            }
         }
 
         public async Task AddProductToOrderAsync(AddProductToOrderRequest request)
@@ -90,7 +111,7 @@ namespace Sales.Core.Services
 
                 order.UpdateDate = DateTime.UtcNow;
                 
-                var orderDetail = order.OrderDetails.Where(p => p.Id == request.ProductId).FirstOrDefault();
+                var orderDetail = order.OrderDetails.Where(p => p.ProductId == request.ProductId).FirstOrDefault();
                 if (orderDetail != null)
                 {                    
                     orderDetail.Quantity = request.Quantity;
