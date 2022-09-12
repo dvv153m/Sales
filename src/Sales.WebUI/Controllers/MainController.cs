@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sales.Contracts.Models;
+using Sales.Core.Exceptions;
 using Sales.Core.Interfaces.Services;
 using Sales.WebUI.Models;
 using System.Diagnostics;
@@ -8,31 +9,30 @@ namespace Sales.WebUI.Controllers
 {
     public class MainController : Controller
     {
-        private readonly IProductClient _productClient;                
+        private readonly IProductClient _productClient;
+        private readonly IOrderClient _orderClient;
         private readonly ILogger<MainController> _logger;          
 
-        public MainController(IProductClient productClient,                                                            
+        public MainController(IProductClient productClient,   
+                              IOrderClient orderClient,
                               ILogger<MainController> logger)
         {            
-            _productClient = productClient ?? throw new ArgumentNullException(nameof(productClient));            
+            _productClient = productClient ?? throw new ArgumentNullException(nameof(productClient));   
+            _orderClient = orderClient ?? throw new ArgumentNullException(nameof(orderClient));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<IActionResult> Index()
         {            
-            string promocode = "---";
-
-            var claim = HttpContext.User.Claims.FirstOrDefault(p => p.Type == "Promocode");
-            if (claim != null)
-            {
-                promocode = claim.Value;
-            }
+            string promocode = GetPromocodeFromCookie() ?? "---";
 
             var products = await _productClient.GetAllAsync();
             var productsViewModel = Map(products);
+
+            //todo запросить товары из корзины
             
-            return View(new MainViewModel { Promocode = promocode, Products = productsViewModel, Cart = productsViewModel.Take(1) });
-        }                
+            return View(new MainViewModel { Promocode = promocode, Products = productsViewModel, Cart = Enumerable.Empty<ProductViewModel>() });
+        }        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -47,11 +47,18 @@ namespace Sales.WebUI.Controllers
         /// <returns></returns>
         public async Task<IActionResult> AddToCart(int productId)
         {
-            //promocodeId productId
-            //todo это делать через сервис OrderClient
-            /*var httpClient = _httpClientFactory.CreateClient();
-            var response = await httpClient.PostAsync($"{_config.OrderApiUrl}/promocode/register", null);
-            var newPromocode = await response.Content.ReadAsStringAsync();*/
+            try
+            {
+                string? promocode = GetPromocodeFromCookie();
+                if (promocode != null)
+                {
+                    await _orderClient.AddProductToOrder(promocode, productId, quantity: 1);
+                }
+            }
+            catch (OrderException ex)
+            {
+                _logger.LogError($"товар не удалось добавить в корзину {ex}");
+            }
 
             return RedirectToAction("Index");
         }
@@ -66,6 +73,18 @@ namespace Sales.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
+        private string? GetPromocodeFromCookie()
+        {
+            var claim = HttpContext.User.Claims.FirstOrDefault(p => p.Type == "Promocode");
+            if (claim != null)
+            {
+                return claim.Value;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         private IEnumerable<ProductViewModel> Map(IEnumerable<ProductDto> products)
         {

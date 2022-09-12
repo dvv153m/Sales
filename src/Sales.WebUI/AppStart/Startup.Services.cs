@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Sales.Contracts.Configuration;
-using Sales.Core.Interfaces.Repositories;
+﻿using Sales.Contracts.Configuration;
 using Sales.Core.Interfaces.Services;
 using Sales.Infrastructure.Services;
 
@@ -19,6 +17,11 @@ namespace Sales.WebUI.AppStart
             builder.Services.AddScoped<IProductClient, ProductClient>(x=>
             {                
                 return new ProductClient(x.GetRequiredService<IHttpProxy>(), appConf.ProductApiUrl);
+            });
+
+            builder.Services.AddScoped<IOrderClient, OrderClient>(x =>
+            {
+                return new OrderClient(x.GetRequiredService<IHttpProxy>(), appConf.OrderApiUrl);
             });
 
             builder.Services.AddScoped<IPromocodeClient, PromocodeClient>(x =>
