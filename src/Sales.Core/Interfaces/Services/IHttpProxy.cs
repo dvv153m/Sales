@@ -12,5 +12,7 @@ namespace Sales.Core.Interfaces.Services
         Task<TOut> PostAsync<TIn, TOut>(TIn input, string url);
 
         Task<TOut> PostAsync<TOut>(string url);
+
+        Task DeleteAsync<TIn>(TIn input, string url);
     }
 }

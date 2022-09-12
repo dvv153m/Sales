@@ -49,7 +49,7 @@ namespace Sales.WebUI.Controllers
         {
             try
             {
-                string? promocode = GetPromocodeFromCookie();
+                string? promocode = GetPromocodeFromCookie()+"1";
                 if (promocode != null)
                 {
                     await _orderClient.AddProductToOrder(promocode, productId, quantity: 1);
@@ -63,8 +63,21 @@ namespace Sales.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult DeleteFromCart(int productId)
+        public async Task<IActionResult> DeleteFromCart(int productId)
         {
+            try
+            {
+                string? promocode = GetPromocodeFromCookie();
+                if (promocode != null)
+                {
+                    await _orderClient.DeleteFromCart(promocode, productId);
+                }
+            }
+            catch (OrderException ex)
+            {
+                _logger.LogError($"товар не удалось добавить в корзину. Eception: {ex}");
+            }
+
             return RedirectToAction("Index");
         }
 

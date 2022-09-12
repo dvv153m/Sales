@@ -25,5 +25,16 @@ namespace Sales.Infrastructure.Services
 
             await _httpProxy.PostAsync(request, $"{_orderApiUrl}/product");
         }
+
+        public async Task DeleteFromCart(string promocode, long productId)
+        {
+            DeleteProductFromOrderRequest request = new DeleteProductFromOrderRequest
+            {
+                Promocode = promocode,
+                ProductId = productId
+            };
+
+            await _httpProxy.DeleteAsync(request, $"{_orderApiUrl}/product");
+        }
     }
 }
