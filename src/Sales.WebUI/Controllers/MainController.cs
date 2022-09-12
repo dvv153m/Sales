@@ -57,7 +57,7 @@ namespace Sales.WebUI.Controllers
             }
             catch (OrderException ex)
             {
-                _logger.LogError($"товар не удалось добавить в корзину {ex}");
+                _logger.LogError($"товар не удалось добавить в корзину. Eception: {ex}");
             }
 
             return RedirectToAction("Index");
