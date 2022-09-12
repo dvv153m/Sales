@@ -44,8 +44,8 @@ namespace Sales.Core.Services
             ProductDto productDto = await GetProduct(request.ProductId);
 
             IEnumerable<OrderEntity> orders = await _orderRepository.GetOrdersByPromocodeAsync(request.Promocode);
-            var completedOrder = orders.Where(x => x.Status == OrderStatus.UserCompleted);
-            var order = orders.FirstOrDefault(x => x.Status == OrderStatus.UserCollect);
+            var completedOrder = orders?.Where(x => x.Status == OrderStatus.UserCompleted);
+            var order = orders?.FirstOrDefault(x => x.Status == OrderStatus.UserCollect);
 
             OrderDto orderDto = Map(order);
 

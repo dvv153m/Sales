@@ -28,7 +28,9 @@ namespace Sales.Order.Api.AppStart
                 return new PromocodeClient(x.GetRequiredService<IHttpProxy>(), appConf.PromocodeApiUrl);
             });
 
-            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<OrderRepository>();
+            builder.Services.AddScoped<IOrderRepository>(x => new OrderCacheDecoratorRepository(x.GetRequiredService<OrderRepository>()));
+
             builder.Services.AddScoped<IOrderService, OrderService>();
 
             //правила при оформлении заказа
