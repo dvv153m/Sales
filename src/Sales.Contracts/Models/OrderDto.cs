@@ -25,20 +25,5 @@ namespace Sales.Contracts.Models
         public decimal Price { get; set; }
 
         public List<OrderDetailsDto> OrderDetails { get; set; }
-    }
-
-    public class OrderDetailsDto
-    {
-        public long ProductId { get; set; }
-
-        /// <summary>
-        /// Кол-во товара
-        /// </summary>
-        public int Quantity { get; set; }
-
-        /// <summary>
-        /// Цена за единицу товара
-        /// </summary>
-        public decimal Price { get; set; }
-    }
+    }    
 }

@@ -49,7 +49,7 @@ namespace Sales.WebUI.Controllers
         {
             try
             {
-                string? promocode = GetPromocodeFromCookie()+"1";
+                string? promocode = GetPromocodeFromCookie();
                 if (promocode != null)
                 {
                     await _orderClient.AddProductToOrder(promocode, productId, quantity: 1);
