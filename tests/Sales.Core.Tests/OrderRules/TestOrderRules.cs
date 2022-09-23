@@ -1,7 +1,6 @@
 ﻿using Moq;
 using Sales.Contracts.Entity.Order;
 using Sales.Contracts.Models;
-using Sales.Core.Domain;
 using Sales.Core.Exceptions;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Core.Rules;
@@ -15,10 +14,11 @@ namespace Sales.Core.Tests.OrderRules
         public void Handle_OnePromocodeOneOrder_Success()
         {
             //Arrange
+            CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
             string promocode = "qwerty";
             IEnumerable<OrderEntity> orders = new List<OrderEntity>() { };
             Mock<IOrderRepository> orderRepositoryMock = new Mock<IOrderRepository>();
-            orderRepositoryMock.Setup(x => x.GetOrdersByPromocodeAsync(promocode)).Returns(Task.FromResult(orders));
+            orderRepositoryMock.Setup(x => x.GetOrdersByPromocodeAsync(promocode, cancelTokenSource.Token)).Returns(Task.FromResult(orders));
             var sut = new OneOrderForOnePromocodeRule(orderRepositoryMock.Object);
 
             var ruleContext = new RuleContext(order: new OrderDto() { Promocode = promocode },
@@ -40,10 +40,11 @@ namespace Sales.Core.Tests.OrderRules
         public void Handle_OnePromocodeTwoOrder_ThrowOrderException()
         {
             //Arrange
+            CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
             OrderEntity orderEntity = new OrderEntity() { Promocode = "qwerty"};
             IEnumerable<OrderEntity> orders = new List<OrderEntity>() { };
             Mock<IOrderRepository> orderRepositoryMock = new Mock<IOrderRepository>();
-            orderRepositoryMock.Setup(x => x.GetOrdersByPromocodeAsync(orderEntity.Promocode)).Returns(Task.FromResult(orders));
+            orderRepositoryMock.Setup(x => x.GetOrdersByPromocodeAsync(orderEntity.Promocode, cancelTokenSource.Token)).Returns(Task.FromResult(orders));
             var sut = new OneOrderForOnePromocodeRule(orderRepositoryMock.Object);
 
             var ruleContext = new RuleContext(order: new OrderDto() { Promocode = orderEntity.Promocode },

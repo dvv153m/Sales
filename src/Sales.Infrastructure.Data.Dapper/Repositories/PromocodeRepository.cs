@@ -26,21 +26,25 @@ namespace Sales.Infrastructure.Promocode.Data.Dapper.Repositories
             }
         }
 
-        public async Task<PromocodeEntity> GetByPromocodeAsync(string promocode)
+        public async Task<PromocodeEntity> GetByPromocodeAsync(string promocode, CancellationToken cancellationToken = default)
         {
             using (IDbConnection connection = _dbContext.CreateConnection())
             {
+                var query = "SELECT * FROM Promocode WHERE Value = @Value";
                 var parameters = new DynamicParameters();
-                parameters.Add("Value", promocode);
-                var result = await connection.QueryAsync<PromocodeEntity>("SELECT * FROM Promocode WHERE Value = @Value", parameters);
+                parameters.Add("Value", promocode);                
+                var cmd = new CommandDefinition(query, parameters: parameters, cancellationToken: cancellationToken);
+                var result = await connection.QueryAsync<PromocodeEntity>(cmd);                
                 return result.FirstOrDefault();                
             }
         }
 
-        public async Task<IEnumerable<PromocodeEntity>> GetAllAsync()
+        public async Task<IEnumerable<PromocodeEntity>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             using (IDbConnection connection = _dbContext.CreateConnection())
             {
+                var query = "SELECT * FROM Promocode";
+                var cmd = new CommandDefinition(query, cancellationToken: cancellationToken);
                 return await connection.QueryAsync<PromocodeEntity>("SELECT * FROM Promocode");
             }
         }

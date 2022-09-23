@@ -6,9 +6,9 @@ namespace Sales.Core.Interfaces.Repositories
     {
         Task<ProductEntity> AddAsync(ProductEntity entity); 
 
-        Task<IEnumerable<ProductEntity>> GetAllAsync();
+        Task<IEnumerable<ProductEntity>> GetAllAsync(CancellationToken cancellationToken = default);
 
-        Task<ProductEntity> GetByIdAsync(long id);
+        Task<ProductEntity> GetByIdAsync(long id, CancellationToken cancellationToken = default);
 
         Task<IEnumerable<ProductEntity>> GetByIdsAsync(int[] ids);
 

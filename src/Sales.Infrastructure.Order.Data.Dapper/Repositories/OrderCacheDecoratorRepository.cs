@@ -1,6 +1,7 @@
 ﻿using Sales.Contracts.Entity.Order;
 using Sales.Core.Interfaces.Repositories;
 using System.Collections.Concurrent;
+using System.Threading;
 
 namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
 {
@@ -48,16 +49,16 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
             if (_ordersCacheById.TryGetValue(orderId, out OrderEntity order))
             {                
                 order.OrderDetails.RemoveAll(x => x.OrderId == orderId && x.ProductId == productId);                
-            }                        
+            }
         }
 
-        public async Task<IEnumerable<OrderEntity>> GetOrdersByPromocodeAsync(string promocode)
+        public async Task<IEnumerable<OrderEntity>> GetOrdersByPromocodeAsync(string promocode, CancellationToken cancellationToken = default)
         {
             if (_ordersCacheByPromocode.TryGetValue(promocode, out List<OrderEntity> orders))
             {
                 return orders;
             }
-            return await _repository.GetOrdersByPromocodeAsync(promocode);            
+            return await _repository.GetOrdersByPromocodeAsync(promocode, cancellationToken);            
         }
 
         public async Task UpdateAsync(OrderEntity entity)

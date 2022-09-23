@@ -27,19 +27,19 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
             await _repository.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<ProductEntity>> GetAllAsync()
+        public async Task<IEnumerable<ProductEntity>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return await _repository.GetAllAsync();
+            return await _repository.GetAllAsync(cancellationToken);
         }
 
-        public async Task<ProductEntity> GetByIdAsync(long id)
+        public async Task<ProductEntity> GetByIdAsync(long id, CancellationToken cancellationToken = default)
         {
             if (_productsCache.TryGetValue(id, out ProductEntity entity))
             {
                 return entity;
             }
 
-            var productEntity = await _repository.GetByIdAsync(id);
+            var productEntity = await _repository.GetByIdAsync(id, cancellationToken);
             if (productEntity != null)
             {
                 _productsCache.TryAdd(productEntity.Id, productEntity);

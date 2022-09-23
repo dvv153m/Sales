@@ -21,19 +21,19 @@ namespace Sales.Infrastructure.Promocode.Data.Dapper.Repositories
             _promocodesCache.TryAdd(entity.Value, entity);
         }
 
-        public async Task<IEnumerable<PromocodeEntity>> GetAllAsync()
+        public async Task<IEnumerable<PromocodeEntity>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return await _repository.GetAllAsync();
+            return await _repository.GetAllAsync(cancellationToken);
         }
 
-        public async Task<PromocodeEntity> GetByPromocodeAsync(string promocode)
+        public async Task<PromocodeEntity> GetByPromocodeAsync(string promocode, CancellationToken cancellationToken = default)
         {
             if (_promocodesCache.TryGetValue(promocode, out PromocodeEntity entity))
             {
                 return entity;
             }
 
-            var promocodeEntity = await _repository.GetByPromocodeAsync(promocode);
+            var promocodeEntity = await _repository.GetByPromocodeAsync(promocode, cancellationToken);
             if (promocodeEntity != null)
             {
                 _promocodesCache.TryAdd(promocode, promocodeEntity);

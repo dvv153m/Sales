@@ -7,8 +7,8 @@ namespace Sales.Core.Interfaces.Repositories
     {
         Task AddAsync(PromocodeEntity entity);
 
-        Task<PromocodeEntity> GetByPromocodeAsync(string promocode);
+        Task<PromocodeEntity> GetByPromocodeAsync(string promocode, CancellationToken cancellationToken = default);
 
-        Task<IEnumerable<PromocodeEntity>> GetAllAsync();
+        Task<IEnumerable<PromocodeEntity>> GetAllAsync(CancellationToken cancellationToken);
     }
 }

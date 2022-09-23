@@ -79,7 +79,7 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
                             productDetailParameters.Add("Quantity", orderDetail.Quantity, DbType.Int32);
                             productDetailParameters.Add("Price", orderDetail.Price, DbType.Decimal);
                             productDetailParameters.Add("CreatedDate", entity.CreatedDate, DbType.DateTime);
-
+                            
                             await connection.ExecuteAsync(insertOrderDetailsQuery, productDetailParameters, transaction);
                         }
 
@@ -100,7 +100,7 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
         /// </summary>
         /// <param name="promocode"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<OrderEntity>> GetOrdersByPromocodeAsync(string promocode)
+        public async Task<IEnumerable<OrderEntity>> GetOrdersByPromocodeAsync(string promocode, CancellationToken cancellationToken = default)
         {            
             var selectOrderQuery = @$"SELECT * FROM [{_databaseName}].[dbo].[Order] mainOrder
                                           LEFT JOIN [{_databaseName}].[dbo].[OrderDetail] orderDetail
@@ -111,9 +111,9 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
             {
                 var orderDict = new Dictionary<long, OrderEntity>();
                 var orderEntities = new List<OrderEntity>();
-
+                
                 var products = await connection.QueryAsync<OrderEntity, OrderDetailsEntity, OrderEntity>(
-                    selectOrderQuery, (order, orderDetails) =>
+                    new CommandDefinition(selectOrderQuery, cancellationToken: cancellationToken), (order, orderDetails) =>
                     {
                         if (!orderDict.TryGetValue((long)order.Id, out var currentOrder))
                         {

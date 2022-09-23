@@ -70,7 +70,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
             return entity;            
         }
 
-        public async Task<ProductEntity> GetByIdAsync(long id)
+        public async Task<ProductEntity> GetByIdAsync(long id, CancellationToken cancellationToken = default)
         {
             var query = @$"SELECT * FROM Product p 
                           JOIN ProductDetail d 
@@ -85,7 +85,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
 
                 var productEntities = new List<ProductEntity>();
                 var products = await connection.QueryAsync<ProductEntity, ProductDetailEntity, AttributeEntity, ProductEntity>(
-                    query, (product, productDetails, attribute) =>
+                    new CommandDefinition(query, cancellationToken: cancellationToken), (product, productDetails, attribute) =>
                     {
                         if (!productDict.TryGetValue(product.Id, out var currentProduct))
                         {
@@ -138,7 +138,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
             }
         }
 
-        public async Task<IEnumerable<ProductEntity>> GetAllAsync()
+        public async Task<IEnumerable<ProductEntity>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             var query = @"SELECT * FROM Product p 
                           JOIN ProductDetail d 
@@ -152,7 +152,7 @@ namespace Sales.Infrastructure.Product.Data.Dapper.Repositories
 
                 var productEntities = new List<ProductEntity>();
                 var products = await connection.QueryAsync<ProductEntity, ProductDetailEntity, AttributeEntity, ProductEntity>(
-                    query, (product, productDetails, attribute) =>
+                    new CommandDefinition(query, cancellationToken: cancellationToken), (product, productDetails, attribute) =>
                     {
                         if (!productDict.TryGetValue(product.Id, out var currentProduct))
                         {
