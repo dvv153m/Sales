@@ -12,10 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sales.Contracts\Sales.Contracts.csproj" />
-    <ProjectReference Include="..\Sales.Infrastructure.Data\Sales.Infrastructure.Data.csproj" />
-    <ProjectReference Include="..\Sales.Infrastructure.Product.Data.Dapper\Sales.Infrastructure.Product.Data.Dapper.csproj" />
-    <ProjectReference Include="..\Sales.Infrastructure\Sales.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Core\Sales.Contracts\Sales.Contracts.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Sales.Infrastructure.Data\Sales.Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Sales.Infrastructure.Product.Data.Dapper\Sales.Infrastructure.Product.Data.Dapper.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Sales.Infrastructure\Sales.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

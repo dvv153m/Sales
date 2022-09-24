@@ -7,9 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sales.Core\Sales.Core.csproj" />
-    <ProjectReference Include="..\Sales.Infrastructure.Data.Dapper\Sales.Infrastructure.Promocode.Data.Dapper.csproj" />
-    <ProjectReference Include="..\Sales.Infrastructure\Sales.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Core\Sales.Core\Sales.Core.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Sales.Infrastructure\Sales.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

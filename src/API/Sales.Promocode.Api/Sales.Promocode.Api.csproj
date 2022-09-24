@@ -11,11 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sales.Core\Sales.Core.csproj" />
-    <ProjectReference Include="..\Sales.Infrastructure.Data.Dapper\Sales.Infrastructure.Promocode.Data.Dapper.csproj" />
-    <ProjectReference Include="..\Sales.Infrastructure.Data\Sales.Infrastructure.Data.csproj" />
-    <ProjectReference Include="..\Sales.Infrastructure.Product.Data.Dapper\Sales.Infrastructure.Product.Data.Dapper.csproj" />
-    <ProjectReference Include="..\Sales.Infrastructure\Sales.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Core\Sales.Core\Sales.Core.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Sales.Infrastructure.Data.Dapper\Sales.Infrastructure.Promocode.Data.Dapper.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Sales.Infrastructure.Data\Sales.Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Sales.Infrastructure.Product.Data.Dapper\Sales.Infrastructure.Product.Data.Dapper.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Sales.Infrastructure\Sales.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
