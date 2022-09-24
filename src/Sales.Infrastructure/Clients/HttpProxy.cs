@@ -1,10 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Sales.Core.Exceptions;
-using Sales.Core.Interfaces.Services;
-using System.Linq.Expressions;
+using Sales.Core.Interfaces.Clients;
 using System.Text;
 
-namespace Sales.Infrastructure.Services
+namespace Sales.Infrastructure.Clients
 {
     public class HttpProxy : IHttpProxy
     {

@@ -1,7 +1,7 @@
 ﻿using Sales.Core.Domain;
-using Sales.Core.Interfaces.Services;
+using Sales.Core.Interfaces.Clients;
 
-namespace Sales.Infrastructure.Services
+namespace Sales.Infrastructure.Clients
 {
     public class PromocodeClient : IPromocodeClient
     {

@@ -1,6 +1,6 @@
 ﻿using Sales.Contracts.Configuration;
-using Sales.Core.Interfaces.Services;
-using Sales.Infrastructure.Services;
+using Sales.Core.Interfaces.Clients;
+using Sales.Infrastructure.Clients;
 
 namespace Sales.WebUI.AppStart
 {

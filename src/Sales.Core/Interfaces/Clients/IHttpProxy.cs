@@ -1,7 +1,7 @@
 ﻿
 using System.Threading.Tasks;
 
-namespace Sales.Core.Interfaces.Services
+namespace Sales.Core.Interfaces.Clients
 {
     public interface IHttpProxy
     {

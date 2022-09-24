@@ -1,12 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Sales.Contracts.Configuration;
+using Sales.Core.Interfaces.Clients;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Core.Interfaces.Services;
 using Sales.Core.Rules.Orders;
 using Sales.Core.Rules.Products;
 using Sales.Core.Services;
 using Sales.Infrastructure.Order.Data.Dapper.Repositories;
-using Sales.Infrastructure.Services;
+using Sales.Infrastructure.Clients;
 
 namespace Sales.Order.Api.AppStart
 {

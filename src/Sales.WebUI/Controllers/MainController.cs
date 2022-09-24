@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sales.Contracts.Models;
 using Sales.Core.Exceptions;
-using Sales.Core.Interfaces.Services;
+using Sales.Core.Interfaces.Clients;
 using Sales.WebUI.Models;
 using System.Diagnostics;
 

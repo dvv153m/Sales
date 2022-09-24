@@ -3,6 +3,7 @@ using Sales.Contracts.Models;
 using Sales.Contracts.Request.Order;
 using Sales.Core.Domain;
 using Sales.Core.Exceptions;
+using Sales.Core.Interfaces.Clients;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Core.Interfaces.Services;
 using Sales.Core.Rules;

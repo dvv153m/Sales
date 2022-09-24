@@ -1,6 +1,6 @@
 ﻿using Sales.Contracts.Models;
 
-namespace Sales.Core.Interfaces.Services
+namespace Sales.Core.Interfaces.Clients
 {
     public interface IProductClient
     {

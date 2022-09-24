@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sales.Core.Exceptions
 {
-    public class ProductException : ApplicationException
+    public sealed class ProductException : ApplicationException
     {
         public ProductException(string message) : base(message)
         {
