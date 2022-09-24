@@ -7,34 +7,34 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C0A2A1DC-2AD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D9101081-8269-4672-B9DC-8386779CDFAA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.WebUI", "src\Sales.WebUI\Sales.WebUI.csproj", "{972F54BB-346F-4F48-91B1-61A077C1807A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.WebUI", "src\Presentation\Sales.WebUI\Sales.WebUI.csproj", "{972F54BB-346F-4F48-91B1-61A077C1807A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3354CCF6-87DD-4E82-AAC7-7443DF051E5E}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Promocode.Api", "src\Sales.Promocode.Api\Sales.Promocode.Api.csproj", "{72228AF8-369D-4E43-A06F-6371318D5F67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Promocode.Api", "src\API\Sales.Promocode.Api\Sales.Promocode.Api.csproj", "{72228AF8-369D-4E43-A06F-6371318D5F67}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Core", "src\Sales.Core\Sales.Core.csproj", "{294EF9A9-6A07-45E9-83FC-DCE9EAECBB8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Core", "src\Core\Sales.Core\Sales.Core.csproj", "{294EF9A9-6A07-45E9-83FC-DCE9EAECBB8B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Contracts", "src\Sales.Contracts\Sales.Contracts.csproj", "{74D0263C-A23C-4FCF-A743-1B985BDAD6CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Contracts", "src\Core\Sales.Contracts\Sales.Contracts.csproj", "{74D0263C-A23C-4FCF-A743-1B985BDAD6CE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Infrastructure", "src\Sales.Infrastructure\Sales.Infrastructure.csproj", "{1052D7D0-CEE1-4A7D-BBAC-C4686E781B90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Infrastructure", "src\Infrastructure\Sales.Infrastructure\Sales.Infrastructure.csproj", "{1052D7D0-CEE1-4A7D-BBAC-C4686E781B90}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Infrastructure.Promocode.Data.Dapper", "src\Sales.Infrastructure.Data.Dapper\Sales.Infrastructure.Promocode.Data.Dapper.csproj", "{DB30DF9C-7219-4A3C-B7F4-C907AF167256}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Infrastructure.Promocode.Data.Dapper", "src\Infrastructure\Sales.Infrastructure.Data.Dapper\Sales.Infrastructure.Promocode.Data.Dapper.csproj", "{DB30DF9C-7219-4A3C-B7F4-C907AF167256}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Product.Api", "src\Sales.Product.Api\Sales.Product.Api.csproj", "{15F88C46-43EB-4CE1-A406-5801DDCCCDE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Product.Api", "src\API\Sales.Product.Api\Sales.Product.Api.csproj", "{15F88C46-43EB-4CE1-A406-5801DDCCCDE6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Core.Tests", "tests\Sales.Core.Tests\Sales.Core.Tests.csproj", "{86045168-3F01-4BE1-9499-E51470088CFC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Infrastructure.Product.Data.Dapper", "src\Sales.Infrastructure.Product.Data.Dapper\Sales.Infrastructure.Product.Data.Dapper.csproj", "{C8F46472-E56C-4FCA-9306-FC14BBD87616}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Infrastructure.Product.Data.Dapper", "src\Infrastructure\Sales.Infrastructure.Product.Data.Dapper\Sales.Infrastructure.Product.Data.Dapper.csproj", "{C8F46472-E56C-4FCA-9306-FC14BBD87616}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Infrastructure.Data", "src\Sales.Infrastructure.Data\Sales.Infrastructure.Data.csproj", "{244B49D8-8158-430D-864D-634E01FAA897}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Infrastructure.Data", "src\Infrastructure\Sales.Infrastructure.Data\Sales.Infrastructure.Data.csproj", "{244B49D8-8158-430D-864D-634E01FAA897}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Order.Api", "src\Sales.Order.Api\Sales.Order.Api.csproj", "{CD053001-30E8-4792-A920-889CCAB4200D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Order.Api", "src\API\Sales.Order.Api\Sales.Order.Api.csproj", "{CD053001-30E8-4792-A920-889CCAB4200D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Infrastructure.Order.Data.Dapper", "src\Sales.Infrastructure.Order.Data.Dapper\Sales.Infrastructure.Order.Data.Dapper.csproj", "{E71BEB8C-A2A3-499B-BB71-235BF55D31AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.Infrastructure.Order.Data.Dapper", "src\Infrastructure\Sales.Infrastructure.Order.Data.Dapper\Sales.Infrastructure.Order.Data.Dapper.csproj", "{E71BEB8C-A2A3-499B-BB71-235BF55D31AD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{D055292D-6A18-401E-A135-AED0AEACB161}"
 EndProject
