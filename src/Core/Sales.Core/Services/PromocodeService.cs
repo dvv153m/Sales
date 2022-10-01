@@ -1,5 +1,6 @@
 ﻿using Sales.Contracts.Entity;
 using Sales.Core.Domain;
+using Sales.Core.Interfaces.Authentication;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Core.Interfaces.Services;
 

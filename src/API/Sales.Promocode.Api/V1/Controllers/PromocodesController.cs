@@ -21,7 +21,7 @@ namespace Sales.Promocode.Api.V1.Controllers
         }
 
         [HttpGet("{promocode}")]
-        public async Task<IActionResult> Get(string promocode)
+        public async Task<IActionResult> Get(string promocode, CancellationToken cancellationToken)
         {                        
             Sales.Core.Domain.Promocode promocodeModel = await _promocodeService.GetByPromocodeAsync(promocode);
             return promocodeModel != null ? Ok(promocodeModel) : NotFound();

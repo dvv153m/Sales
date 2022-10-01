@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sales.Core.Interfaces.Services
+namespace Sales.Core.Interfaces.Authentication
 {
     public interface IPromocodeGenerator
     {

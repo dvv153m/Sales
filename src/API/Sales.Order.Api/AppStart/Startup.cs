@@ -13,10 +13,13 @@ namespace Sales.Order.Api.AppStart
             //чтоб через di в конструкторе получать этот конфиг
             builder.Services.Configure<OrderApiOptions>(builder.Configuration.GetSection(OrderApiOptions.SectionName));
 
+            builder.Services.AddControllers();
+
             DbInitialize(builder);
-            ConfigureServices(builder);            
-            /*ConfigureCors(builder);            
-            ConfigureSwagger(builder);*/
+            ConfigureAuth(builder);
+            ConfigureServices(builder);
+            //ConfigureCors(builder);                        
+            ConfigureSwagger(builder);
         }
     }
 }

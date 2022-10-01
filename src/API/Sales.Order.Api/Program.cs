@@ -1,17 +1,9 @@
 using FluentMigrator.Runner;
-using Microsoft.Extensions.Logging;
 using Sales.Infrastructure.Data.Migration;
 using Sales.Infrastructure.Exception;
 using Sales.Order.Api.AppStart;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var startup = new Startup();
 startup.Initialize(builder);
@@ -26,14 +18,21 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    /*app.UseSwaggerUI(options =>
+    {
+        options.RoutePrefix = string.Empty;
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "V1");
+    });*/
 }
 
 app.UseHttpsRedirection();
 
 app.UseExceptionHandlerMiddleware(logger);
 
+app.UseAuthentication();
 app.UseAuthorization();
 
+//todo вынести в infrastructure
 #region Creation and migration database
 
 using (var scope = app.Services.CreateScope())

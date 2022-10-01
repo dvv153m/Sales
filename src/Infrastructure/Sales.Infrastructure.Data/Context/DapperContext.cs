@@ -15,7 +15,7 @@ namespace Sales.Infrastructure.Data.Context
             _sqlConnectionString = sqlConnectionString;
             _masterConnectionString = masterConnectionString;
         }
-
+        
         public IDbConnection CreateConnection()
             => new SqlConnection(_sqlConnectionString);
 

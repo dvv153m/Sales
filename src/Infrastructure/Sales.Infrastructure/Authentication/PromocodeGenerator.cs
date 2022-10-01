@@ -1,6 +1,6 @@
-﻿using Sales.Core.Interfaces.Services;
+﻿using Sales.Core.Interfaces.Authentication;
 
-namespace Sales.Core.Services
+namespace Sales.Infrastructure.Authentication
 {
     public class PromocodeGenerator : IPromocodeGenerator
     {

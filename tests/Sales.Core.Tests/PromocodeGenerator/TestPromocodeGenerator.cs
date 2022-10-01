@@ -8,7 +8,7 @@ namespace Sales.Core.Tests.PromocodeGenerator
         {
             //arrange
             const int expected = 7;
-            var promocodeGenerator = new Services.PromocodeGenerator();
+            var promocodeGenerator = new Sales.Infrastructure.Authentication.PromocodeGenerator();
 
             //act
             int actual = promocodeGenerator.Build(promocodeLenght: expected).Length;
@@ -22,7 +22,7 @@ namespace Sales.Core.Tests.PromocodeGenerator
         {
             //arrange
             const int promocodeLenght = 3;
-            var promocodeGenerator = new Services.PromocodeGenerator();
+            var promocodeGenerator = new Sales.Infrastructure.Authentication.PromocodeGenerator();
 
             //act            
             //arrange

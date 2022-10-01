@@ -1,7 +1,9 @@
 ﻿using Sales.Contracts.Configuration;
+using Sales.Core.Interfaces.Authentication;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Core.Interfaces.Services;
 using Sales.Core.Services;
+using Sales.Infrastructure.Authentication;
 using Sales.Infrastructure.Promocode.Data.Dapper.Repositories;
 
 namespace Sales.Promocode.Api.AppStart

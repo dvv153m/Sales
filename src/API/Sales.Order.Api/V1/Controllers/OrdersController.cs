@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Sales.Contracts.Models;
 using Sales.Contracts.Request.Order;
 using Sales.Core.Exceptions;
@@ -6,8 +7,9 @@ using Sales.Core.Interfaces.Services;
 
 namespace Sales.Order.Api.V1.Controllers
 {
+    [Authorize]
     [Route("api/v1/orders")]
-    [ApiController]
+    [ApiController]    
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
@@ -19,12 +21,12 @@ namespace Sales.Order.Api.V1.Controllers
             _orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-        
+
         /// <summary>
         /// Добавление товара в корзину
         /// </summary>
         /// <param name="request"></param>
-        /// <returns></returns>
+        /// <returns></returns>        
         [HttpPost("product")]
         public async Task<IActionResult> AddProductToOrder(AddProductToOrderRequest request)
         {
@@ -44,7 +46,7 @@ namespace Sales.Order.Api.V1.Controllers
         /// Удаление товара из корзины
         /// </summary>
         /// <param name="request"></param>
-        /// <returns></returns>
+        /// <returns></returns>        
         [HttpDelete("product")]
         public async Task<IActionResult> DeletProductFromOrder(DeleteProductFromOrderRequest request)
         {
@@ -79,6 +81,7 @@ namespace Sales.Order.Api.V1.Controllers
         }
 
         [HttpGet("{id}", Name = nameof(GetOrderById))]
+        [AllowAnonymous]
         public async Task<IActionResult> GetOrderById(long id)
         {
             try
