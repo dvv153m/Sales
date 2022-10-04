@@ -11,7 +11,7 @@ namespace Sales.Order.Api.AppStart
         public void Initialize(WebApplicationBuilder builder)
         {
             //чтоб через di в конструкторе получать этот конфиг
-            builder.Services.Configure<OrderApiOptions>(builder.Configuration.GetSection(OrderApiOptions.SectionName));
+            builder.Services.Configure<OrderApiSettings>(builder.Configuration.GetSection(OrderApiSettings.SectionName));
 
             builder.Services.AddControllers();
 

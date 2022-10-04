@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sales.Contracts.Configuration
 {
-    public class PromocodeApiOptions
+    public class PromocodeApiSettings
     {
         public const string SectionName = "AppSettings";
 

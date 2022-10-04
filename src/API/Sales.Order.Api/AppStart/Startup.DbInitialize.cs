@@ -10,7 +10,7 @@ namespace Sales.Order.Api.AppStart
     {
         void DbInitialize(WebApplicationBuilder builder)
         {
-            OrderApiOptions orderApiOptions = builder.Configuration.GetSection(OrderApiOptions.SectionName).Get<OrderApiOptions>();
+            OrderApiSettings orderApiOptions = builder.Configuration.GetSection(OrderApiSettings.SectionName).Get<OrderApiSettings>();
 
             builder.Services.AddSingleton<DapperContext>(x =>
             {

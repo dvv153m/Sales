@@ -19,7 +19,7 @@ namespace Sales.Promocode.Api.AppStart
 
             builder.Services.AddScoped<IPromocodeService>(x =>
             {
-                PromocodeApiOptions appConf = builder.Configuration.GetSection(PromocodeApiOptions.SectionName).Get<PromocodeApiOptions>();
+                PromocodeApiSettings appConf = builder.Configuration.GetSection(PromocodeApiSettings.SectionName).Get<PromocodeApiSettings>();
                 return new PromocodeService(x.GetRequiredService<IPromocodeRepository>(),
                                             x.GetRequiredService<IPromocodeGenerator>(),
                                             appConf.PromocodeLenght);

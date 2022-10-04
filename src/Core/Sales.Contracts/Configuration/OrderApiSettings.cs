@@ -6,12 +6,18 @@ using System.Threading.Tasks;
 
 namespace Sales.Contracts.Configuration
 {
-    public class ProductApiOptions
+    public class OrderApiSettings
     {
         public const string SectionName = "AppSettings";
+
+        public string ProductApiUrl { get; set; }
+
+        public string PromocodeApiUrl { get; set; }
 
         public string SqlConnectionString { get; set; }
 
         public string MasterConnectionString { get; set; }
+
+        public decimal MinimalOrderPrice { get; set; }
     }
 }

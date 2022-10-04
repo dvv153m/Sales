@@ -11,7 +11,7 @@ namespace Sales.Promocode.Api.AppStart
         public void Initialize(WebApplicationBuilder builder)
         {
             //чтоб через di в конструкторе получать этот конфиг
-            builder.Services.Configure<PromocodeApiOptions>(builder.Configuration.GetSection(PromocodeApiOptions.SectionName));
+            builder.Services.Configure<PromocodeApiSettings>(builder.Configuration.GetSection(PromocodeApiSettings.SectionName));
 
             DbInitialize(builder);
             ConfigureCors(builder);

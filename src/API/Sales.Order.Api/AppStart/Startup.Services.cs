@@ -15,7 +15,7 @@ namespace Sales.Order.Api.AppStart
     {
         void ConfigureServices(WebApplicationBuilder builder)
         {
-            OrderApiOptions appConf = builder.Configuration.GetSection(OrderApiOptions.SectionName).Get<OrderApiOptions>();
+            OrderApiSettings appConf = builder.Configuration.GetSection(OrderApiSettings.SectionName).Get<OrderApiSettings>();
 
             builder.Services.AddHttpClient();
 

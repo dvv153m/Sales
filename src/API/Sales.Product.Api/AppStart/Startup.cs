@@ -11,7 +11,7 @@ namespace Sales.Product.Api.AppStart
         public void Initialize(WebApplicationBuilder builder)
         {
             //чтоб через di в конструкторе получать этот конфиг
-            builder.Services.Configure<ProductApiOptions>(builder.Configuration.GetSection(ProductApiOptions.SectionName));
+            builder.Services.Configure<ProductApiSettings>(builder.Configuration.GetSection(ProductApiSettings.SectionName));
 
             DbInitialize(builder);
             //ConfigureCors(builder);
