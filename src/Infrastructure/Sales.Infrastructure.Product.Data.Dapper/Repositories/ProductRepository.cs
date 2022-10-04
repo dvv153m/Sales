@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using Sales.Contracts.Entity.Product;
+using Sales.Core.Entity.Product;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Infrastructure.Data.Context;
 using System.Data;

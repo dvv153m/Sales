@@ -1,4 +1,4 @@
-﻿using Sales.Contracts.Entity;
+﻿using Sales.Core.Entity;
 
 
 namespace Sales.Core.Interfaces.Repositories

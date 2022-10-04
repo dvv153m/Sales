@@ -1,5 +1,5 @@
 ﻿using Moq;
-using Sales.Contracts.Entity.Order;
+using Sales.Core.Entity.Order;
 using Sales.Contracts.Models;
 using Sales.Core.Exceptions;
 using Sales.Core.Interfaces.Repositories;

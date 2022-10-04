@@ -1,5 +1,5 @@
 ﻿
-namespace Sales.Contracts.Entity
+namespace Sales.Core.Entity
 {
     public class PromocodeEntity
     {        

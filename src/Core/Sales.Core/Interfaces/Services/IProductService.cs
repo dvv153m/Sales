@@ -1,4 +1,4 @@
-﻿using Sales.Contracts.Entity.Product;
+﻿using Sales.Core.Entity.Product;
 using Sales.Contracts.Models;
 using Sales.Contracts.Request.Product;
 

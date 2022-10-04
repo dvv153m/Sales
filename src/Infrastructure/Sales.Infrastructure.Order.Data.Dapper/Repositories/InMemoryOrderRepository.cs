@@ -1,4 +1,4 @@
-﻿using Sales.Contracts.Entity.Order;
+﻿using Sales.Core.Entity.Order;
 using Sales.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;

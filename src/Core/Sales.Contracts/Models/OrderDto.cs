@@ -1,6 +1,4 @@
-﻿using Sales.Contracts.Entity.Order;
-
-
+﻿
 namespace Sales.Contracts.Models
 {
     public class OrderDto

@@ -1,6 +1,6 @@
-﻿using Sales.Contracts.Entity.Base;
+﻿using Sales.Core.Entity.Base;
 
-namespace Sales.Contracts.Entity.Product
+namespace Sales.Core.Entity.Product
 {
     public class ProductEntity : EntityBase
     {        

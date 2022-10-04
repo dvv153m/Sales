@@ -1,6 +1,6 @@
-﻿using Sales.Contracts.Entity.Base;
+﻿using Sales.Core.Entity.Base;
 
-namespace Sales.Contracts.Entity.Order
+namespace Sales.Core.Entity.Order
 {
     public class OrderDetailsEntity : EntityBase
     {        

@@ -1,4 +1,4 @@
-﻿using Sales.Contracts.Entity.Order;
+﻿using Sales.Core.Entity.Order;
 
 namespace Sales.Core.Interfaces.Repositories
 {

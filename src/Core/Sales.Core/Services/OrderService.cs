@@ -1,4 +1,4 @@
-﻿using Sales.Contracts.Entity.Order;
+﻿using Sales.Core.Entity.Order;
 using Sales.Contracts.Models;
 using Sales.Contracts.Request.Order;
 using Sales.Core.Domain;
@@ -10,6 +10,7 @@ using Sales.Core.Rules;
 using Sales.Core.Rules.Orders;
 using Sales.Core.Rules.Products;
 using System.Data;
+using OrderStatus = Sales.Core.Entity.Order.OrderStatus;
 
 namespace Sales.Core.Services
 {
@@ -246,7 +247,7 @@ namespace Sales.Core.Services
                     Id = orderEntity.Id,
                     Promocode = orderEntity.Promocode,
                     Date = orderEntity.Date,
-                    Status = orderEntity.Status,
+                    Status = (Sales.Contracts.Models.OrderStatus)orderEntity.Status,
                     Price = orderEntity.Price,
                     OrderDetails = orderDetails
                 };

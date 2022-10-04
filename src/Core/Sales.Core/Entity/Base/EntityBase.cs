@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sales.Contracts.Entity.Base
+namespace Sales.Core.Entity.Base
 {
     public class EntityBase
     {

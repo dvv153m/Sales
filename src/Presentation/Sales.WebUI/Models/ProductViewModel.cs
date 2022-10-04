@@ -1,4 +1,4 @@
-﻿using Sales.Contracts.Entity.Product;
+﻿using Sales.Core.Entity.Product;
 
 namespace Sales.WebUI.Models
 {
