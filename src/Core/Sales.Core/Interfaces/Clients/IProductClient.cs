@@ -1,4 +1,5 @@
-﻿using Sales.Contracts.Models;
+﻿
+using Sales.Core.Dto;
 
 namespace Sales.Core.Interfaces.Clients
 {

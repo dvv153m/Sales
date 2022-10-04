@@ -1,5 +1,5 @@
 using AutoFixture;
-using Sales.Contracts.Models;
+using Sales.Core.Dto;
 
 namespace Sales.Order.Api.Tests
 {

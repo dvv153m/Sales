@@ -1,6 +1,6 @@
 ﻿using Moq;
+using Sales.Core.Dto;
 using Sales.Core.Entity.Order;
-using Sales.Contracts.Models;
 using Sales.Core.Exceptions;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Core.Rules;

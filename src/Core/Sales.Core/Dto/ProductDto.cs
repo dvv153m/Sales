@@ -1,6 +1,5 @@
-﻿using Sales.Contracts.Request.Product;
-
-namespace Sales.Contracts.Models
+﻿
+namespace Sales.Core.Dto
 {
     public class ProductDto
     {

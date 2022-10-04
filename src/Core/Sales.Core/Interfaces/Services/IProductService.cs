@@ -1,6 +1,5 @@
-﻿using Sales.Core.Entity.Product;
-using Sales.Contracts.Models;
-using Sales.Contracts.Request.Product;
+﻿using Sales.Contracts.Request.Product;
+using Sales.Core.Dto;
 
 namespace Sales.Core.Interfaces.Services
 {

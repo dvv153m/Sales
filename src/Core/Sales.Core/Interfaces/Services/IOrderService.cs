@@ -1,6 +1,5 @@
-﻿using Sales.Contracts.Models;
-using Sales.Contracts.Request.Order;
-
+﻿using Sales.Contracts.Request.Order;
+using Sales.Core.Dto;
 
 namespace Sales.Core.Interfaces.Services
 {

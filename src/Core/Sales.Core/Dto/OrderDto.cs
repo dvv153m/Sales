@@ -1,5 +1,5 @@
 ﻿
-namespace Sales.Contracts.Models
+namespace Sales.Core.Dto
 {
     public class OrderDto
     {
@@ -15,7 +15,7 @@ namespace Sales.Contracts.Models
         /// <summary>
         /// Статус заказа
         /// </summary>
-        public OrderStatus Status { get; set; }
+        public OrderStatusDto Status { get; set; }
 
         /// <summary>
         /// Стоимость заказа

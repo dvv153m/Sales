@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Sales.Contracts.Models;
 using Sales.Contracts.Request.Order;
+using Sales.Core.Dto;
 using Sales.Core.Exceptions;
 using Sales.Core.Interfaces.Services;
 

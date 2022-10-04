@@ -1,4 +1,4 @@
-﻿using Sales.Contracts.Models;
+﻿using Sales.Core.Dto;
 using Sales.Core.Interfaces.Clients;
 
 namespace Sales.Infrastructure.Clients

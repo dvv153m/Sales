@@ -1,4 +1,4 @@
-﻿using Sales.Contracts.Models;
+﻿using Sales.Core.Dto;
 using Sales.Core.Exceptions;
 
 namespace Sales.Core.Rules.Products

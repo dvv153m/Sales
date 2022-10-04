@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Sales.Contracts.Models;
 using Sales.Contracts.Request.Product;
+using Sales.Core.Dto;
 using Sales.Core.Exceptions;
 using Sales.Core.Interfaces.Services;
 

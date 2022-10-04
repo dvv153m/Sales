@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sales.Contracts.Models
+namespace Sales.Core.Dto
 {
-    public enum OrderStatus
+    public enum OrderStatusDto
     {
         /// <summary>
         /// Статус не задан

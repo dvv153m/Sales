@@ -1,5 +1,5 @@
 ﻿
-namespace Sales.Contracts.Models
+namespace Sales.Core.Dto
 {
     public class OrderDetailsDto
     {

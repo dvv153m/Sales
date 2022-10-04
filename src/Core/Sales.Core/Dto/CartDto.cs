@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sales.Contracts.Models
+namespace Sales.Core.Dto
 {
     /// <summary>
     /// Корзина
     /// </summary>
-    public class Cart
+    public class CartDto
     {
         public List<ProductDto> Products { get; set; }
     }
