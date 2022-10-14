@@ -33,12 +33,12 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
             return orderEntity;
         }
 
-        public async Task AddProductToOrder(OrderDetailsEntity entity)
+        public async Task AddProductToOrder(OrderItemEntity entity)
         {
             await _repository.AddProductToOrder(entity);
             if (_ordersCacheById.TryGetValue(entity.OrderId, out var order))
             {                
-                order.OrderDetails.Add(entity);                
+                order.OrderItems.Add(entity);                
             }
             
         }
@@ -48,7 +48,7 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
             await _repository.DeleteProductFromOrderAsync(orderId, productId);
             if (_ordersCacheById.TryGetValue(orderId, out OrderEntity order))
             {                
-                order.OrderDetails.RemoveAll(x => x.OrderId == orderId && x.ProductId == productId);                
+                order.OrderItems.RemoveAll(x => x.OrderId == orderId && x.ProductId == productId);                
             }
         }
 
@@ -73,9 +73,9 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
             }
         }
 
-        public async Task UpdateOrderDetailAsync(OrderDetailsEntity entity)
+        public async Task UpdateOrderItemAsync(OrderItemEntity entity)
         {
-            await _repository.UpdateOrderDetailAsync(entity);   
+            await _repository.UpdateOrderItemAsync(entity);   
         }
     }
 }

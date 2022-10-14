@@ -7,7 +7,7 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Migrations
     {
         public override void Down()
         {
-            Delete.Table("OrderDetail");
+            Delete.Table("OrderItem");
             Delete.Table("Order");            
         }
 
@@ -22,7 +22,7 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Migrations
                   .WithColumn("UpdateDate").AsDateTime().NotNullable()
                   .WithColumn("CreatedDate").AsDateTime().NotNullable();
 
-            Create.Table("OrderDetail")
+            Create.Table("OrderItem")
                   .WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
                   .WithColumn("OrderId").AsInt64().NotNullable()
                   .WithColumn("ProductId").AsInt64().NotNullable()
@@ -31,7 +31,7 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Migrations
                   .WithColumn("CreatedDate").AsDateTime().NotNullable();
 
             Create.ForeignKey()
-            .FromTable("OrderDetail").ForeignColumn("OrderId")
+            .FromTable("OrderItem").ForeignColumn("OrderId")
             .ToTable("Order").PrimaryColumn("Id");
         }
     }

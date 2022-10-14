@@ -23,6 +23,6 @@ namespace Sales.Core.Entity.Order
 
         public DateTime UpdateDate { get; set; }
 
-        public List<OrderDetailsEntity> OrderDetails { get; set; }
+        public List<OrderItemEntity> OrderItems { get; set; }
     }    
 }

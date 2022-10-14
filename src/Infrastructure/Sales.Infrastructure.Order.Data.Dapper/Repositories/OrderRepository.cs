@@ -22,9 +22,9 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
             }
         }
 
-        public async Task AddProductToOrder(OrderDetailsEntity entity)
+        public async Task AddProductToOrder(OrderItemEntity entity)
         {
-            var insertProductDetailsQuery = @"INSERT INTO OrderDetail (OrderId, ProductId, Quantity, Price, CreatedDate) 
+            var insertProductItemsQuery = @"INSERT INTO OrderItem (OrderId, ProductId, Quantity, Price, CreatedDate) 
                                           VALUES (@OrderId, @ProductId, @Quantity, @Price, @CreatedDate)";
 
             using (IDbConnection connection = _dbContext.CreateConnection())
@@ -32,14 +32,14 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
                 connection.Open();
 
                 entity.CreatedDate = DateTime.UtcNow;
-                var productDetailParameters = new DynamicParameters();
-                productDetailParameters.Add("OrderId", entity.OrderId, DbType.Int64);
-                productDetailParameters.Add("ProductId", entity.ProductId, DbType.Int64);
-                productDetailParameters.Add("Quantity", entity.Quantity, DbType.Int32);
-                productDetailParameters.Add("Price", entity.Price, DbType.Decimal);
-                productDetailParameters.Add("CreatedDate", entity.CreatedDate, DbType.DateTime);
+                var orderItemParameters = new DynamicParameters();
+                orderItemParameters.Add("OrderId", entity.OrderId, DbType.Int64);
+                orderItemParameters.Add("ProductId", entity.ProductId, DbType.Int64);
+                orderItemParameters.Add("Quantity", entity.Quantity, DbType.Int32);
+                orderItemParameters.Add("Price", entity.Price, DbType.Decimal);
+                orderItemParameters.Add("CreatedDate", entity.CreatedDate, DbType.DateTime);
 
-                await connection.ExecuteAsync(insertProductDetailsQuery, productDetailParameters);
+                await connection.ExecuteAsync(insertProductItemsQuery, orderItemParameters);
             }
         }
 
@@ -49,7 +49,7 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
                                           VALUES (@Promocode, @Date, @Status, @Price, @UpdateDate, @CreatedDate)
                                           SELECT CAST(SCOPE_IDENTITY() as int)";
 
-            var insertOrderDetailsQuery = @$"INSERT INTO [{_databaseName}].[dbo].[OrderDetail] (OrderId, ProductId, Quantity, Price, CreatedDate) 
+            var insertOrderItemQuery = @$"INSERT INTO [{_databaseName}].[dbo].[OrderItem] (OrderId, ProductId, Quantity, Price, CreatedDate) 
                                           VALUES (@OrderId, @ProductId, @Quantity, @Price, @CreatedDate)";
 
             using (IDbConnection connection = _dbContext.CreateConnection())
@@ -70,17 +70,17 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
                         var orderId = await connection.QuerySingleAsync<int>(insertOrderQuery, orderParameters, transaction);
                         entity.Id = orderId;
 
-                        foreach (var orderDetail in entity.OrderDetails)
+                        foreach (var orderItem in entity.OrderItems)
                         {
-                            orderDetail.CreatedDate = DateTime.UtcNow;
+                            orderItem.CreatedDate = DateTime.UtcNow;
                             var productDetailParameters = new DynamicParameters();
                             productDetailParameters.Add("OrderId", orderId, DbType.Int64);
-                            productDetailParameters.Add("ProductId", orderDetail.ProductId, DbType.Int64);
-                            productDetailParameters.Add("Quantity", orderDetail.Quantity, DbType.Int32);
-                            productDetailParameters.Add("Price", orderDetail.Price, DbType.Decimal);
+                            productDetailParameters.Add("ProductId", orderItem.ProductId, DbType.Int64);
+                            productDetailParameters.Add("Quantity", orderItem.Quantity, DbType.Int32);
+                            productDetailParameters.Add("Price", orderItem.Price, DbType.Decimal);
                             productDetailParameters.Add("CreatedDate", entity.CreatedDate, DbType.DateTime);
                             
-                            await connection.ExecuteAsync(insertOrderDetailsQuery, productDetailParameters, transaction);
+                            await connection.ExecuteAsync(insertOrderItemQuery, productDetailParameters, transaction);
                         }
 
                         transaction.Commit();
@@ -103,8 +103,8 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
         public async Task<IEnumerable<OrderEntity>> GetOrdersByPromocodeAsync(string promocode, CancellationToken cancellationToken = default)
         {            
             var selectOrderQuery = @$"SELECT * FROM [{_databaseName}].[dbo].[Order] mainOrder
-                                          LEFT JOIN [{_databaseName}].[dbo].[OrderDetail] orderDetail
-                                          ON mainOrder.Id = orderDetail.OrderId
+                                          LEFT JOIN [{_databaseName}].[dbo].[OrderItem] orderItem
+                                          ON mainOrder.Id = orderItem.OrderId
                                           WHERE Promocode= '{promocode}'";
 
             using (var connection = _dbContext.CreateConnection())
@@ -112,19 +112,19 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
                 var orderDict = new Dictionary<long, OrderEntity>();
                 var orderEntities = new List<OrderEntity>();
                 
-                var products = await connection.QueryAsync<OrderEntity, OrderDetailsEntity, OrderEntity>(
-                    new CommandDefinition(selectOrderQuery, cancellationToken: cancellationToken), (order, orderDetails) =>
+                var products = await connection.QueryAsync<OrderEntity, OrderItemEntity, OrderEntity>(
+                    new CommandDefinition(selectOrderQuery, cancellationToken: cancellationToken), (order, orderItem) =>
                     {
                         if (!orderDict.TryGetValue((long)order.Id, out var currentOrder))
                         {
                             currentOrder = order;
-                            currentOrder.OrderDetails = new List<OrderDetailsEntity>();
+                            currentOrder.OrderItems = new List<OrderItemEntity>();
                             orderDict.Add(order.Id, order);
                         }
 
-                        if (orderDetails != null)
+                        if (orderItem != null)
                         {                            
-                            currentOrder.OrderDetails.Add(orderDetails);
+                            currentOrder.OrderItems.Add(orderItem);
                         }
 
                         return currentOrder;
@@ -155,10 +155,10 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
             }
         }
 
-        public async Task UpdateOrderDetailAsync(OrderDetailsEntity entity)
+        public async Task UpdateOrderItemAsync(OrderItemEntity entity)
         {
 
-            var updateQuery = @$"UPDATE [{_databaseName}].[dbo].[OrderDetail]
+            var updateQuery = @$"UPDATE [{_databaseName}].[dbo].[OrderItem]
                                      SET Quantity=@Quantity, Price=@Price
                                      WHERE Id=@Id";
 
@@ -175,7 +175,7 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
 
         public async Task DeleteProductFromOrderAsync(long orderId, long productId)
         {
-            var deleteQuery = @$"DELETE FROM [{_databaseName}].[dbo].[OrderDetail]
+            var deleteQuery = @$"DELETE FROM [{_databaseName}].[dbo].[OrderItem]
                                      WHERE OrderId=@OrderId AND ProductId=@ProductId";
 
             var parameters = new DynamicParameters();

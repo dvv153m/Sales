@@ -15,11 +15,11 @@ namespace Sales.Core.Rules.Products
                 throw new ProductException($"В корзину можно положить только один экземпляр одного и того же товара");
             }
 
-            if (ruleContext.Order?.OrderDetails != null)
+            if (ruleContext.Order?.OrderItems != null)
             {                
-                foreach (OrderDetailsDto orderDetail in ruleContext.Order.OrderDetails)
+                foreach (OrderItemsDto orderItem in ruleContext.Order.OrderItems)
                 { 
-                    if(orderDetail.ProductId == ruleContext.Product.Id)
+                    if(orderItem.ProductId == ruleContext.Product.Id)
                     {
                         throw new ProductException($"{ruleContext.Product.Title} уже есть в корзине");
                     }

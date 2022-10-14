@@ -3,14 +3,26 @@ Book Sale
 
 #### Summary ####
 
-Info:
-1. проект Contracts содержит Request, Response
+todo
+1. Во все API сделать basic auth + в OrderClient и др. clients добавть header Authorization
+2. Миграцию из Program вынести в Infrastructure
+3. Рефачить объекты. Создать проект Contracts там Request, Response объекты
+в Sales.Core папка Dto и Entity. 
+OrderStatus должен быть один
+4. Add FluentValudator на Request, Response objects
+5. Тесты на бизнес логику. Правила добавления в корзину и оформления заказа
+6. Отображение книг с картинками
+7. SignalR
+8. Доделать реализации репозиториев
+9. Добавить API Gateway
 
-2. Папка Core проект Domain доменные объекты папка Objects or Models
+
+Info:
 
 2. Попадаем в метод контроллера. Метод контроллера принимает объект SomeRequest
 мапим SomeRequest в доменный объект Some
 вызываем метод сервиса или метод медиатора и передаем ему объект Some
+в методе контроллере перехватываем пользовательские исключения
 
 
 Todo:

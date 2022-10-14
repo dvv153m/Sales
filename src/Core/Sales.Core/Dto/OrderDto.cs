@@ -22,6 +22,6 @@ namespace Sales.Core.Dto
         /// </summary>
         public decimal Price { get; set; }
 
-        public List<OrderDetailsDto> OrderDetails { get; set; }
+        public List<OrderItemsDto> OrderItems { get; set; }
     }    
 }

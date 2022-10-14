@@ -6,13 +6,13 @@ namespace Sales.Core.Interfaces.Repositories
     {
         Task<OrderEntity> AddAsync(OrderEntity entity);
 
-        Task AddProductToOrder(OrderDetailsEntity entity);
+        Task AddProductToOrder(OrderItemEntity entity);
 
         Task<IEnumerable<OrderEntity>> GetOrdersByPromocodeAsync(string promocode, CancellationToken cancellationToken = default);
 
         Task UpdateAsync(OrderEntity entity);
 
-        Task UpdateOrderDetailAsync(OrderDetailsEntity entity);
+        Task UpdateOrderItemAsync(OrderItemEntity entity);
 
         Task DeleteProductFromOrderAsync(long orderId, long productId);
     }    

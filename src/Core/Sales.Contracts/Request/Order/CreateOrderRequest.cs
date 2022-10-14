@@ -13,10 +13,10 @@ namespace Sales.Contracts.Request.Order
     {
         public string Promocode { get; set; }
 
-        public List<OrderDetailsRequest> OrderDetails { get; set; }
+        public List<OrderItemRequest> OrderItems { get; set; }
     }
 
-    public class OrderDetailsRequest
+    public class OrderItemRequest
     {
         public int ProductId { get; set; }
 

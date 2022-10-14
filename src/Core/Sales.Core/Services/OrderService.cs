@@ -65,9 +65,9 @@ namespace Sales.Core.Services
                     Price = productDto.Price,
                     UpdateDate = DateTime.UtcNow,
                     CreatedDate = DateTime.UtcNow,
-                    OrderDetails = new List<OrderDetailsEntity>()
+                    OrderItems = new List<OrderItemEntity>()
                     {
-                        new OrderDetailsEntity
+                        new OrderItemEntity
                         {
                             ProductId = productDto.Id,
                             Quantity = request.Quantity,
@@ -84,28 +84,28 @@ namespace Sales.Core.Services
 
                 order.UpdateDate = DateTime.UtcNow;
                 
-                var orderDetail = order.OrderDetails.Where(p => p.ProductId == request.ProductId).FirstOrDefault();
-                if (orderDetail != null)
+                var orderItem = order.OrderItems.Where(p => p.ProductId == request.ProductId).FirstOrDefault();
+                if (orderItem != null)
                 {                    
-                    orderDetail.Quantity = request.Quantity;
-                    orderDetail.Price = productDto.Price;
-                    order.Price = GetOrderPrice(order.OrderDetails);
+                    orderItem.Quantity = request.Quantity;
+                    orderItem.Price = productDto.Price;
+                    order.Price = GetOrderPrice(order.OrderItems);
 
-                    await _orderRepository.UpdateOrderDetailAsync(orderDetail);
+                    await _orderRepository.UpdateOrderItemAsync(orderItem);
                 }
                 else
                 {
-                    var newOrderDetail = new OrderDetailsEntity()
+                    var newOrderItem = new OrderItemEntity()
                     {
                         OrderId = order.Id,
                         ProductId = request.ProductId,
                         Quantity = request.Quantity,
                         Price= productDto.Price
                     };
-                    await _orderRepository.AddProductToOrder(newOrderDetail);
+                    await _orderRepository.AddProductToOrder(newOrderItem);
                     
-                    order.Price = GetOrderPrice(order.OrderDetails);
-                    order.Price += newOrderDetail.Price * newOrderDetail.Quantity;
+                    order.Price = GetOrderPrice(order.OrderItems);
+                    order.Price += newOrderItem.Price * newOrderItem.Quantity;
                 }
                 await _orderRepository.UpdateAsync(order);
             }            
@@ -215,12 +215,12 @@ namespace Sales.Core.Services
             return product;
         }        
 
-        private decimal GetOrderPrice(IEnumerable<OrderDetailsEntity> orderDetailEntities)
+        private decimal GetOrderPrice(IEnumerable<OrderItemEntity> orderItemEntities)
         {
             decimal price = 0;
-            foreach (var orderDetailEntity in orderDetailEntities)
+            foreach (var orderItemEntity in orderItemEntities)
             {
-                price += orderDetailEntity.Price * orderDetailEntity.Quantity;
+                price += orderItemEntity.Price * orderItemEntity.Quantity;
             }
             return price;
         }
@@ -229,16 +229,16 @@ namespace Sales.Core.Services
         {
             if (orderEntity != null)
             {
-                var orderDetails = new List<OrderDetailsDto>();
-                if (orderEntity.OrderDetails != null)
+                var orderItems = new List<OrderItemsDto>();
+                if (orderEntity.OrderItems != null)
                 {
-                    foreach (var orderDetail in orderEntity.OrderDetails)
+                    foreach (var orderItem in orderEntity.OrderItems)
                     {
-                        orderDetails.Add(new OrderDetailsDto
+                        orderItems.Add(new OrderItemsDto
                         {
-                            ProductId = orderDetail.ProductId,
-                            Quantity = orderDetail.Quantity,
-                            Price = orderDetail.Price,
+                            ProductId = orderItem.ProductId,
+                            Quantity = orderItem.Quantity,
+                            Price = orderItem.Price,
                         });
                     }
                 }
@@ -249,7 +249,7 @@ namespace Sales.Core.Services
                     Date = orderEntity.Date,
                     Status = (Sales.Core.Dto.OrderStatusDto)orderEntity.Status,
                     Price = orderEntity.Price,
-                    OrderDetails = orderDetails
+                    OrderItems = orderItems
                 };
             }
             else

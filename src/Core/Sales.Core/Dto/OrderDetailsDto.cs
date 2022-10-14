@@ -1,7 +1,7 @@
 ﻿
 namespace Sales.Core.Dto
 {
-    public class OrderDetailsDto
+    public class OrderItemsDto
     {
         public long ProductId { get; set; }
 

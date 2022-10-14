@@ -19,7 +19,7 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
             return Task.FromResult(entity);
         }
 
-        public Task AddProductToOrder(OrderDetailsEntity entity)
+        public Task AddProductToOrder(OrderItemEntity entity)
         {
             throw new NotImplementedException();
         }
@@ -39,7 +39,7 @@ namespace Sales.Infrastructure.Order.Data.Dapper.Repositories
             throw new NotImplementedException();
         }
 
-        public Task UpdateOrderDetailAsync(OrderDetailsEntity entity)
+        public Task UpdateOrderItemAsync(OrderItemEntity entity)
         {
             throw new NotImplementedException();
         }

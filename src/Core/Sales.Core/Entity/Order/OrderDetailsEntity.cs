@@ -2,7 +2,7 @@
 
 namespace Sales.Core.Entity.Order
 {
-    public class OrderDetailsEntity : EntityBase
+    public class OrderItemEntity : EntityBase
     {        
         /// <summary>
         /// Id заказа
