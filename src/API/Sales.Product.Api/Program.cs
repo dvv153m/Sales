@@ -30,7 +30,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseExceptionHandlerMiddleware(logger);
+app.UseGlobalExceptionHandlerMiddleware(logger);
 
 app.UseAuthorization();
 

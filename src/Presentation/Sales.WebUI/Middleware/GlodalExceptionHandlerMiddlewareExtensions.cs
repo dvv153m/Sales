@@ -4,9 +4,9 @@ using System.Text.Json;
 
 namespace Sales.WebUI.Middleware
 {
-    public static class ExceptionHandlerMiddlewareExtensions
+    public static class GlobalExceptionHandlerMiddlewareExtensions
     {
-        public static void UseExceptionHandlerMiddleware(this IApplicationBuilder app, ILogger logger)
+        public static void UseGlobalExceptionHandlerMiddleware(this IApplicationBuilder app, ILogger logger)
         {
             app.UseExceptionHandler(appError =>
             {
@@ -21,12 +21,12 @@ namespace Sales.WebUI.Middleware
                     var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
                     if (exceptionHandlerPathFeature != null)
                     {
-                        logger.LogError($"Something went wrong: {exceptionHandlerPathFeature.Error}");
+                        logger.LogError($"Something went wrong: {exceptionHandlerPathFeature}");
 
-                        await context.Response.WriteAsync(new ErrorDetail
+                        await context.Response.WriteAsync(new ErrorDetails
                         {
                             StatusCode = context.Response.StatusCode,
-                            Message = "Internal server error"
+                            Message = "An internal server has occurred"
                         }.ToString());
                     }
                     
@@ -39,7 +39,7 @@ namespace Sales.WebUI.Middleware
         }        
     }
 
-    public class ErrorDetail
+    public class ErrorDetails
     {
         public int StatusCode { get; set; }
 

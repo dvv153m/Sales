@@ -7,9 +7,9 @@ using System.Text.Json;
 
 namespace Sales.Infrastructure.Exception
 {
-    public static class ExceptionHandlerMiddlewareExtensions
+    public static class GlobalExceptionHandlerMiddlewareExtensions
     {
-        public static void UseExceptionHandlerMiddleware(this IApplicationBuilder app, ILogger logger)
+        public static void UseGlobalExceptionHandlerMiddleware(this IApplicationBuilder app, ILogger logger)
         {
             app.UseExceptionHandler(appError =>
             {
@@ -21,19 +21,19 @@ namespace Sales.Infrastructure.Exception
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                     if (contextFeature != null)
                     {
-                        logger.LogError($"Something went wrong: {contextFeature.Error}");
+                        logger.LogError($"Something went wrong: {contextFeature}");
 
-                        await context.Response.WriteAsync(new ErrorDetail
+                        await context.Response.WriteAsync(new ErrorDetails
                         {
                             StatusCode = context.Response.StatusCode,
-                            Message = "Internal server error"
+                            Message = "An internal server has occurred"
                         }.ToString());
                     }
                 });
             });
         }
 
-        public class ErrorDetail
+        public class ErrorDetails
         {
             public int StatusCode { get; set; }
 

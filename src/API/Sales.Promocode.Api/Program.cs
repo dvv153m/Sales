@@ -31,7 +31,7 @@ else
 
 app.UseHttpsRedirection();
 
-app.UseExceptionHandlerMiddleware(logger);
+app.UseGlobalExceptionHandlerMiddleware(logger);
 
 app.UseAuthorization();
 

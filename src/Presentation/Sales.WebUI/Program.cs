@@ -27,7 +27,7 @@ else
     app.UseDeveloperExceptionPage();    
 }
 
-app.UseExceptionHandlerMiddleware(logger);
+app.UseGlobalExceptionHandlerMiddleware(logger);
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
