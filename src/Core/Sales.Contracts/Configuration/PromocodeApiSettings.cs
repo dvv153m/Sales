@@ -15,5 +15,14 @@ namespace Sales.Contracts.Configuration
         public string MasterConnectionString { get; set; }
 
         public int PromocodeLenght { get; set; }
+
+        public CacheOptions CacheOptions { get; set; }
+    }
+
+    public class CacheOptions
+    {        
+        public TimeSpan AbsoluteExpirationRelativeToNow { get; set; }
+
+        public TimeSpan SlidingExpiration { get; set; }
     }
 }

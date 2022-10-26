@@ -1,4 +1,5 @@
-﻿using Sales.Core.Entity;
+﻿using Microsoft.Extensions.Caching.Memory;
+using Sales.Core.Entity;
 using Sales.Core.Interfaces.Repositories;
 using System.Collections.Concurrent;
 
@@ -10,9 +11,18 @@ namespace Sales.Infrastructure.Promocode.Data.Dapper.Repositories
 
         private static readonly ConcurrentDictionary<string, PromocodeEntity> _promocodesCache = new ConcurrentDictionary<string, PromocodeEntity>();
 
-        public PromocodeCacheDecoratorRepository(IPromocodeRepository promocodeRepository)
+        private readonly IMemoryCache _memoryCache;
+
+        private readonly TimeSpan _absoluteExpirationRelativeToNow;
+
+        public PromocodeCacheDecoratorRepository(IPromocodeRepository promocodeRepository,
+                                                 IMemoryCache memoryCache,
+                                                 TimeSpan absoluteExpirationRelativeToNow)
         {
             _repository = promocodeRepository ?? throw new ArgumentNullException(nameof(promocodeRepository));
+            _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
+
+            _absoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow;
         }
 
         public async Task AddAsync(PromocodeEntity entity)
@@ -26,20 +36,16 @@ namespace Sales.Infrastructure.Promocode.Data.Dapper.Repositories
             return await _repository.GetAllAsync(cancellationToken);
         }
 
-        public async Task<PromocodeEntity> GetByPromocodeAsync(string promocode, CancellationToken cancellationToken = default)
+        public Task<PromocodeEntity> GetByPromocodeAsync(string promocode, CancellationToken cancellationToken = default)
         {
-            if (_promocodesCache.TryGetValue(promocode, out PromocodeEntity entity))
-            {
-                return entity;
-            }
-
-            var promocodeEntity = await _repository.GetByPromocodeAsync(promocode, cancellationToken);
-            if (promocodeEntity != null)
-            {
-                _promocodesCache.TryAdd(promocode, promocodeEntity);
-            }
-
-            return promocodeEntity;
+            string key = $"promo-{promocode}";
+            return _memoryCache.GetOrCreateAsync(
+                key,
+                entry =>
+                {
+                    entry.SetAbsoluteExpiration(_absoluteExpirationRelativeToNow);
+                    return  _repository.GetByPromocodeAsync(promocode, cancellationToken);
+                });
         }
     }
 }

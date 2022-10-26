@@ -1,4 +1,7 @@
-﻿using Sales.Contracts.Configuration;
+﻿using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Sales.Contracts.Configuration;
 using Sales.Core.Interfaces.Authentication;
 using Sales.Core.Interfaces.Repositories;
 using Sales.Core.Interfaces.Services;
@@ -12,8 +15,19 @@ namespace Sales.Promocode.Api.AppStart
     {
         void ConfigureServices(WebApplicationBuilder builder)
         {            
+            builder.Services.AddMemoryCache();
+
             builder.Services.AddScoped<PromocodeRepository>();
-            builder.Services.AddScoped<IPromocodeRepository>(x => new PromocodeCacheDecoratorRepository(x.GetRequiredService<PromocodeRepository>()));
+            //builder.Services.AddScoped<IPromocodeRepository, PromocodeCacheDecoratorRepository>();
+            //builder.Services.AddScoped<IPromocodeRepository>(x => new PromocodeCacheDecoratorRepository(x.GetRequiredService<PromocodeRepository>()));
+            builder.Services.AddScoped<IPromocodeRepository>(provider =>
+            {
+                PromocodeApiSettings promocodeApiOptions = builder.Configuration.GetSection(PromocodeApiSettings.SectionName).Get<PromocodeApiSettings>();
+                var promoRepository = provider.GetService<PromocodeRepository>();
+                return new PromocodeCacheDecoratorRepository(promoRepository,
+                                                             provider.GetService<IMemoryCache>(),
+                                                             promocodeApiOptions.CacheOptions.AbsoluteExpirationRelativeToNow);
+            });
 
             builder.Services.AddScoped<IPromocodeGenerator, PromocodeGenerator>();
 
